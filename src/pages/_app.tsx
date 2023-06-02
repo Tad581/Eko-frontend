@@ -8,6 +8,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../@core/utils/theme';
 import createEmotionCache from '../@core/utils/createEmotionCache';
 
+import { Navbar } from "../@core/components/navbar/index";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -29,6 +31,7 @@ export default function MyApp(props: MyAppProps) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon.
         remove the margins of all browsers and apply the material design background color */}
         <CssBaseline />
+        <Navbar></Navbar>
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
