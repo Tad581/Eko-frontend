@@ -1,11 +1,12 @@
-import { Thumbnail } from "@/@core/components/thumbnail";
-import { RecommendGroup } from "@/@core/components/recommendGroup";
+// ** MUI Component import
+import { Container } from "@mui/material";
+// ** Component import
+import { FilterBox } from "@/@core/components/filterBox";
 
 export default function Home() {
   return (
-    <div>
-      <Thumbnail></Thumbnail>
-      <RecommendGroup></RecommendGroup>
-    </div>
+    <Container sx={{marginTop: "50px"}}>
+      <FilterBox></FilterBox>
+    </Container>
   );
 }
