@@ -1,6 +1,5 @@
 import { Container, Stack, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { BorderRadius } from "mdi-material-ui";
 
 export const Thumbnail = () => {
   return (

@@ -10,7 +10,7 @@ import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
 
 export const Navbar = () => {
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar position="fixed" color="inherit">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <IconButton size="large" edge="start" color="primary" aria-label="logo">
           <StorefrontRoundedIcon />
