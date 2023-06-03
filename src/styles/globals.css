@@ -100,7 +100,3 @@ a {
     color-scheme: dark;
   }
 }
-
-.MuiButton-root {
-  min-width: 100px !important;
-}

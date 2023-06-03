@@ -1,10 +1,10 @@
 
-import styles from "../styles/Home.module.css";
+import { Thumbnail } from "@/@core/components/thumbnail";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-
+    <div>
+      <Thumbnail></Thumbnail>
     </div>
   );
 }
