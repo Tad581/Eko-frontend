@@ -9,14 +9,14 @@ const homePageBoxStyle = {
 
 export const CardItemHomePage = (props: ICardItemHomePage) => {
   return (
-    <Box width="300px" sx={homePageBoxStyle}>
+    <Box width="400px" sx={homePageBoxStyle}>
       <Card>
         <CardMedia
           component="img"
           image={
             props.image ? props.image : "https://i.ibb.co/6WXYg60/cafe.jpg"
           }
-          height="200px"
+          height="250px"
           width="auto"
           alt="cafe image"
           sx={{ padding: "10px" }}

@@ -61,7 +61,7 @@ export const RecommendGroup = () => {
       </Typography>
       <Grid container spacing={2}>
         {recommendData.map((data: ICardItemHomePage) => (
-          <Grid item sm={6} md={4} lg={3} key={data.id}>
+          <Grid item sm={6} md={4} lg={4} key={data.id}>
             <CardItemHomePage
               id={data.id}
               name={data.name}
