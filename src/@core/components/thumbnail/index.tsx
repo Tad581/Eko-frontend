@@ -1,5 +1,6 @@
 import { Container, Stack, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { BorderRadius } from "mdi-material-ui";
 
 export const Thumbnail = () => {
   return (
@@ -25,12 +26,14 @@ export const Thumbnail = () => {
       >
         <TextField
           label="名前"
-          variant="filled"
+          variant="outlined"
           size="small"
           inputProps={{
             style: {
               height: "30px",
               width: "40vw",
+              backgroundColor: "#fff",
+              borderRadius: '5px'
             },
           }}
         ></TextField>
@@ -38,7 +41,7 @@ export const Thumbnail = () => {
           variant="contained"
           startIcon={<SearchIcon />}
           size="large"
-          sx={{ width: "120px", height: "55px" }}
+          sx={{ width: "120px", height: "45px" }}
         >
           検索
         </Button>
