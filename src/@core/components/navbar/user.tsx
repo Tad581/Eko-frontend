@@ -16,6 +16,7 @@ import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
 import SearchIcon from "@mui/icons-material/Search";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 export const UserNavbar = () => {
   return (
@@ -74,6 +75,16 @@ export const UserNavbar = () => {
           >
             日本語
           </Button>
+          <Box
+            justifyContent={"center"}
+            alignItems={"center"}
+            display={"flex"}
+          >
+            <AccountCircleOutlinedIcon sx={{fontSize: "50px"}}/>
+            <Typography sx={{ fontWeight: 600, fontSize: "16px", marginLeft: "5px" }}>
+              nakama.no.team
+            </Typography>
+          </Box>
         </Stack>
       </Toolbar>
     </AppBar>

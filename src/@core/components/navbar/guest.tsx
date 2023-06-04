@@ -17,7 +17,7 @@ export const GuestNavbar = () => {
     <AppBar position="fixed" color="inherit">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <IconButton size="large" edge="start" color="primary" aria-label="logo">
-          <StorefrontRoundedIcon fontSize="large"/>
+          <StorefrontRoundedIcon fontSize="large" />
           <Typography variant="h6" component="div" sx={{ marginLeft: "10px" }}>
             eko
           </Typography>
@@ -46,6 +46,7 @@ export const GuestNavbar = () => {
           >
             ログイン
           </Button>
+
         </Stack>
       </Toolbar>
     </AppBar>
