@@ -17,12 +17,14 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 export const FilterBox = () => {
   return (
     <Box
-      maxWidth={400}
+      minWidth={"25%"}
+      maxHeight={550}
       sx={{
         border: "1px solid",
         borderRadius: "5px",
         padding: "40px",
         paddingTop: "30px",
+        marginRight: "20px",
       }}
     >
       <FormControl fullWidth>

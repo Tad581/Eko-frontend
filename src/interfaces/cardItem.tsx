@@ -5,3 +5,7 @@ export interface ICardItemHomePage {
   address: string;
 }
 
+export interface ICardItemResultPage extends ICardItemHomePage {
+  rating: number;
+  workingTime: string;
+}

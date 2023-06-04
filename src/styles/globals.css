@@ -103,6 +103,6 @@ a {
   }
 }
 
-/* .MuiContainer-root {
+.MuiContainer-root {
   max-width: none;
-} */
+}

@@ -28,7 +28,7 @@ export const CardItemHomePage = (props: ICardItemHomePage) => {
             {props.name}
           </Typography>
           <Typography variant="subtitle1" component="div">
-            {props.address}
+            カフェの食わし場所
           </Typography>
         </CardContent>
       </Card>
