@@ -103,6 +103,7 @@ export const ResultPagination = () => {
         display={"flex"}
         flexDirection={"column"}
         width="100%"
+        paddingBottom="50px"
       >
         {cafeList.map((data: ICardItemResultPage) => (
           <CardItemResultPage

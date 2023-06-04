@@ -34,7 +34,7 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
           position: "relative",
         }}
       >
-        <Box width="35%">
+        <Box width="280px">
           <CardMedia
             component="img"
             image={
@@ -123,7 +123,7 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
             right: "20px",
           }}
         >
-          <BookmarkBorderOutlinedIcon color="#000" />
+          <BookmarkBorderOutlinedIcon/>
         </Box>
       </Card>
     </Box>
