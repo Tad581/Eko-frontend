@@ -1,5 +1,7 @@
+// ** MUI Component import
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
+// ** Interface import
 import { ICardItemHomePage } from "@/interfaces/cardItem";
 
 const homePageBoxStyle = {
