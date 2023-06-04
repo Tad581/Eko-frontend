@@ -12,11 +12,21 @@ import {
 import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+// ** Hooks import
+import { useRouter } from "next/router";
 export const GuestNavbar = () => {
+  const { push } = useRouter();
+
   return (
     <AppBar position="fixed" color="inherit">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <IconButton size="large" edge="start" color="primary" aria-label="logo">
+        <IconButton
+          size="large"
+          edge="start"
+          color="primary"
+          aria-label="logo"
+          onClick={() => push("/")}
+        >
           <StorefrontRoundedIcon fontSize="large" />
           <Typography variant="h6" component="div" sx={{ marginLeft: "10px" }}>
             eko
@@ -46,7 +56,6 @@ export const GuestNavbar = () => {
           >
             ログイン
           </Button>
-
         </Stack>
       </Toolbar>
     </AppBar>

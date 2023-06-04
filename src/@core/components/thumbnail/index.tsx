@@ -1,7 +1,19 @@
+// ** MUI Components import
 import { Container, Stack, Typography, TextField, Button } from "@mui/material";
+
+// ** MUI Icons import
 import SearchIcon from "@mui/icons-material/Search";
 
+// ** Hooks import
+import { useRouter } from "next/router";
+
 export const Thumbnail = () => {
+  const { push } = useRouter();
+
+  const handleSubmit = () => {
+    push("/search-results");
+  }
+
   return (
     <Container
       sx={{
@@ -32,7 +44,7 @@ export const Thumbnail = () => {
               height: "30px",
               width: "40vw",
               backgroundColor: "#fff",
-              borderRadius: '5px'
+              borderRadius: "5px",
             },
           }}
         ></TextField>
@@ -41,6 +53,7 @@ export const Thumbnail = () => {
           startIcon={<SearchIcon />}
           size="large"
           sx={{ width: "120px", height: "45px" }}
+          onClick={handleSubmit}
         >
           検索
         </Button>

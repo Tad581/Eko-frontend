@@ -1,4 +1,4 @@
-// ** MUI Component import
+// ** MUI Components import
 import {
   AppBar,
   Toolbar,
@@ -11,14 +11,19 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-// ** MUI Icon import
+// ** MUI Icons import
 import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
 import SearchIcon from "@mui/icons-material/Search";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
+// ** Hooks import
+import { useRouter } from "next/router";
+
 export const UserNavbar = () => {
+  const { push } = useRouter();
+
   return (
     <AppBar position="fixed" color="inherit">
       <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -28,6 +33,7 @@ export const UserNavbar = () => {
             edge="start"
             color="primary"
             aria-label="logo"
+            onClick={() => push("/")}
           >
             <StorefrontRoundedIcon fontSize="large" />
           </IconButton>
@@ -75,13 +81,11 @@ export const UserNavbar = () => {
           >
             日本語
           </Button>
-          <Box
-            justifyContent={"center"}
-            alignItems={"center"}
-            display={"flex"}
-          >
-            <AccountCircleOutlinedIcon sx={{fontSize: "50px"}}/>
-            <Typography sx={{ fontWeight: 600, fontSize: "16px", marginLeft: "5px" }}>
+          <Box justifyContent={"center"} alignItems={"center"} display={"flex"}>
+            <AccountCircleOutlinedIcon sx={{ fontSize: "35px" }} />
+            <Typography
+              sx={{ fontWeight: 600, fontSize: "16px", marginLeft: "5px" }}
+            >
               nakama.no.team
             </Typography>
           </Box>
