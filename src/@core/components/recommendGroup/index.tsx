@@ -42,6 +42,7 @@ export const RecommendGroup = () => {
               address={data.address}
               image = {data.image}
               star = {data.star}
+              business_hours={data.business_hours}
             ></CardItemHomePage>
           </Grid>
         ))}
