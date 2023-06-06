@@ -14,7 +14,33 @@ import {
 // ** MUI Icon import
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
-export const FilterBox = () => {
+// ** Hooks import
+
+interface IFilterForm {
+  all: boolean;
+  isOpen: boolean;
+  airCon: boolean;
+  carPark: boolean;
+  creditCard: boolean;
+  delivery: boolean;
+}
+
+interface Props {
+  filterForm: IFilterForm,
+  handleFilterFormData: any
+}
+
+export const FilterBox = ({filterForm, handleFilterFormData}: Props) => {
+
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    checked?: boolean
+  ) => {
+    const { name } = event.target;
+    handleFilterFormData(name, checked);
+  };
+
+
   return (
     <Box
       minWidth={"25%"}
@@ -93,19 +119,43 @@ export const FilterBox = () => {
           </Typography>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  name="carPark"
+                  value={filterForm.carPark}
+                  onChange={handleCheckboxChange}
+                />
+              }
               label="駐車場"
             />
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  name="airCon"
+                  value={filterForm.airCon}
+                  onChange={handleCheckboxChange}
+                />
+              }
               label="エアコン"
             />
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  name="creditCard"
+                  value={filterForm.creditCard}
+                  onChange={handleCheckboxChange}
+                />
+              }
               label="クレジットカード"
             />
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  name="delivery"
+                  value={filterForm.delivery}
+                  onChange={handleCheckboxChange}
+                />
+              }
               label="配送"
             />
           </FormGroup>

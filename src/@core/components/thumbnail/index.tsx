@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 // ** Hooks import
 import { useRouter } from "next/router";
-import {useState, useEffect} from "react"
+import {useState} from "react"
 
 export const Thumbnail = () => {
   const { push } = useRouter();

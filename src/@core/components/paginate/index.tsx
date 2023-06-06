@@ -22,7 +22,20 @@ import { cafesList } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
-export const ResultPagination = () => {
+interface IFilterForm {
+  all: boolean;
+  isOpen: boolean;
+  airCon: boolean;
+  carPark: boolean;
+  creditCard: boolean;
+  delivery: boolean;
+}
+
+interface Props {
+  filterForm: IFilterForm;
+}
+
+export const ResultPagination = ({ filterForm }: Props) => {
   const [cafeListData, setCafeListData] =
     useState<ICardItemResultPage[]>(cafesList);
 
@@ -31,12 +44,43 @@ export const ResultPagination = () => {
   // Filter raw data by keyword
   useEffect(() => {
     const keyword = localStorage.getItem("keyword");
-    const filterData = cafesList.filter(
-      (cafe: any) =>
-        cafe.name.includes(keyword) || cafe.name.toLowerCase().includes(keyword)
-    );
+    console.log("filterForm :>> ", filterForm);
+    const filterData = cafesList
+      .filter(
+        (cafe: any) =>
+          cafe.name.includes(keyword) ||
+          cafe.name.toLowerCase().includes(keyword)
+      )
+      .filter((cafe: any) => {
+        if (filterForm.airCon)
+          return cafe.coffee_shop_devices.find(
+            (device: any) => device.name === "air conditioner"
+          );
+        return true;
+      })
+      .filter((cafe: any) => {
+        if (filterForm.carPark)
+          return cafe.coffee_shop_devices.find(
+            (device: any) => device.name === "car park"
+          );
+        return true;
+      })
+      .filter((cafe: any) => {
+        if (filterForm.creditCard)
+          return cafe.coffee_shop_devices.find(
+            (device: any) => device.name === "credit card"
+          );
+        return true;
+      })
+      .filter((cafe: any) => {
+        if (filterForm.delivery)
+          return cafe.coffee_shop_devices.find(
+            (device: any) => device.name === "delivery"
+          );
+        return true;
+      });
     setCafeListData(filterData);
-  }, []);
+  }, [filterForm]);
 
   // For pagination
   const [pagination, setPagination] = useState({
