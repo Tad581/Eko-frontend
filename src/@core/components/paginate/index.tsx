@@ -17,78 +17,43 @@ import { ICardItemResultPage } from "@/interfaces/cardItem";
 // ** Hooks import
 import { useEffect, useState } from "react";
 
+// ** Others import
+import { cafesList } from "@/@core/utils/cafes";
+
 const pageSize = 4;
 
-const fakeData: ICardItemResultPage[] = [
-  {
-    id: 1,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 2,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 3,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 4,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 5,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 6,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-  {
-    id: 7,
-    name: "カフェの名前",
-    address: "2 Đinh Liệt, Hoàn Kiếm",
-    rating: 3.5,
-    workingTime: "08:00 - 23:00",
-  },
-];
-
 export const ResultPagination = () => {
+  const [cafeListData, setCafeListData] =
+    useState<ICardItemResultPage[]>(cafesList);
+
+  const [showData, setShowData] = useState<ICardItemResultPage[]>(cafeListData);
+
+  // Filter raw data by keyword
+  useEffect(() => {
+    const keyword = localStorage.getItem("keyword");
+    const filterData = cafesList.filter(
+      (cafe: any) =>
+        cafe.name.includes(keyword) || cafe.name.toLowerCase().includes(keyword)
+    );
+    setCafeListData(filterData);
+  }, []);
+
   // For pagination
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
     to: pageSize,
   });
-  const [cafeList, setCafeList] = useState<ICardItemResultPage[]>([]);
 
   useEffect(() => {
-    const data: ICardItemResultPage[] = fakeData.slice(
+    const data: ICardItemResultPage[] = cafeListData.slice(
       pagination.from,
       pagination.to
     );
-    setPagination({ ...pagination, count: cafeList.length });
-    setCafeList(data);
+    setPagination({ ...pagination, count: cafeListData.length });
+    setShowData(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagination.from, pagination.to]);
+  }, [cafeListData, pagination.from, pagination.to]);
 
   const handlePageChange = (event: any, page: number) => {
     const from = (page - 1) * pageSize;
@@ -126,13 +91,15 @@ export const ResultPagination = () => {
         >
           <Typography mx={1} sx={{ fontWeight: 700 }}>
             {pagination.from + 1} ~{" "}
-            {pagination.to === fakeData.length + 1
+            {pagination.to === cafeListData.length + 1
               ? pagination.to - 1
+              : cafeListData.length < pageSize
+              ? cafeListData.length
               : pagination.to}
           </Typography>
           件を表示 / 全
           <Typography mx={1} sx={{ fontWeight: 700 }}>
-            {fakeData.length}{" "}
+            {cafeListData.length}{" "}
           </Typography>
           件
         </Box>
@@ -161,21 +128,26 @@ export const ResultPagination = () => {
         width="100%"
         paddingBottom="50px"
       >
-        {cafeList.map((data: ICardItemResultPage) => (
+        {showData.map((data: ICardItemResultPage) => (
           <CardItemResultPage
-            rating={data.rating}
-            workingTime={data.workingTime}
+            star={data.star}
+            business_hours={data.business_hours}
             id={data.id}
             name={data.name}
             address={data.address}
             key={data.id}
+            image={data.image}
           />
         ))}
       </Box>
-      <Pagination
-        count={Math.ceil(fakeData.length / 4)}
-        onChange={handlePageChange}
-      />
+      {cafeListData.length < pageSize ? (
+        <></>
+      ) : (
+        <Pagination
+          count={Math.ceil(cafeListData.length / 4)}
+          onChange={handlePageChange}
+        />
+      )}
     </Box>
   );
 };

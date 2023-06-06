@@ -6,12 +6,20 @@ import SearchIcon from "@mui/icons-material/Search";
 
 // ** Hooks import
 import { useRouter } from "next/router";
+import {useState, useEffect} from "react"
 
 export const Thumbnail = () => {
   const { push } = useRouter();
 
+  const [searchKeyword, setSearchKeyword] = useState<string>("")
+
   const handleSubmit = () => {
     push("/search-results");
+    localStorage.setItem("keyword", searchKeyword);
+  }
+
+  const handleTextChange = (e: any) => {
+    setSearchKeyword(e.target.value)
   }
 
   return (
@@ -39,6 +47,8 @@ export const Thumbnail = () => {
           label="名前"
           variant="outlined"
           size="small"
+          value={searchKeyword}
+          onChange={handleTextChange}
           inputProps={{
             style: {
               height: "30px",

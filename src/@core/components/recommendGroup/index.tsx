@@ -18,6 +18,7 @@ export const RecommendGroup = () => {
     const newData = recommendData.sort(sortRating).slice(0, 9);
     console.log("🚀 ~ file: index.tsx:19 ~ useEffect ~ newData:", newData)
     setRecommendData(newData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

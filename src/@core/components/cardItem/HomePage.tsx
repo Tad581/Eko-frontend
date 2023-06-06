@@ -42,9 +42,7 @@ export const CardItemHomePage = (props: ICardItemHomePage) => {
               name="simple-controlled"
               value={props.star}
               precision={0.1}
-              // onChange={(event, newValue) => {
-              //   setValue(newValue);
-              // }}
+              readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
               {props.star}

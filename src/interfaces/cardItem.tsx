@@ -4,8 +4,8 @@ export interface ICardItemHomePage {
   name: string;
   address: string;
   star: number;
+  business_hours: string;
 }
 
 export interface ICardItemResultPage extends ICardItemHomePage {
-  workingTime: string;
 }

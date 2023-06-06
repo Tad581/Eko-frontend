@@ -65,6 +65,7 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
               // onChange={(event, newValue) => {
               //   setValue(newValue);
               // }}
+              readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
               {props.star}
@@ -89,7 +90,7 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
               sx={{ fontSize: 16 }}
               ml={1}
             >
-              {props.workingTime}
+              {props.business_hours}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -123,7 +124,7 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
             right: "20px",
           }}
         >
-          <BookmarkBorderOutlinedIcon/>
+          <BookmarkBorderOutlinedIcon />
         </Box>
       </Card>
     </Box>
