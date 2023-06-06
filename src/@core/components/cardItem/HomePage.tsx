@@ -1,5 +1,12 @@
 // ** MUI Component import
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Rating,
+} from "@mui/material";
 
 // ** Interface import
 import { ICardItemHomePage } from "@/interfaces/cardItem";
@@ -27,9 +34,22 @@ export const CardItemHomePage = (props: ICardItemHomePage) => {
           <Typography gutterBottom variant="h5" component="div">
             {props.name}
           </Typography>
-          <Typography variant="subtitle1" component="div">
-            カフェの食わし場所
+          <Typography variant="subtitle1" component="div" sx={{ fontSize: 16, marginBottom: "3px" }}>
+            {props.address}
           </Typography>
+          <Box display="flex" alignItems="center">
+            <Rating
+              name="simple-controlled"
+              value={props.star}
+              precision={0.1}
+              // onChange={(event, newValue) => {
+              //   setValue(newValue);
+              // }}
+            />
+            <Typography component="span" sx={{ marginLeft: 1 }}>
+              {props.star}
+            </Typography>
+          </Box>
         </CardContent>
       </Card>
     </Box>

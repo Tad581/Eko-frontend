@@ -60,14 +60,14 @@ export const CardItemResultPage = (props: ICardItemResultPage) => {
           <Box display="flex" alignItems="center">
             <Rating
               name="simple-controlled"
-              value={props.rating}
-              precision={0.5}
+              value={props.star}
+              precision={0.1}
               // onChange={(event, newValue) => {
               //   setValue(newValue);
               // }}
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.rating}
+              {props.star}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" mt={2}>

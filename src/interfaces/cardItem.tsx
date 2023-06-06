@@ -3,9 +3,9 @@ export interface ICardItemHomePage {
   image?: string;
   name: string;
   address: string;
+  star: number;
 }
 
 export interface ICardItemResultPage extends ICardItemHomePage {
-  rating: number;
   workingTime: string;
 }
