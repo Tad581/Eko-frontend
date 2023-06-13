@@ -12,7 +12,7 @@ import {
 import { CardItemResultPage } from "../cardItem/ResultPage";
 
 // ** Interfaces import
-import { ICardItemResultPage } from "@/interfaces/cardItem";
+import { ICardItem, IFilterForm } from "@/interfaces";
 
 // ** Hooks import
 import { useEffect, useState } from "react";
@@ -22,24 +22,15 @@ import { cafesList } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
-interface IFilterForm {
-  all: boolean;
-  isOpen: boolean;
-  airCon: boolean;
-  carPark: boolean;
-  creditCard: boolean;
-  delivery: boolean;
-}
-
 interface Props {
   filterForm: IFilterForm;
 }
 
 export const ResultPagination = ({ filterForm }: Props) => {
   const [cafeListData, setCafeListData] =
-    useState<ICardItemResultPage[]>(cafesList);
+    useState<ICardItem[]>(cafesList);
 
-  const [showData, setShowData] = useState<ICardItemResultPage[]>(cafeListData);
+  const [showData, setShowData] = useState<ICardItem[]>(cafeListData);
 
   // For pagination
   const [pagination, setPagination] = useState<any>({
@@ -96,7 +87,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   }, [filterForm]);
 
   useEffect(() => {
-    const data: ICardItemResultPage[] = cafeListData.slice(
+    const data: ICardItem[] = cafeListData.slice(
       pagination.from,
       pagination.to
     );
@@ -178,7 +169,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
         width="100%"
         paddingBottom="50px"
       >
-        {showData.map((data: ICardItemResultPage) => (
+        {showData.map((data: ICardItem) => (
           <CardItemResultPage
             star={data.star}
             business_hours={data.business_hours}

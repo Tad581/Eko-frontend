@@ -14,7 +14,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 
 // ** Interfaces import
-import { ICardItemResultPage } from "@/interfaces/cardItem";
+import { ICardItem } from "@/interfaces";
 
 const resultPageBoxStyle = {
   border: "1px solid #000",
@@ -23,7 +23,7 @@ const resultPageBoxStyle = {
   margin: "10px",
 };
 
-export const CardItemResultPage = (props: ICardItemResultPage) => {
+export const CardItemResultPage = (props: ICardItem) => {
   return (
     <Box width="95%" sx={resultPageBoxStyle}>
       <Card

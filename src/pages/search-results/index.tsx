@@ -3,18 +3,13 @@ import { Container } from "@mui/material";
 // ** Component import
 import { FilterBox } from "@/@core/components/filterBox";
 import { ResultPagination } from "@/@core/components/paginate";
+import { UserNavbar } from "@/@core/components/navbar/user";
+
+// ** Interfaces import
+import { IFilterForm } from "@/interfaces";
 
 // ** Hooks import
-import { useState, useEffect } from "react";
-
-interface IFilterForm {
-  all: boolean;
-  isOpen: boolean;
-  airCon: boolean;
-  carPark: boolean;
-  creditCard: boolean;
-  delivery: boolean;
-}
+import { useState } from "react";
 
 export default function Home() {
   const [filterForm, setFilterForm] = useState<IFilterForm>({
@@ -31,18 +26,21 @@ export default function Home() {
   };
 
   return (
-    <Container
-      sx={{
-        marginTop: "50px",
-        width: "100vw",
-        display: "flex",
-      }}
-    >
-      <FilterBox
-        filterForm={filterForm}
-        handleFilterFormData={handleFilterFormData}
-      />
-      <ResultPagination filterForm={filterForm} />
-    </Container>
+    <>
+      <UserNavbar />
+      <Container
+        sx={{
+          marginTop: "50px",
+          width: "100vw",
+          display: "flex",
+        }}
+      >
+        <FilterBox
+          filterForm={filterForm}
+          handleFilterFormData={handleFilterFormData}
+        />
+        <ResultPagination filterForm={filterForm} />
+      </Container>
+    </>
   );
 }
