@@ -1,6 +1,6 @@
 // ** MUI Components import
 import { Grid, Typography, Container } from "@mui/material";
-import { CardItemHomePage } from "../cardItem/HomePage";
+import { CardItemHomePage } from "../../layouts/cardItem/HomePage";
 
 // ** Interfaces import
 import { ICardItem } from "@/interfaces";

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 // ** Components import
-import { CardItemResultPage } from "../cardItem/ResultPage";
+import { CardItemResultPage } from "../../layouts/cardItem/ResultPage";
 
 // ** Interfaces import
 import { ICardItem, IFilterForm } from "@/interfaces";

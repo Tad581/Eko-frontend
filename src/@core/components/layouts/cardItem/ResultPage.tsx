@@ -54,9 +54,6 @@ export const CardItemResultPage = (props: ICardItem) => {
           >
             {props.name}
           </Typography>
-          <Typography variant="subtitle1" component="div" sx={{ fontSize: 16 }}>
-            カフェの食わし場所
-          </Typography>
           <Box display="flex" alignItems="center">
             <Rating
               name="simple-controlled"

@@ -1,7 +1,7 @@
 // ** Components import
-import { Thumbnail } from "@/@core/components/thumbnail";
-import { RecommendGroup } from "@/@core/components/recommendGroup";
-import { GuestNavbar } from "@/@core/components/navbar/guest";
+import { Thumbnail } from "@/@core/components/home/thumbnail";
+import { RecommendGroup } from "@/@core/components/home/recommendGroup";
+import { GuestNavbar } from "@/@core/components/layouts/navbar/guest";
 
 export default function Home() {
   return (
