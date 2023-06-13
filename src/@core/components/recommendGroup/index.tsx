@@ -31,7 +31,7 @@ export const RecommendGroup = () => {
         mt={3}
         sx={{ fontWeight: 700, fontSize: "24px" }}
       >
-        おすすめのカフェfun
+        おすすめのカフェ
       </Typography>
       <Grid container spacing={2}>
         {recommendData.map((data: ICardItem) => (
