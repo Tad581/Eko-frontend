@@ -9,14 +9,14 @@ import {
 } from "@mui/material";
 
 // ** Interface import
-import { ICardItemHomePage } from "@/interfaces/cardItem";
+import { ICardItem } from "@/interfaces";
 
 const homePageBoxStyle = {
   border: "1px solid #556cd6",
   borderRadius: "5px",
 };
 
-export const CardItemHomePage = (props: ICardItemHomePage) => {
+export const CardItemHomePage = (props: ICardItem) => {
   return (
     <Box width="400px" sx={homePageBoxStyle}>
       <Card>

@@ -14,16 +14,8 @@ import {
 // ** MUI Icon import
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
-// ** Hooks import
-
-interface IFilterForm {
-  all: boolean;
-  isOpen: boolean;
-  airCon: boolean;
-  carPark: boolean;
-  creditCard: boolean;
-  delivery: boolean;
-}
+// ** Interfaces import
+import { IFilterForm } from "@/interfaces";
 
 interface Props {
   filterForm: IFilterForm,
