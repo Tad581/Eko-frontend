@@ -41,10 +41,23 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   const [showData, setShowData] = useState<ICardItemResultPage[]>(cafeListData);
 
+  // For pagination
+  const [pagination, setPagination] = useState<any>({
+    count: 0,
+    from: 0,
+    to: pageSize,
+    page: 1,
+  });
+
   // Filter raw data by keyword
   useEffect(() => {
     const keyword = localStorage.getItem("keyword");
-    console.log("filterForm :>> ", filterForm);
+    setPagination({
+      count: 0,
+      from: 0,
+      to: pageSize,
+      page: 1
+    });
     const filterData = cafesList
       .filter(
         (cafe: any) =>
@@ -82,13 +95,6 @@ export const ResultPagination = ({ filterForm }: Props) => {
     setCafeListData(filterData);
   }, [filterForm]);
 
-  // For pagination
-  const [pagination, setPagination] = useState({
-    count: 0,
-    from: 0,
-    to: pageSize,
-  });
-
   useEffect(() => {
     const data: ICardItemResultPage[] = cafeListData.slice(
       pagination.from,
@@ -102,7 +108,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   const handlePageChange = (event: any, page: number) => {
     const from = (page - 1) * pageSize;
     const to = (page - 1) * pageSize + pageSize;
-    setPagination({ ...pagination, from: from, to: to });
+    setPagination({ ...pagination, from: from, to: to, page: page });
   };
 
   // For select sort mode
@@ -190,6 +196,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
         <Pagination
           count={Math.ceil(cafeListData.length / 4)}
           onChange={handlePageChange}
+          page={(pagination.page)}
         />
       )}
     </Box>

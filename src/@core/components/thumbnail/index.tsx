@@ -6,21 +6,28 @@ import SearchIcon from "@mui/icons-material/Search";
 
 // ** Hooks import
 import { useRouter } from "next/router";
-import {useState} from "react"
+import { useState } from "react";
 
 export const Thumbnail = () => {
   const { push } = useRouter();
 
-  const [searchKeyword, setSearchKeyword] = useState<string>("")
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   const handleSubmit = () => {
     push("/search-results");
     localStorage.setItem("keyword", searchKeyword);
-  }
+  };
+
+  const handleSubmitEnterKey = (event: any) => {
+    if (event.key === "Enter") {
+      push("/search-results");
+      localStorage.setItem("keyword", searchKeyword);
+    }
+  };
 
   const handleTextChange = (e: any) => {
-    setSearchKeyword(e.target.value)
-  }
+    setSearchKeyword(e.target.value);
+  };
 
   return (
     <Container
@@ -35,7 +42,7 @@ export const Thumbnail = () => {
       }}
     >
       <Typography align="center" mb={5} sx={{ fontWeight: 600, fontSize: 40 }}>
-        いらっさいめせ〜
+        いらっさいませ〜
       </Typography>
       <Stack
         direction="row"
@@ -49,6 +56,7 @@ export const Thumbnail = () => {
           size="small"
           value={searchKeyword}
           onChange={handleTextChange}
+          onKeyDown={handleSubmitEnterKey}
           inputProps={{
             style: {
               height: "30px",
