@@ -26,10 +26,8 @@ export interface ICafeInfo {
 }
 
 export interface IFilterForm {
-  all: boolean;
-  isOpen: boolean;
-  airCon: boolean;
-  carPark: boolean;
-  creditCard: boolean;
-  delivery: boolean;
+  エアコン: boolean;
+  駐車場: boolean;
+  クレジットカード: boolean;
+  配送: boolean;
 }

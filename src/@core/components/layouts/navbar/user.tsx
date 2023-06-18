@@ -52,7 +52,7 @@ export const UserNavbar = () => {
             edge="start"
             color="primary"
             aria-label="logo"
-            onClick={() => push("/")}
+            onClick={() => router.push("/")}
           >
             <StorefrontRoundedIcon fontSize="large" />
           </IconButton>

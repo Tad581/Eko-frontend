@@ -13,12 +13,10 @@ import { useState } from "react";
 
 export default function Home() {
   const [filterForm, setFilterForm] = useState<IFilterForm>({
-    all: false,
-    isOpen: true,
-    airCon: false,
-    carPark: false,
-    creditCard: false,
-    delivery: false,
+    エアコン: false,
+    駐車場: false,
+    クレジットカード: false,
+    配送: false,
   });
 
   const handleFilterFormData = (name: string, checked?: boolean) => {

@@ -16,7 +16,7 @@ export const RecommendGroup = () => {
 
   useEffect(() => {
     (async () => {
-      const getAllCafe = await CafeAPI.getAll({ orderBy: "avg_star", orderType: "asc"});
+      const getAllCafe = await CafeAPI.getAll({ orderBy: "avg_star", orderType: "desc"});
       setRecommendData(getAllCafe.data.slice(0, 9));
     })();
   }, []);

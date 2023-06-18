@@ -20,6 +20,9 @@ import { useEffect, useState } from "react";
 // ** API import
 import { CafeAPI } from "@/@core/api/cafeApi";
 
+// ** Other import
+import { objectToArray, sortOptions } from "@/@core/utils/cafes";
+
 const pageSize = 4;
 
 interface Props {
@@ -47,9 +50,13 @@ export const ResultPagination = ({ filterForm }: Props) => {
       : "";
 
     setKeyword(keywordTemp);
-
+    const devices = objectToArray(filterForm);
+    console.log("🚀 ~ file: index.tsx:54 ~ useEffect ~ devices:", devices);
     (async () => {
-      const getAllCafe = await CafeAPI.getAll({ name: keywordTemp });
+      const getAllCafe = await CafeAPI.getAll({
+        name: keywordTemp,
+        device: devices,
+      });
       setCafeListData(getAllCafe.data);
     })();
 
@@ -59,7 +66,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
       to: pageSize,
       page: 1,
     });
-  }, []);
+  }, [filterForm]);
 
   useEffect(() => {
     const data: ICafeInfo[] = cafeListData.slice(
@@ -78,8 +85,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   };
 
   // For select sort mode
-
-  const [sortMode, setSortMode] = useState<string>("最もいい");
+  const [sortMode, setSortMode] = useState<string>("エアコン最もいい");
 
   const handleChangeSortMode = (event: SelectChangeEvent) => {
     setSortMode(event.target.value);
@@ -151,9 +157,14 @@ export const ResultPagination = ({ filterForm }: Props) => {
             id="demo-simple-select"
             value={sortMode}
             onChange={handleChangeSortMode}
-            sx={{ width: "150px", height: "40px" }}
+            sx={{ width: "200px", height: "40px" }}
+            defaultValue="エアコン最もいい"
           >
-            <MenuItem value="最もいい">最もいい</MenuItem>
+            {sortOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </Box>
       </Box>
