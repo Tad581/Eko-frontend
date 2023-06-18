@@ -29,13 +29,13 @@ export const RecommendGroup = () => {
         variant="h5"
         component="div"
         mt={3}
-        sx={{ fontWeight: 700, fontSize: "24px" }}
+        sx={{ fontWeight: 700, fontSize: "24px", paddingBottom: "10px" }}
       >
         おすすめのカフェ
       </Typography>
       <Grid container spacing={2}>
         {recommendData?.map((data: ICafeInfo) => (
-          <Grid item sm={6} md={4} lg={4} key={data.id}>
+          <Grid item sm={12} md={6} lg={4} xl={3} key={data.id}>
             <CardItemHomePage
               address={data.address}
               closing_at={data.closing_at}

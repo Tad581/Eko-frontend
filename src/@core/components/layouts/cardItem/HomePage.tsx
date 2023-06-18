@@ -14,12 +14,20 @@ import { ICafeInfo } from "@/interfaces";
 const homePageBoxStyle = {
   border: "1px solid #556cd6",
   borderRadius: "5px",
+  width: {
+    xs: "90vw",
+    sm: "90vw",
+    md: "45vw",
+    lg: "30vw",
+    xl: "22vw",
+  },
+  height: "calc(100%)",
 };
 
 export const CardItemHomePage = (props: ICafeInfo) => {
   return (
     <Box width="400px" sx={homePageBoxStyle}>
-      <Card>
+      <Card sx={{ height: "calc(100%)" }}>
         <CardMedia
           component="img"
           image={
