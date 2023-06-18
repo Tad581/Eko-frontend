@@ -12,7 +12,7 @@ import {
 import { CardItemResultPage } from "../../layouts/cardItem/ResultPage";
 
 // ** Interfaces import
-import { ICardItem, IFilterForm } from "@/interfaces";
+import { ICafeInfo, IFilterForm } from "@/interfaces";
 
 // ** Hooks import
 import { useEffect, useState } from "react";
@@ -28,9 +28,9 @@ interface Props {
 
 export const ResultPagination = ({ filterForm }: Props) => {
   const [cafeListData, setCafeListData] =
-    useState<ICardItem[]>(cafesList);
+    useState<ICafeInfo[]>(cafesList);
 
-  const [showData, setShowData] = useState<ICardItem[]>(cafeListData);
+  const [showData, setShowData] = useState<ICafeInfo[]>(cafeListData);
 
   // For pagination
   const [pagination, setPagination] = useState<any>({
@@ -87,7 +87,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   }, [filterForm]);
 
   useEffect(() => {
-    const data: ICardItem[] = cafeListData.slice(
+    const data: ICafeInfo[] = cafeListData.slice(
       pagination.from,
       pagination.to
     );
@@ -169,7 +169,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
         width="100%"
         paddingBottom="50px"
       >
-        {showData.map((data: ICardItem) => (
+        {showData.map((data: ICafeInfo) => (
           <CardItemResultPage
             star={data.star}
             business_hours={data.business_hours}

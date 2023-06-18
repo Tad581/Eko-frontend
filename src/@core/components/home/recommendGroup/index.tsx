@@ -3,24 +3,24 @@ import { Grid, Typography, Container } from "@mui/material";
 import { CardItemHomePage } from "../../layouts/cardItem/HomePage";
 
 // ** Interfaces import
-import { ICardItem } from "@/interfaces";
+import { ICafeInfo } from "@/interfaces";
 
 // ** Hooks import
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from "react";
 
-// ** Other import
-import { cafesList, sortRating } from "@/@core/utils/cafes";
+// ** APIs import
+import { CafeAPI } from "@/@core/api/cafeApi";
 
 export const RecommendGroup = () => {
-  const [recommendData, setRecommendData] = useState(cafesList)
+  const [recommendData, setRecommendData] = useState([]);
 
   useEffect(() => {
-    const newData = recommendData.sort(sortRating).slice(0, 9);
-    console.log("🚀 ~ file: index.tsx:19 ~ useEffect ~ newData:", newData)
-    setRecommendData(newData);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+    (async () => {
+      const getAllCafe = await CafeAPI.getAll({ orderBy: "avg_star", orderType: "asc"});
+      setRecommendData(getAllCafe.data.slice(0, 9));
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container maxWidth="xl">
@@ -34,15 +34,23 @@ export const RecommendGroup = () => {
         おすすめのカフェ
       </Typography>
       <Grid container spacing={2}>
-        {recommendData.map((data: ICardItem) => (
+        {recommendData?.map((data: ICafeInfo) => (
           <Grid item sm={6} md={4} lg={4} key={data.id}>
             <CardItemHomePage
+              address={data.address}
+              closing_at={data.closing_at}
+              current_crowded={data.current_crowded}
+              description={data.description}
+              device={data.device}
               id={data.id}
               name={data.name}
-              address={data.address}
-              image = {data.image}
-              star = {data.star}
-              business_hours={data.business_hours}
+              owner={data.owner}
+              owner_ID={data.owner_ID}
+              phone_number={data.phone_number}
+              review={data.review}
+              status={data.status}
+              verified={data.verified}
+              images={data.images}
             ></CardItemHomePage>
           </Grid>
         ))}

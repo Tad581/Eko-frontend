@@ -9,21 +9,21 @@ import {
 } from "@mui/material";
 
 // ** Interface import
-import { ICardItem } from "@/interfaces";
+import { ICafeInfo } from "@/interfaces";
 
 const homePageBoxStyle = {
   border: "1px solid #556cd6",
   borderRadius: "5px",
 };
 
-export const CardItemHomePage = (props: ICardItem) => {
+export const CardItemHomePage = (props: ICafeInfo) => {
   return (
     <Box width="400px" sx={homePageBoxStyle}>
       <Card>
         <CardMedia
           component="img"
           image={
-            props.image ? props.image : "https://i.ibb.co/6WXYg60/cafe.jpg"
+            props.images ? props.images[0] : "https://i.ibb.co/6WXYg60/cafe.jpg"
           }
           height="250px"
           width="auto"
@@ -34,18 +34,22 @@ export const CardItemHomePage = (props: ICardItem) => {
           <Typography gutterBottom variant="h5" component="div">
             {props.name}
           </Typography>
-          <Typography variant="subtitle1" component="div" sx={{ fontSize: 16, marginBottom: "3px" }}>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            sx={{ fontSize: 16, marginBottom: "3px" }}
+          >
             {props.address}
           </Typography>
           <Box display="flex" alignItems="center">
             <Rating
               name="simple-controlled"
-              value={props.star}
+              value={props.status}
               precision={0.1}
               readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.star}
+              {props.status}
             </Typography>
           </Box>
         </CardContent>

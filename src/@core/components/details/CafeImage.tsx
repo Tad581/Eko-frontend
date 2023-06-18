@@ -1,12 +1,24 @@
 // ** MUI Components import
-import { Box, Container, Rating, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // ** Hooks import
 
 export default function CafeImage() {
   return (
-    <Container>
-      <Box display="flex" alignItems="center"></Box>
-    </Container>
+    <Box mt={3}>
+      <Typography variant="h5" component="div" sx={{ fontWeight: "bold" }}>
+        写真
+      </Typography>
+      <Box mt={2}>
+        {/* {fakeData.map((item) => (
+        <Chip
+          key={item.id}
+          label={item.name}
+          color="primary"
+          sx={{ marginRight: 1 }}
+        />
+      ))} */}
+      </Box>
+    </Box>
   );
 }
