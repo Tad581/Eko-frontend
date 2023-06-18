@@ -46,7 +46,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
             sx={{ padding: "20px", borderRadius: "30px" }}
           />
         </Box>
-        <CardContent sx={{ paddingLeft: 0 }}>
+        <CardContent sx={{ paddingLeft: 0, width: "60%" }}>
           <Typography
             gutterBottom
             variant="h5"
@@ -72,8 +72,8 @@ export const CardItemResultPage = (props: ICafeInfo) => {
               {props.review.star}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center" mt={2}>
-            <PlaceOutlinedIcon />
+          <Box display="flex" alignItems="flex-start" mt={2}>
+            <PlaceOutlinedIcon sx={{mt: 1}}/>
             <Typography
               variant="subtitle1"
               component="div"
