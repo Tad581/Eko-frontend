@@ -15,11 +15,12 @@ export interface ICafeInfo {
   name: string;
   owner: any;
   owner_ID: number;
+  opening_at: string;
   phone_number: string;
   review: {
-    star: number,
-    count: number
-  },
+    star: number;
+    count: number;
+  };
   status: number; // Đánh giá của Admin về điều hòa của quán
   verified: number;
 }

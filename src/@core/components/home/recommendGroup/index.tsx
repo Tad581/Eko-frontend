@@ -19,7 +19,6 @@ export const RecommendGroup = () => {
       const getAllCafe = await CafeAPI.getAll({ orderBy: "avg_star", orderType: "asc"});
       setRecommendData(getAllCafe.data.slice(0, 9));
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -46,6 +45,7 @@ export const RecommendGroup = () => {
               name={data.name}
               owner={data.owner}
               owner_ID={data.owner_ID}
+              opening_at={data.opening_at}
               phone_number={data.phone_number}
               review={data.review}
               status={data.status}

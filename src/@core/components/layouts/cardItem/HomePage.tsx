@@ -49,15 +49,21 @@ export const CardItemHomePage = (props: ICafeInfo) => {
           >
             {props.address}
           </Typography>
-          <Box display="flex" alignItems="center">
+          <Typography
+            component="span"
+            sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}
+          >
+            エアコン評価
+          </Typography>
+          <Box display="flex" alignItems="center" marginLeft={-0.2}>
             <Rating
               name="simple-controlled"
-              value={props.status}
+              value={props.review.star}
               precision={0.1}
               readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.status}
+              {props.review.star}
             </Typography>
           </Box>
         </CardContent>

@@ -38,7 +38,9 @@ export const CardItemResultPage = (props: ICafeInfo) => {
           <CardMedia
             component="img"
             image={
-              props.image ? props.image : "https://i.ibb.co/6WXYg60/cafe.jpg"
+              props.images
+                ? props.images[0]
+                : "https://i.ibb.co/6WXYg60/cafe.jpg"
             }
             height="100%"
             alt="cafe image"
@@ -54,15 +56,21 @@ export const CardItemResultPage = (props: ICafeInfo) => {
           >
             {props.name}
           </Typography>
-          <Box display="flex" alignItems="center">
+          <Typography
+            component="span"
+            sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}
+          >
+            エアコン評価
+          </Typography>
+          <Box display="flex" alignItems="center" ml={-0.3}>
             <Rating
               name="simple-controlled"
-              value={props.star}
+              value={props.review.star}
               precision={0.1}
               readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.star}
+              {props.review.star}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" mt={2}>
@@ -84,7 +92,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
               sx={{ fontSize: 16 }}
               ml={1}
             >
-              {props.business_hours}
+              {props.opening_at} - {props.closing_at}
             </Typography>
             <Typography
               variant="subtitle1"

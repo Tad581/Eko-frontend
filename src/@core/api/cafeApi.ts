@@ -2,7 +2,7 @@ import api from "./configs/axiosConfigs";
 
 export const CafeAPI = {
   getAll: async function (params: {
-    name?: string;
+    name?: string | null;
     opening_at?: string;
     closing_at?: string;
     device?: string[];
