@@ -2,13 +2,14 @@
 import {
   Box,
   Checkbox,
-  Radio,
-  RadioGroup,
   Typography,
   FormControl,
   FormGroup,
   FormLabel,
   FormControlLabel,
+  TextField,
+  Button,
+  MenuItem,
 } from "@mui/material";
 
 // ** MUI Icon import
@@ -17,13 +18,15 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // ** Interfaces import
 import { IFilterForm } from "@/interfaces";
 
+// ** Other import
+import { timeValues, devicesList } from "@/@core/utils/cafes";
+
 interface Props {
-  filterForm: IFilterForm,
-  handleFilterFormData: any
+  filterForm: IFilterForm;
+  handleFilterFormData: any;
 }
 
-export const FilterBox = ({filterForm, handleFilterFormData}: Props) => {
-
+export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     checked?: boolean
@@ -77,18 +80,46 @@ export const FilterBox = ({filterForm, handleFilterFormData}: Props) => {
               営業時間
             </Typography>
           </FormLabel>
-          <RadioGroup
-            aria-labelledby="working-time"
-            defaultValue="isOpen"
-            name="radio-buttons-group"
+          <Box
+            display="flex"
+            alignItems="center"
+            width="100%"
+            my={1}
+            sx={{ fontSize: "16px" }}
           >
-            <FormControlLabel value="all" control={<Radio />} label="すべて" />
-            <FormControlLabel
-              value="isOpen"
-              control={<Radio />}
-              label="開いています"
-            />
-          </RadioGroup>
+            <TextField
+              id="outlined-start-adornment"
+              label="開"
+              sx={{ mr: 1, width: "45%" }}
+              select
+              defaultValue="なし"
+            >
+              {timeValues.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            {" - "}
+            <TextField
+              id="outlined-start-adornment"
+              sx={{ ml: 1, width: "45%" }}
+              label="閉"
+              select
+              defaultValue="なし"
+            >
+              {timeValues.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+          <Box display="flex" justifyContent="center" width="100%" mb={2}>
+            <Button variant="contained" sx={{ width: "100%" }}>
+              検索
+            </Button>
+          </Box>
         </Box>
         <hr />
         <Box
@@ -110,46 +141,19 @@ export const FilterBox = ({filterForm, handleFilterFormData}: Props) => {
             ユーティリティー
           </Typography>
           <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="carPark"
-                  value={filterForm.carPark}
-                  onChange={handleCheckboxChange}
-                />
-              }
-              label="駐車場"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="airCon"
-                  value={filterForm.airCon}
-                  onChange={handleCheckboxChange}
-                />
-              }
-              label="エアコン"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="creditCard"
-                  value={filterForm.creditCard}
-                  onChange={handleCheckboxChange}
-                />
-              }
-              label="クレジットカード"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="delivery"
-                  value={filterForm.delivery}
-                  onChange={handleCheckboxChange}
-                />
-              }
-              label="配送"
-            />
+            {devicesList.map((device) => (
+              <FormControlLabel
+                key={device.value}
+                control={
+                  <Checkbox
+                    name={device.label}
+                    value={filterForm[device.value as keyof IFilterForm]}
+                    onChange={handleCheckboxChange}
+                  />
+                }
+                label={device.label}
+              />
+            ))}
           </FormGroup>
         </Box>
       </FormControl>

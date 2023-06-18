@@ -1,9 +1,9 @@
 // ** MUI Component import
 import { Container } from "@mui/material";
 // ** Component import
-import { FilterBox } from "@/@core/components/filterBox";
-import { ResultPagination } from "@/@core/components/paginate";
-import { UserNavbar } from "@/@core/components/navbar/user";
+import { FilterBox } from "@/@core/components/search-results/filterBox";
+import { ResultPagination } from "@/@core/components/search-results/paginate";
+import { UserNavbar } from "@/@core/components/layouts/navbar/user";
 
 // ** Interfaces import
 import { IFilterForm } from "@/interfaces";
@@ -13,12 +13,10 @@ import { useState } from "react";
 
 export default function Home() {
   const [filterForm, setFilterForm] = useState<IFilterForm>({
-    all: false,
-    isOpen: true,
-    airCon: false,
-    carPark: false,
-    creditCard: false,
-    delivery: false,
+    エアコン: false,
+    駐車場: false,
+    クレジットカード: false,
+    配送: false,
   });
 
   const handleFilterFormData = (name: string, checked?: boolean) => {

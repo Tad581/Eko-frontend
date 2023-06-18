@@ -9,16 +9,19 @@ import {
 } from "@mui/material";
 
 // ** Components import
-import { CardItemResultPage } from "../cardItem/ResultPage";
+import { CardItemResultPage } from "../../layouts/cardItem/ResultPage";
 
 // ** Interfaces import
-import { ICardItem, IFilterForm } from "@/interfaces";
+import { ICafeInfo, IFilterForm } from "@/interfaces";
 
 // ** Hooks import
 import { useEffect, useState } from "react";
 
-// ** Others import
-import { cafesList } from "@/@core/utils/cafes";
+// ** API import
+import { CafeAPI } from "@/@core/api/cafeApi";
+
+// ** Other import
+import { objectToArray, sortOptions } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
@@ -27,10 +30,10 @@ interface Props {
 }
 
 export const ResultPagination = ({ filterForm }: Props) => {
-  const [cafeListData, setCafeListData] =
-    useState<ICardItem[]>(cafesList);
+  const [cafeListData, setCafeListData] = useState<ICafeInfo[]>([]);
 
-  const [showData, setShowData] = useState<ICardItem[]>(cafeListData);
+  const [showData, setShowData] = useState<ICafeInfo[]>(cafeListData);
+  const [keyword, setKeyword] = useState<string | null>("");
 
   // For pagination
   const [pagination, setPagination] = useState<any>({
@@ -42,52 +45,31 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   // Filter raw data by keyword
   useEffect(() => {
-    const keyword = localStorage.getItem("keyword");
+    const keywordTemp = localStorage.getItem("keyword")
+      ? localStorage.getItem("keyword")
+      : "";
+
+    setKeyword(keywordTemp);
+    const devices = objectToArray(filterForm);
+    console.log("🚀 ~ file: index.tsx:54 ~ useEffect ~ devices:", devices);
+    (async () => {
+      const getAllCafe = await CafeAPI.getAll({
+        name: keywordTemp,
+        device: devices,
+      });
+      setCafeListData(getAllCafe.data);
+    })();
+
     setPagination({
       count: 0,
       from: 0,
       to: pageSize,
-      page: 1
+      page: 1,
     });
-    const filterData = cafesList
-      .filter(
-        (cafe: any) =>
-          cafe.name.includes(keyword) ||
-          cafe.name.toLowerCase().includes(keyword)
-      )
-      .filter((cafe: any) => {
-        if (filterForm.airCon)
-          return cafe.coffee_shop_devices.find(
-            (device: any) => device.name === "air conditioner"
-          );
-        return true;
-      })
-      .filter((cafe: any) => {
-        if (filterForm.carPark)
-          return cafe.coffee_shop_devices.find(
-            (device: any) => device.name === "car park"
-          );
-        return true;
-      })
-      .filter((cafe: any) => {
-        if (filterForm.creditCard)
-          return cafe.coffee_shop_devices.find(
-            (device: any) => device.name === "credit card"
-          );
-        return true;
-      })
-      .filter((cafe: any) => {
-        if (filterForm.delivery)
-          return cafe.coffee_shop_devices.find(
-            (device: any) => device.name === "delivery"
-          );
-        return true;
-      });
-    setCafeListData(filterData);
   }, [filterForm]);
 
   useEffect(() => {
-    const data: ICardItem[] = cafeListData.slice(
+    const data: ICafeInfo[] = cafeListData.slice(
       pagination.from,
       pagination.to
     );
@@ -103,8 +85,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   };
 
   // For select sort mode
-
-  const [sortMode, setSortMode] = useState<string>("最もいい");
+  const [sortMode, setSortMode] = useState<string>("エアコン最もいい");
 
   const handleChangeSortMode = (event: SelectChangeEvent) => {
     setSortMode(event.target.value);
@@ -118,7 +99,27 @@ export const ResultPagination = ({ filterForm }: Props) => {
       flexDirection={"column"}
       sx={{ margin: "20px 0px" }}
       minWidth="75%"
+      position="relative"
     >
+      <Box
+        justifyContent={"flex-start"}
+        alignItems={"center"}
+        display={"flex"}
+        width="95%"
+      >
+        <Typography
+          component="span"
+          sx={{
+            justifyItems: "flex-start",
+            alignContent: "flex-start",
+            fontWeight: 700,
+            marginRight: "10px",
+          }}
+        >
+          キーワード:
+        </Typography>
+        <Typography>{keyword}</Typography>
+      </Box>
       <Box
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -129,6 +130,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
           justifyContent={"flex-start"}
           alignItems={"center"}
           display={"flex"}
+          marginLeft={-1}
         >
           <Typography mx={1} sx={{ fontWeight: 700 }}>
             {pagination.from + 1} ~{" "}
@@ -155,9 +157,14 @@ export const ResultPagination = ({ filterForm }: Props) => {
             id="demo-simple-select"
             value={sortMode}
             onChange={handleChangeSortMode}
-            sx={{ width: "150px", height: "40px" }}
+            sx={{ width: "200px", height: "40px" }}
+            defaultValue="エアコン最もいい"
           >
-            <MenuItem value="最もいい">最もいい</MenuItem>
+            {sortOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </Box>
       </Box>
@@ -169,15 +176,24 @@ export const ResultPagination = ({ filterForm }: Props) => {
         width="100%"
         paddingBottom="50px"
       >
-        {showData.map((data: ICardItem) => (
+        {showData.map((data: ICafeInfo) => (
           <CardItemResultPage
-            star={data.star}
-            business_hours={data.business_hours}
+            key={data.id}
+            address={data.address}
+            closing_at={data.closing_at}
+            current_crowded={data.current_crowded}
+            description={data.description}
+            device={data.device}
             id={data.id}
             name={data.name}
-            address={data.address}
-            key={data.id}
-            image={data.image}
+            owner={data.owner}
+            owner_ID={data.owner_ID}
+            opening_at={data.opening_at}
+            phone_number={data.phone_number}
+            review={data.review}
+            status={data.status}
+            verified={data.verified}
+            images={data.images}
           />
         ))}
       </Box>
@@ -187,7 +203,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
         <Pagination
           count={Math.ceil(cafeListData.length / 4)}
           onChange={handlePageChange}
-          page={(pagination.page)}
+          page={pagination.page}
         />
       )}
     </Box>

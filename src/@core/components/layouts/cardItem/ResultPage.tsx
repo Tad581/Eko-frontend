@@ -14,31 +14,32 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 
 // ** Interfaces import
-import { ICardItem } from "@/interfaces";
+import { ICafeInfo } from "@/interfaces";
 
 const resultPageBoxStyle = {
   border: "1px solid #000",
   borderRadius: "5px",
-  height: "100%",
   margin: "10px",
 };
 
-export const CardItemResultPage = (props: ICardItem) => {
+export const CardItemResultPage = (props: ICafeInfo) => {
   return (
     <Box width="95%" sx={resultPageBoxStyle}>
       <Card
         sx={{
           display: "flex",
           flexDirection: "row",
-          height: "200px",
+          height: "250px",
           position: "relative",
         }}
       >
-        <Box width="280px">
+        <Box width="40%">
           <CardMedia
             component="img"
             image={
-              props.image ? props.image : "https://i.ibb.co/6WXYg60/cafe.jpg"
+              props.images
+                ? props.images[0]
+                : "https://i.ibb.co/6WXYg60/cafe.jpg"
             }
             height="100%"
             alt="cafe image"
@@ -54,18 +55,21 @@ export const CardItemResultPage = (props: ICardItem) => {
           >
             {props.name}
           </Typography>
-          <Typography variant="subtitle1" component="div" sx={{ fontSize: 16 }}>
-            カフェの食わし場所
+          <Typography
+            component="span"
+            sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}
+          >
+            エアコン評価
           </Typography>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" ml={-0.3}>
             <Rating
               name="simple-controlled"
-              value={props.star}
+              value={props.review.star}
               precision={0.1}
               readOnly
             />
             <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.star}
+              {props.review.star}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" mt={2}>
@@ -79,7 +83,7 @@ export const CardItemResultPage = (props: ICardItem) => {
               {props.address}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" mt={1}>
             <AccessTimeOutlinedIcon />
             <Typography
               variant="subtitle1"
@@ -87,7 +91,7 @@ export const CardItemResultPage = (props: ICardItem) => {
               sx={{ fontSize: 16 }}
               ml={1}
             >
-              {props.business_hours}
+              {props.opening_at} - {props.closing_at}
             </Typography>
             <Typography
               variant="subtitle1"
