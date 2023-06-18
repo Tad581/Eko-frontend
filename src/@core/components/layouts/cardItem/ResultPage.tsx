@@ -19,7 +19,6 @@ import { ICafeInfo } from "@/interfaces";
 const resultPageBoxStyle = {
   border: "1px solid #000",
   borderRadius: "5px",
-  height: "100%",
   margin: "10px",
 };
 
@@ -30,11 +29,11 @@ export const CardItemResultPage = (props: ICafeInfo) => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          height: "200px",
+          height: "250px",
           position: "relative",
         }}
       >
-        <Box width="280px">
+        <Box width="40%">
           <CardMedia
             component="img"
             image={
@@ -84,7 +83,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
               {props.address}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" mt={1}>
             <AccessTimeOutlinedIcon />
             <Typography
               variant="subtitle1"

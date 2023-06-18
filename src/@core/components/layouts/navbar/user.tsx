@@ -20,9 +20,28 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 
 // ** Hooks import
 import { useRouter } from "next/router";
+import {useState} from "react"
 
 export const UserNavbar = () => {
-  const { push } = useRouter();
+  const router = useRouter()
+
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+
+  const handleSubmit = () => {
+    router.reload()
+    localStorage.setItem("keyword", searchKeyword);
+  };
+
+  const handleSubmitEnterKey = (event: any) => {
+    if (event.key === "Enter") {
+      router.reload()
+      localStorage.setItem("keyword", searchKeyword);
+    }
+  };
+
+  const handleTextChange = (e: any) => {
+    setSearchKeyword(e.target.value);
+  };
 
   return (
     <AppBar position="fixed" color="inherit">
@@ -41,13 +60,15 @@ export const UserNavbar = () => {
             label="発見"
             variant="outlined"
             size="small"
+            onChange={handleTextChange}
+            onKeyDown={handleSubmitEnterKey}
             InputProps={{
               style: {
                 // height: "20px",
                 width: "30vw",
               },
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position="end" onClick={handleSubmit}>
                   <IconButton edge="end">
                     <SearchIcon />
                   </IconButton>
