@@ -27,7 +27,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { IFilterForm, ECrowdedStatus } from "@/interfaces";
 
 // ** Other import
-import { timeValues, devicesList, trafficOptions } from "@/@core/utils/cafes";
+import { timeValues, trafficOptions } from "@/@core/utils/cafes";
 
 interface Props {
   filterForm: IFilterForm;
@@ -69,7 +69,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
   return (
     <Box
       minWidth={"25%"}
-      maxHeight={500}
+      maxHeight={550}
       sx={{
         border: "1px solid",
         borderRadius: "5px",
@@ -194,7 +194,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
           display="flex"
           flexDirection="column"
           alignItems="flex-start"
-          sx={{ marginTop: "20px" }}
+          sx={{ marginY: "20px" }}
         >
           <FormControl>
             <FormLabel

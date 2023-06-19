@@ -18,12 +18,14 @@ export const CafeAPI = {
       url: `/coffee_shop`,
       method: "GET",
       params: {
-        name: params.name,
-        opening_at: params.opening_at,
         closing_at: params.closing_at,
+        crowded_status: params.crowded_status,
         devices: params.devices,
+        name: params.name,
         orderBy: params.orderBy,
         orderType: params.orderType,
+        opening_at: params.opening_at,
+        now: params.now
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);

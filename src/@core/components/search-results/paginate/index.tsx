@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { CafeAPI } from "@/@core/api/cafeApi";
 
 // ** Other import
-import { objectToArray, sortOptions, removeUnUseFieldInParams } from "@/@core/utils/cafes";
+import { sortOptions, removeUnUseFieldInParams, getCurrentHour } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
@@ -58,6 +58,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
       orderType: "desc",
       opening_at: filterForm.time.opening_at,
       closing_at: filterForm.time.closing_at,
+      crowded_status: filterForm.crowded_status,
+      now: getCurrentHour()
     }
 
     params = removeUnUseFieldInParams(params)

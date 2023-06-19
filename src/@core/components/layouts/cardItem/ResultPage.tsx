@@ -121,21 +121,13 @@ export const CardItemResultPage = (props: ICafeInfo) => {
             >
               {props.opening_at} - {props.closing_at}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              sx={{ fontSize: 16 }}
-              mx={1}
-            >
-              -
-            </Typography>
-            <Typography
+            {/* <Typography
               sx={{ fontWeight: 600, fontSize: 16 }}
               variant="subtitle1"
               component="div"
             >
               オープン中
-            </Typography>
+            </Typography> */}
           </Box>
         </CardContent>
         <Box

@@ -26,9 +26,10 @@ export interface ICafeInfo {
 }
 
 export enum ECrowdedStatus {
-  Crowded = 0,
+  All = 3,
+  Crowded = 2,
   Normal = 1,
-  Secluded = 2
+  Secluded = 0,
 }
 
 export interface IFilterForm {

@@ -1,4 +1,5 @@
 import { ECrowdedStatus } from "@/interfaces";
+import moment from "moment";
 
 export const objectToArray = (inputObject: any) => {
   const devicesList = Object.keys(inputObject);
@@ -12,14 +13,19 @@ export const objectToArray = (inputObject: any) => {
 };
 
 export const removeUnUseFieldInParams = (inputObject: any) => {
-  const paramsList = Object.keys(inputObject);
-  for (let i = 0; i < paramsList.length; i++) {
-    if (inputObject[paramsList[i]] === "なし") {
-      delete inputObject[paramsList[i]];
-      i--;
-    }
+  if (inputObject?.crowded_status == 3) {
+    delete inputObject.crowded_status;
+    delete inputObject.now;
   }
+  if (inputObject?.opening_at === "なし") delete inputObject.opening_at;
+  if (inputObject?.closing_at === "なし") delete inputObject.closing_at;
+
   return inputObject;
+};
+
+export const getCurrentHour = () => {
+  const currentDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+  return currentDate;
 };
 
 export const devicesList = [
@@ -72,6 +78,10 @@ export const trafficOptions = [
   {
     value: ECrowdedStatus.Secluded,
     label: "少ない",
+  },
+  {
+    value: ECrowdedStatus.All,
+    label: "全て",
   },
 ];
 
