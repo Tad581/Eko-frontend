@@ -1,3 +1,5 @@
+import { ECrowdedStatus } from "@/interfaces";
+
 export const objectToArray = (inputObject: any) => {
   const devicesList = Object.keys(inputObject);
   for (let i = 0; i < devicesList.length; i++) {
@@ -60,15 +62,15 @@ export const sortOptions = [
 
 export const trafficOptions = [
   {
-    value: "多い",
+    value: ECrowdedStatus.Crowded,
     label: "多い",
   },
   {
-    value: "普通",
+    value: ECrowdedStatus.Normal,
     label: "普通",
   },
   {
-    value: "少ない",
+    value: ECrowdedStatus.Secluded,
     label: "少ない",
   },
 ];

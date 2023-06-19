@@ -43,6 +43,10 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
     closing_at: "なし",
   });
 
+  const [crowded_status, setCrowdedStatus] = useState<ECrowdedStatus>(
+    ECrowdedStatus.Normal
+  );
+
   const handleChangeTimeInput = (event: SelectChangeEvent) => {
     let tempArr;
     console.log(event);
@@ -52,8 +56,14 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
     setTime(tempArr);
   };
 
-  const handleSubmitTimeRange = () => {
-    handleFilterFormData(time);
+  const handleChangeCrowdedStatus = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCrowdedStatus(event.target.value as unknown as ECrowdedStatus);
+  };
+
+  const handleSubmitFilterForm = () => {
+    handleFilterFormData({ time, crowded_status });
   };
 
   return (
@@ -84,7 +94,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
           display="flex"
           flexDirection="column"
           alignItems="flex-start"
-          sx={{ marginTop: "20px" }}
+          sx={{ marginY: "20px" }}
         >
           <FormLabel id="working-time">
             <Typography
@@ -143,11 +153,6 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
               </Select>
             </FormControl>
           </Box>
-          <Box display="flex" justifyContent="center" width="100%" mb={2}>
-            <Button variant="contained" sx={{ width: "100%" }} onClick={handleSubmitTimeRange}>
-              検索
-            </Button>
-          </Box>
         </Box>
         <hr />
         {/* <Box
@@ -199,14 +204,15 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
                 marginBottom: "0px",
                 alignItems: "center",
               }}
-              id="working-time"
+              id="crowded-status"
             >
               今店での人数
             </FormLabel>
             <RadioGroup
-              aria-labelledby="working-time"
-              name="radio-buttons-group"
+              aria-labelledby="crowded-status"
+              name="crowded-status"
               defaultValue={trafficOptions[1].value}
+              onChange={handleChangeCrowdedStatus}
             >
               {trafficOptions.map((option) => (
                 <FormControlLabel
@@ -218,6 +224,16 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
               ))}
             </RadioGroup>
           </FormControl>
+        </Box>
+        <hr />
+        <Box display="flex" justifyContent="center" width="100%" mt={2}>
+          <Button
+            variant="contained"
+            sx={{ width: "100%" }}
+            onClick={handleSubmitFilterForm}
+          >
+            当てはまり
+          </Button>
         </Box>
       </FormControl>
     </Box>

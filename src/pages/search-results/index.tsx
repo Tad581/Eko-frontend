@@ -18,14 +18,15 @@ export default function Home() {
         opening_at: "なし",
         closing_at: "なし"
       },
-      crowded_status: ECrowdedStatus.Crowded
+      crowded_status: ECrowdedStatus.Normal
   });
 
-  const handleFilterFormData = (filterFormData: any) => {
+  const handleFilterFormData = (filterFormData: IFilterForm) => {
     const tempForm = {...filterForm}
-    tempForm.time = {...filterFormData}
-    setFilterForm(tempForm);
+    tempForm.time = {...filterFormData.time}
+    tempForm.crowded_status = filterFormData.crowded_status
     console.log(tempForm)
+    setFilterForm(tempForm);
   };
 
   return (
