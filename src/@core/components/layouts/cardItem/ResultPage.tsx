@@ -29,8 +29,9 @@ export const CardItemResultPage = (props: ICafeInfo) => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          height: "250px",
+          height: "calc(100%)",
           position: "relative",
+          maxHeight: "270px"
         }}
       >
         <Box width="40%">
@@ -55,25 +56,52 @@ export const CardItemResultPage = (props: ICafeInfo) => {
           >
             {props.name}
           </Typography>
-          <Typography
-            component="span"
-            sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}
-          >
-            エアコン評価
+          <Typography sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}>
+            エアコンへの評価
           </Typography>
-          <Box display="flex" alignItems="center" ml={-0.3}>
-            <Rating
-              name="simple-controlled"
-              value={props.review.star}
-              precision={0.1}
-              readOnly
-            />
-            <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.review.star}
-            </Typography>
+          <Box display={"flex"} mt={1}>
+            <Box>
+              <Typography
+                component="span"
+                sx={{ fontSize: 14, marginRight: 1 }}
+              >
+                アドミンから
+              </Typography>
+              <Box display="flex" alignItems="center" ml={-0.3}>
+                <Rating
+                  name="simple-controlled"
+                  value={props.status}
+                  precision={0.1}
+                  readOnly
+                />
+                <Typography component="span" sx={{ marginLeft: 1 }}>
+                  {props.status}
+                </Typography>
+              </Box>
+            </Box>
+            <Box ml={6}>
+              <Typography
+                component="span"
+                sx={{ fontSize: 14, marginRight: 1 }}
+              >
+                ユーザーから
+              </Typography>
+              <Box display="flex" alignItems="center" ml={-0.3}>
+                <Rating
+                  name="simple-controlled"
+                  value={props.review.star}
+                  precision={0.1}
+                  readOnly
+                />
+                <Typography component="span" sx={{ marginLeft: 1 }}>
+                  {props.review.star}
+                </Typography>
+              </Box>
+            </Box>
           </Box>
+
           <Box display="flex" alignItems="flex-start" mt={2}>
-            <PlaceOutlinedIcon sx={{mt: 1}}/>
+            <PlaceOutlinedIcon sx={{ mt: 0.5 }} />
             <Typography
               variant="subtitle1"
               component="div"

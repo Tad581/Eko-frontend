@@ -53,18 +53,47 @@ export const CardItemHomePage = (props: ICafeInfo) => {
             component="span"
             sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}
           >
-            エアコン評価
+            エアコンへの評価
           </Typography>
-          <Box display="flex" alignItems="center" marginLeft={-0.2}>
-            <Rating
-              name="simple-controlled"
-              value={props.review.star}
-              precision={0.1}
-              readOnly
-            />
-            <Typography component="span" sx={{ marginLeft: 1 }}>
-              {props.review.star}
-            </Typography>
+          <Box display={"flex"} mt={1}　justifyContent={"space-between"}>
+            <Box>
+              <Typography
+                component="span"
+                sx={{ fontSize: 14, marginRight: 1 }}
+              >
+                アドミンから
+              </Typography>
+              <Box display="flex" alignItems="center" ml={-0.3}>
+                <Rating
+                  name="simple-controlled"
+                  value={props.status}
+                  precision={0.1}
+                  readOnly
+                />
+                <Typography component="span" sx={{ marginLeft: 1 }}>
+                  {props.status}
+                </Typography>
+              </Box>
+            </Box>
+            <Box>
+              <Typography
+                component="span"
+                sx={{ fontSize: 14, marginRight: 1 }}
+              >
+                ユーザーから
+              </Typography>
+              <Box display="flex" alignItems="center" ml={-0.3}>
+                <Rating
+                  name="simple-controlled"
+                  value={props.review.star}
+                  precision={0.1}
+                  readOnly
+                />
+                <Typography component="span" sx={{ marginLeft: 1 }}>
+                  {props.review.star}
+                </Typography>
+              </Box>
+            </Box>
           </Box>
         </CardContent>
       </Card>

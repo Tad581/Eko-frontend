@@ -57,6 +57,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
       const getAllCafe = await CafeAPI.getAll({
         name: keywordTemp,
         devices: devices,
+        orderBy: "avg_star",
+        orderType: "desc"
       });
       setCafeListData(getAllCafe.data);
     })();
@@ -134,7 +136,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
           marginLeft={-1}
         >
           <Typography mx={1} sx={{ fontWeight: 700 }}>
-            {pagination.from + 1} ~{" "}
+            {pagination.from + 1} {" ~ "}
             {pagination.to === cafeListData.length + 1
               ? pagination.to - 1
               : cafeListData.length < pageSize
