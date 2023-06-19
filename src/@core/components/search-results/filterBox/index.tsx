@@ -107,7 +107,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
                 color: "black",
               }}
             >
-              営業時間
+              希望時間
             </Typography>
           </FormLabel>
           <Box
@@ -118,10 +118,10 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
             sx={{ fontSize: "16px" }}
           >
             <FormControl sx={{ mr: 1, width: "45%" }}>
-              <InputLabel id="opening-at">開</InputLabel>
+              {/* <InputLabel id="opening-at">開</InputLabel> */}
               <Select
                 id="opening-at"
-                label="開"
+                // label="開"
                 defaultValue={timeValues[0].value}
                 value={time.opening_at}
                 onChange={handleChangeTimeInput}
@@ -136,10 +136,10 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
             </FormControl>
             {" - "}
             <FormControl sx={{ ml: 1, width: "45%" }}>
-              <InputLabel id="closing-at">閉</InputLabel>
+              {/* <InputLabel id="closing-at">閉</InputLabel> */}
               <Select
                 id="closing-at"
-                label="閉"
+                // label="閉"
                 defaultValue={timeValues[0].value}
                 value={time.closing_at}
                 onChange={handleChangeTimeInput}
