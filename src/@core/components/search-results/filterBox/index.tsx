@@ -44,7 +44,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
   });
 
   const [crowded_status, setCrowdedStatus] = useState<ECrowdedStatus>(
-    ECrowdedStatus.Normal
+    ECrowdedStatus.All
   );
 
   const handleChangeTimeInput = (event: SelectChangeEvent) => {
@@ -211,7 +211,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
             <RadioGroup
               aria-labelledby="crowded-status"
               name="crowded-status"
-              defaultValue={trafficOptions[1].value}
+              defaultValue={trafficOptions[3].value}
               onChange={handleChangeCrowdedStatus}
             >
               {trafficOptions.map((option) => (

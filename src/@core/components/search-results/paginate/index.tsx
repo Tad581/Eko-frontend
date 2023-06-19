@@ -14,7 +14,7 @@ import {
 import { CardItemResultPage } from "../../layouts/cardItem/ResultPage";
 
 // ** Interfaces import
-import { ICafeInfo, IFilterForm } from "@/interfaces";
+import { ICafeInfo, IFilterForm, ESortMode } from "@/interfaces";
 
 // ** Hooks import
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { CafeAPI } from "@/@core/api/cafeApi";
 
 // ** Other import
-import { sortOptions, removeUnUseFieldInParams, getCurrentHour } from "@/@core/utils/cafes";
+import { sortOptions, removeUnUseFieldInParams, getCurrentHour, apiSortOptions, handleSortOption } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
@@ -31,11 +31,14 @@ interface Props {
   filterForm: IFilterForm;
 }
 
+
 export const ResultPagination = ({ filterForm }: Props) => {
   const [cafeListData, setCafeListData] = useState<ICafeInfo[]>([]);
 
   const [showData, setShowData] = useState<ICafeInfo[]>(cafeListData);
   const [keyword, setKeyword] = useState<string | null>("");
+
+  const [sortMode, setSortMode] = useState<ESortMode>(ESortMode.UserBest);
 
   // For pagination
   const [pagination, setPagination] = useState<any>({
@@ -47,6 +50,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   // Filter raw data by keyword
   useEffect(() => {
+
     const keywordTemp = localStorage.getItem("keyword")
       ? localStorage.getItem("keyword")
       : "";
@@ -54,8 +58,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
     setKeyword(keywordTemp);
     let params = {
       name: keywordTemp,
-      orderBy: "avg_star",
-      orderType: "desc",
+      orderBy: apiSortOptions[ESortMode.UserBest].orderBy,
+      orderType: apiSortOptions[ESortMode.UserBest].orderType,
       opening_at: filterForm.time.opening_at,
       closing_at: filterForm.time.closing_at,
       crowded_status: filterForm.crowded_status,
@@ -63,6 +67,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
     }
 
     params = removeUnUseFieldInParams(params)
+    params.orderBy = handleSortOption(sortMode).orderBy
+    params.orderType = handleSortOption(sortMode).orderType
 
     ;(async () => {
       const getAllCafe = await CafeAPI.getAll(params);
@@ -75,7 +81,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
       to: pageSize,
       page: 1,
     });
-  }, [filterForm]);
+  }, [filterForm, sortMode]);
 
   useEffect(() => {
     const data: ICafeInfo[] = cafeListData.slice(
@@ -93,11 +99,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
     setPagination({ ...pagination, from: from, to: to, page: page });
   };
 
-  // For select sort mode
-  const [sortMode, setSortMode] = useState<string>(sortOptions[0].value);
-
   const handleChangeSortMode = (event: SelectChangeEvent) => {
-    setSortMode(event.target.value);
+    setSortMode(event.target.value as unknown as ESortMode);
   };
 
   return (
@@ -168,10 +171,10 @@ export const ResultPagination = ({ filterForm }: Props) => {
             label="エアコンへの評価"
             labelId="sort-mode"
             id="sort-mode"
-            value={sortMode}
+            value={sortMode as unknown as string}
             onChange={handleChangeSortMode}
             sx={{ width: "auto", height: "40px" }}
-            defaultValue={sortOptions[0].value}
+            defaultValue={sortOptions[0].value as unknown as string}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>

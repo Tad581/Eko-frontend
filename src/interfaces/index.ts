@@ -32,6 +32,13 @@ export enum ECrowdedStatus {
   Secluded = 0,
 }
 
+export enum ESortMode {
+  UserBest = 0,
+  UserWorst = 1,
+  AdminBest = 2,
+  AdminWorst = 3
+}
+
 export interface IFilterForm {
   time: {
     opening_at: string,
