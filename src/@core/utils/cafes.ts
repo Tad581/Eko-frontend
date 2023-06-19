@@ -1,3 +1,4 @@
+
 export const objectToArray = (inputObject: any) => {
   const devicesList = Object.keys(inputObject);
   for (let i = 0; i < devicesList.length; i++) {
@@ -30,26 +31,37 @@ export const devicesList = [
 
 export const sortOptions = [
   {
-    value: "エアコン最もいい",
-    label: "エアコン最もいい",
+    value: "アドミンによれば最もいい",
+    label: "アドミンによれば最もいい",
   },
   {
-    value: "エアコン悪い",
-    label: "エアコン悪い",
+    value: "アドミンによれば最も悪い",
+    label: "アドミンによれば最も悪い",
   },
+  {
+    value: "ユーザーによれば最もいい",
+    label: "ユーザーによれば最もいい",
+  },
+  {
+    value: "ユーザーによれば最も悪い",
+    label: "ユーザーによれば最も悪い",
+  },
+];
+
+export const trafficOptions = [
   {
     value: "多い",
-    label: "人数が多い",
+    label: "多い",
   },
   {
     value: "普通",
-    label: "人数が普通",
+    label: "普通",
   },
   {
     value: "少ない",
-    label: "人数が少ない",
+    label: "少ない",
   },
-];
+]
 
 export const timeValues = [
   {

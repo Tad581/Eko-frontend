@@ -6,6 +6,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  InputLabel,
+  FormControl
 } from "@mui/material";
 
 // ** Components import
@@ -51,11 +53,10 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
     setKeyword(keywordTemp);
     const devices = objectToArray(filterForm);
-    console.log("🚀 ~ file: index.tsx:54 ~ useEffect ~ devices:", devices);
     (async () => {
       const getAllCafe = await CafeAPI.getAll({
         name: keywordTemp,
-        device: devices,
+        devices: devices,
       });
       setCafeListData(getAllCafe.data);
     })();
@@ -85,7 +86,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   };
 
   // For select sort mode
-  const [sortMode, setSortMode] = useState<string>("エアコン最もいい");
+  const [sortMode, setSortMode] = useState<string>(sortOptions[0].value);
 
   const handleChangeSortMode = (event: SelectChangeEvent) => {
     setSortMode(event.target.value);
@@ -152,13 +153,17 @@ export const ResultPagination = ({ filterForm }: Props) => {
           display={"flex"}
         >
           <Typography mr={3}>並べ替え</Typography>
+          <FormControl>
+
+          <InputLabel id="sort-mode">エアコンへの評価</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            label="エアコンへの評価"
+            labelId="sort-mode"
+            id="sort-mode"
             value={sortMode}
             onChange={handleChangeSortMode}
-            sx={{ width: "200px", height: "40px" }}
-            defaultValue="エアコン最もいい"
+            sx={{ width: "auto", height: "40px" }}
+            defaultValue={sortOptions[0].value}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -166,6 +171,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
               </MenuItem>
             ))}
           </Select>
+          </FormControl>
+
         </Box>
       </Box>
       <Box

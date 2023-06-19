@@ -1,11 +1,12 @@
 import api from "./configs/axiosConfigs";
+import * as qs from "qs";
 
 export const CafeAPI = {
   getAll: async function (params: {
     name?: string | null;
     opening_at?: string;
     closing_at?: string;
-    device?: string[];
+    devices?: string[];
     orderBy?: string;
     orderType?: string;
     now?: string;
@@ -20,8 +21,12 @@ export const CafeAPI = {
         name: params.name,
         opening_at: params.opening_at,
         closing_at: params.closing_at,
-        device: params.device,
+        devices: params.devices,
         orderBy: params.orderBy,
+        orderType: params.orderType,
+      },
+      paramsSerializer: (params) => {
+        return qs.stringify(params);
       },
     });
     console.log(

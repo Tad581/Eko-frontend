@@ -10,7 +10,12 @@ import {
   TextField,
   Button,
   MenuItem,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
+
+// ** Hooks import
+import { useState } from "react";
 
 // ** MUI Icon import
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
@@ -19,7 +24,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { IFilterForm } from "@/interfaces";
 
 // ** Other import
-import { timeValues, devicesList } from "@/@core/utils/cafes";
+import { timeValues, devicesList, trafficOptions } from "@/@core/utils/cafes";
 
 interface Props {
   filterForm: IFilterForm;
@@ -27,19 +32,20 @@ interface Props {
 }
 
 export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    checked?: boolean
-  ) => {
-    const { name } = event.target;
-    handleFilterFormData(name, checked);
-  };
+  // const [traffic, setTraffic] = useState<string>("普通");
 
+  // const handleCheckboxChange = (
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  //   checked?: boolean
+  // ) => {
+  //   const { name } = event.target;
+  //   handleFilterFormData(name, checked);
+  // };
 
   return (
     <Box
       minWidth={"25%"}
-      maxHeight={550}
+      maxHeight={500}
       sx={{
         border: "1px solid",
         borderRadius: "5px",
@@ -122,7 +128,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
           </Box>
         </Box>
         <hr />
-        <Box
+        {/* <Box
           display="flex"
           flexDirection="column"
           alignItems="flex-start"
@@ -155,6 +161,41 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
               />
             ))}
           </FormGroup>
+        </Box>
+        <hr /> */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          sx={{ marginTop: "20px" }}
+        >
+          <FormControl>
+            <FormLabel
+              sx={{
+                fontWeight: 600,
+                fontSize: 16,
+                marginBottom: "0px",
+                alignItems: "center",
+               }}
+              id="working-time"
+            >
+              今店での人数
+            </FormLabel>
+            <RadioGroup
+              aria-labelledby="working-time"
+              name="radio-buttons-group"
+              defaultValue={trafficOptions[1].value}
+            >
+              {trafficOptions.map((option) => (
+                <FormControlLabel
+                  value={option.value}
+                  key={option.value}
+                  control={<Radio />}
+                  label={option.label}
+                />
+              ))}
+            </RadioGroup>
+          </FormControl>
         </Box>
       </FormControl>
     </Box>
