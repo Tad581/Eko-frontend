@@ -25,9 +25,16 @@ export interface ICafeInfo {
   verified: number;
 }
 
+export enum ECrowdedStatus {
+  Crowded = 0,
+  Normal = 1,
+  Secluded = 2
+}
+
 export interface IFilterForm {
-  エアコン: boolean;
-  駐車場: boolean;
-  クレジットカード: boolean;
-  配送: boolean;
+  time: {
+    opening_at: string,
+    closing_at: string,
+  };
+  crowded_status: ECrowdedStatus;
 }

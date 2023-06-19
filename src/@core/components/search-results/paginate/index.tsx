@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { CafeAPI } from "@/@core/api/cafeApi";
 
 // ** Other import
-import { objectToArray, sortOptions } from "@/@core/utils/cafes";
+import { objectToArray, sortOptions, removeUnUseFieldInParams } from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
@@ -52,14 +52,18 @@ export const ResultPagination = ({ filterForm }: Props) => {
       : "";
 
     setKeyword(keywordTemp);
-    const devices = objectToArray(filterForm);
-    (async () => {
-      const getAllCafe = await CafeAPI.getAll({
-        name: keywordTemp,
-        devices: devices,
-        orderBy: "avg_star",
-        orderType: "desc"
-      });
+    let params = {
+      name: keywordTemp,
+      orderBy: "avg_star",
+      orderType: "desc",
+      opening_at: filterForm.time.opening_at,
+      closing_at: filterForm.time.closing_at,
+    }
+
+    params = removeUnUseFieldInParams(params)
+
+    ;(async () => {
+      const getAllCafe = await CafeAPI.getAll(params);
       setCafeListData(getAllCafe.data);
     })();
 

@@ -6,21 +6,26 @@ import { ResultPagination } from "@/@core/components/search-results/paginate";
 import { UserNavbar } from "@/@core/components/layouts/navbar/user";
 
 // ** Interfaces import
-import { IFilterForm } from "@/interfaces";
+import { IFilterForm, ECrowdedStatus } from "@/interfaces";
 
 // ** Hooks import
 import { useState } from "react";
 
+
 export default function Home() {
   const [filterForm, setFilterForm] = useState<IFilterForm>({
-    エアコン: false,
-    駐車場: false,
-    クレジットカード: false,
-    配送: false,
+      time: {
+        opening_at: "なし",
+        closing_at: "なし"
+      },
+      crowded_status: ECrowdedStatus.Crowded
   });
 
-  const handleFilterFormData = (name: string, checked?: boolean) => {
-    setFilterForm({ ...filterForm, [name]: checked });
+  const handleFilterFormData = (filterFormData: any) => {
+    const tempForm = {...filterForm}
+    tempForm.time = {...filterFormData}
+    setFilterForm(tempForm);
+    console.log(tempForm)
   };
 
   return (
