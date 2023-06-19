@@ -7,7 +7,7 @@ import {
   MenuItem,
   SelectChangeEvent,
   InputLabel,
-  FormControl
+  FormControl,
 } from "@mui/material";
 
 // ** Components import
@@ -23,14 +23,19 @@ import { useEffect, useState } from "react";
 import { CafeAPI } from "@/@core/api/cafeApi";
 
 // ** Other import
-import { sortOptions, removeUnUseFieldInParams, getCurrentHour, apiSortOptions, handleSortOption } from "@/@core/utils/cafes";
+import {
+  sortOptions,
+  removeUnUseFieldInParams,
+  getCurrentHour,
+  apiSortOptions,
+  handleSortOption,
+} from "@/@core/utils/cafes";
 
 const pageSize = 4;
 
 interface Props {
   filterForm: IFilterForm;
 }
-
 
 export const ResultPagination = ({ filterForm }: Props) => {
   const [cafeListData, setCafeListData] = useState<ICafeInfo[]>([]);
@@ -39,6 +44,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
   const [keyword, setKeyword] = useState<string | null>("");
 
   const [sortMode, setSortMode] = useState<ESortMode>(ESortMode.UserBest);
+
 
   // For pagination
   const [pagination, setPagination] = useState<any>({
@@ -50,7 +56,6 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   // Filter raw data by keyword
   useEffect(() => {
-
     const keywordTemp = localStorage.getItem("keyword")
       ? localStorage.getItem("keyword")
       : "";
@@ -63,14 +68,13 @@ export const ResultPagination = ({ filterForm }: Props) => {
       opening_at: filterForm.time.opening_at,
       closing_at: filterForm.time.closing_at,
       crowded_status: filterForm.crowded_status,
-      now: getCurrentHour()
-    }
+      now: getCurrentHour(),
+    };
 
-    params = removeUnUseFieldInParams(params)
-    params.orderBy = handleSortOption(sortMode).orderBy
-    params.orderType = handleSortOption(sortMode).orderType
-
-    ;(async () => {
+    params = removeUnUseFieldInParams(params);
+    params.orderBy = handleSortOption(sortMode).orderBy;
+    params.orderType = handleSortOption(sortMode).orderType;
+    (async () => {
       const getAllCafe = await CafeAPI.getAll(params);
       setCafeListData(getAllCafe.data);
     })();
@@ -165,25 +169,23 @@ export const ResultPagination = ({ filterForm }: Props) => {
         >
           <Typography mr={3}>並べ替え</Typography>
           <FormControl>
-
-          <InputLabel id="sort-mode">エアコンへの評価</InputLabel>
-          <Select
-            label="エアコンへの評価"
-            labelId="sort-mode"
-            id="sort-mode"
-            value={sortMode as unknown as string}
-            onChange={handleChangeSortMode}
-            sx={{ width: "auto", height: "40px" }}
-            defaultValue={sortOptions[0].value as unknown as string}
-          >
-            {sortOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+            <InputLabel id="sort-mode">エアコンへの評価</InputLabel>
+            <Select
+              label="エアコンへの評価"
+              labelId="sort-mode"
+              id="sort-mode"
+              value={sortMode as unknown as string}
+              onChange={handleChangeSortMode}
+              sx={{ width: "auto", height: "40px" }}
+              defaultValue={sortOptions[0].value as unknown as string}
+            >
+              {sortOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
-
         </Box>
       </Box>
       <Box
@@ -195,24 +197,24 @@ export const ResultPagination = ({ filterForm }: Props) => {
         paddingBottom="50px"
       >
         {showData.map((data: ICafeInfo) => (
-          <CardItemResultPage
-            key={data.id}
-            address={data.address}
-            closing_at={data.closing_at}
-            current_crowded={data.current_crowded}
-            description={data.description}
-            device={data.device}
-            id={data.id}
-            name={data.name}
-            owner={data.owner}
-            owner_ID={data.owner_ID}
-            opening_at={data.opening_at}
-            phone_number={data.phone_number}
-            review={data.review}
-            status={data.status}
-            verified={data.verified}
-            images={data.images}
-          />
+            <CardItemResultPage
+              key={data.id}
+              address={data.address}
+              closing_at={data.closing_at}
+              current_crowded={data.current_crowded}
+              description={data.description}
+              device={data.device}
+              id={data.id}
+              name={data.name}
+              owner={data.owner}
+              owner_ID={data.owner_ID}
+              opening_at={data.opening_at}
+              phone_number={data.phone_number}
+              review={data.review}
+              status={data.status}
+              verified={data.verified}
+              images={data.images}
+            />
         ))}
       </Box>
       {cafeListData.length < pageSize ? (

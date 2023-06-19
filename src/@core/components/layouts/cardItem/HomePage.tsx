@@ -11,6 +11,9 @@ import {
 // ** Interface import
 import { ICafeInfo } from "@/interfaces";
 
+// ** Hooks import
+import { useRouter } from "next/router";
+
 const homePageBoxStyle = {
   border: "1px solid #556cd6",
   borderRadius: "5px",
@@ -25,8 +28,18 @@ const homePageBoxStyle = {
 };
 
 export const CardItemHomePage = (props: ICafeInfo) => {
+  const router = useRouter();
   return (
-    <Box width="400px" sx={homePageBoxStyle}>
+    <Box
+      width="400px"
+      sx={homePageBoxStyle}
+      onClick={() => {
+        router.push({
+          pathname: "/search-results/[id]",
+          query: { id: props.id },
+        });
+      }}
+    >
       <Card sx={{ height: "calc(100%)" }}>
         <CardMedia
           component="img"
@@ -55,7 +68,7 @@ export const CardItemHomePage = (props: ICafeInfo) => {
           >
             エアコンへの評価
           </Typography>
-          <Box display={"flex"} mt={1}　justifyContent={"space-between"}>
+          <Box display={"flex"} mt={1} justifyContent={"space-between"}>
             <Box>
               <Typography
                 component="span"

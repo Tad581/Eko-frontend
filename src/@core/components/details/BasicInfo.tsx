@@ -10,12 +10,29 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 
-export default function BasicInfo() {
+
+interface IProps {
+  id: number;
+  name: string;
+  status: number;
+  review: {
+    star: number;
+    count: number;
+  };
+  address: string;
+  opening_at: string;
+  closing_at: string;
+  phone_number: string;
+  description: string;
+}
+
+
+export default function BasicInfo(props: IProps) {
   return (
     <Box>
       <Box>
         <Typography variant="h3" component="div" sx={{ fontWeight: "bold" }}>
-          Ban Công Cafe
+          {props.name}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" my={2}>
@@ -32,7 +49,7 @@ export default function BasicInfo() {
           sx={{ fontSize: 16 }}
           ml={1}
         >
-          2 Đinh Liệt, Hoàn Kiếm
+          {props.address}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt={2}>
@@ -43,7 +60,7 @@ export default function BasicInfo() {
           sx={{ fontSize: 16 }}
           ml={1}
         >
-          08:00 - 23:00 - オープン中
+          {props.opening_at} - {props.closing_at}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt={2}>
@@ -54,7 +71,7 @@ export default function BasicInfo() {
           sx={{ fontSize: 16 }}
           ml={1}
         >
-          0123456789
+          {props.phone_number}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt={2}>
@@ -74,10 +91,7 @@ export default function BasicInfo() {
         sx={{ fontSize: 16 }}
         mt={2}
       >
-        古代フランスのヴィラに位置する Ban Công Cafe
-        は、古代の瞑想的な特徴を自然に楽しんでいます。
-        黄色い壁、階段、タイル張りの床… 時が経てば忘れ去られてしまいそうです。
-        これは通常の補助金付きのスタイルではなく、古い貴族スタイルです。
+        {props.description}
       </Typography>
     </Box>
   );

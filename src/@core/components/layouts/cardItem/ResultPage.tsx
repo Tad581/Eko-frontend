@@ -16,6 +16,9 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 // ** Interfaces import
 import { ICafeInfo } from "@/interfaces";
 
+// ** Hooks import
+import { useRouter } from 'next/router'
+
 const resultPageBoxStyle = {
   border: "1px solid #000",
   borderRadius: "5px",
@@ -23,8 +26,16 @@ const resultPageBoxStyle = {
 };
 
 export const CardItemResultPage = (props: ICafeInfo) => {
+
+  const router = useRouter()
+
   return (
-    <Box width="95%" sx={resultPageBoxStyle}>
+    <Box width="95%" sx={resultPageBoxStyle} onClick={() => {
+      router.push({
+        pathname: '/search-results/[id]',
+        query: { id: props.id },
+      })
+    }}>
       <Card
         sx={{
           display: "flex",
