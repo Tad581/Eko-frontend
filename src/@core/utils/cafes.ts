@@ -96,9 +96,24 @@ export const apiSortOptions = {
   },
 };
 
+export const apiSortOptionsReview = {
+  [ESortModeReview.Newest]: {
+    orderBy: "create_at",
+    orderType: "desc",
+  },
+  [ESortModeReview.Oldest]: {
+    orderBy: "create_at",
+    orderType: "asc",
+  },
+};
+
 export const handleSortOption = (option: ESortMode) => {
   return apiSortOptions[option];
 };
+
+export const handleSortOptionReview = (option: ESortModeReview) => {
+  return apiSortOptionsReview[option];
+}
 
 export const trafficOptions = [
   {

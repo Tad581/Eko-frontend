@@ -8,6 +8,7 @@ import {
   Select,
   FormControl,
   MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import MakeReview from "../layouts/form/review";
 // ** MUI Icons import
@@ -17,10 +18,14 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useState, useEffect } from "react";
 
 // ** Interfaces import
-import { IReview } from "@/interfaces";
+import { IReview, ESortModeReview } from "@/interfaces";
 
 // ** Other import
-import { sortOptionsReview } from "@/@core/utils/cafes";
+import {
+  sortOptionsReview,
+  apiSortOptionsReview,
+  handleSortOptionReview,
+} from "@/@core/utils/cafes";
 
 // ** APIs import
 import { ReviewAPI } from "@/@core/api/reviewApi";
@@ -35,6 +40,10 @@ export default function Reviews(props: IProps) {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [open, setOpen] = useState(false);
 
+  const [sortMode, setSortMode] = useState<ESortModeReview>(
+    ESortModeReview.Newest
+  );
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -42,17 +51,26 @@ export default function Reviews(props: IProps) {
     setOpen(false);
   };
 
+  const handleChangeSortMode = (event: SelectChangeEvent) => {
+    setSortMode(event.target.value as unknown as ESortModeReview);
+  };
+
   useEffect(() => {
     if (props.id !== undefined) {
-      const paramsReview = {
+      let paramsReview = {
         coffee_shop_ID: props.id,
+        orderType: apiSortOptionsReview[ESortModeReview.Newest].orderType,
+        orderBy: apiSortOptionsReview[ESortModeReview.Newest].orderBy,
       };
+
+      paramsReview.orderBy = handleSortOptionReview(sortMode).orderBy;
+      paramsReview.orderType = handleSortOptionReview(sortMode).orderType;
       (async () => {
         const getAllReview = await ReviewAPI.getAll(paramsReview);
         setReviews(getAllReview.data);
       })();
     }
-  }, [props.id]);
+  }, [props.id, sortMode]);
 
   return (
     <Box mt={3}>
@@ -72,8 +90,8 @@ export default function Reviews(props: IProps) {
               <Select
                 labelId="sort-mode"
                 id="sort-mode"
-                // value={sortMode as unknown as string}
-                // onChange={handleChangeSortMode}
+                value={sortMode as unknown as string}
+                onChange={handleChangeSortMode}
                 sx={{ width: "auto", height: "40px" }}
                 defaultValue={sortOptionsReview[0].value as unknown as string}
               >
