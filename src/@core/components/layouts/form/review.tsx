@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // ** Components import
 import {
   Box,
@@ -26,6 +27,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // ** APIs import
 import { ReviewAPI } from "@/@core/api/reviewApi";
+import { OtherAPI } from "@/@core/api/otherApi";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -95,6 +97,8 @@ export default function MakeReview(props: IProps) {
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
 
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
+
   useEffect(() => {
     if (props.coffee_shop_ID !== undefined) {
       const tempFormValue = {
@@ -122,6 +126,24 @@ export default function MakeReview(props: IProps) {
     const params = formValue;
     const postOneReview = await ReviewAPI.postOne(params);
     console.log(postOneReview);
+  };
+
+  const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    // Handle the review field change here
+    console.log(value);
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const previewArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setPreviewImages(previewArray);
+    }
+    // Handle the image field change here
+    console.log(files);
   };
 
   return (
@@ -239,6 +261,64 @@ export default function MakeReview(props: IProps) {
                   placeholder="なぜその評価を思うのですか。"
                 />
                 <ErrorMessage name="review" component="div" />
+              </Box>
+            </Box>
+            <Box>
+              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+                写真
+              </Typography>
+              <Box sx={{ display: "flex" }}>
+                {previewImages.map((previewImage) => (
+                  <Box key={previewImage}>
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      style={{
+                        maxWidth: "100%",
+                        objectFit: "cover",
+                        border: "1px solid black",
+                        borderRadius: "10px",
+                        width: "10vw",
+                        aspectRatio: "1 / 1",
+                      }}
+                    />
+                  </Box>
+                ))}
+                <Box
+                  style={{
+                    border: "1px solid black",
+                    padding: "10px",
+                    width: "30%",
+                    aspectRatio: "1 / 1",
+                    cursor: "pointer",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <label
+                    htmlFor="image-upload"
+                    style={{
+                      cursor: "pointer",
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AddOutlinedIcon sx={{ fontSize: 60 }} />
+                  </label>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    name="images"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                    width="100%"
+                    height="100%"
+                  />
+                </Box>
               </Box>
             </Box>
           </DialogContent>
