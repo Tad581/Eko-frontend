@@ -14,9 +14,10 @@ import { useEffect, useState } from "react";
 
 // ** APIs import
 import { CafeAPI } from "@/@core/api/cafeApi";
+import { ReviewAPI } from "@/@core/api/reviewApi";
 
 // ** Interfaces import
-import { ICafeInfo } from "@/interfaces";
+import { ICafeInfo, IReview } from "@/interfaces";
 
 // ** Other import
 import { getCurrentHour } from "@/@core/utils/cafes";
@@ -46,16 +47,24 @@ export default function Details() {
     images: [""],
   });
 
+  const [reviews, setReviews] = useState<IReview[]>([]);
+
   useEffect(() => {
-    let params = {
+    const paramsCafe = {
       id: cafeId as unknown as number,
       now: getCurrentHour(),
     };
 
+    const paramsReview = {
+      coffee_shop_ID: cafeId as unknown as number,
+    };
+
     if (cafeId !== undefined) {
       (async () => {
-        const getOneCafe = await CafeAPI.getOne(params);
+        const getOneCafe = await CafeAPI.getOne(paramsCafe);
         setCafeDetail(getOneCafe);
+        const getAllReview = await ReviewAPI.getAll(paramsReview);
+        setReviews(getAllReview.data);
       })();
     }
   }, [cafeId]);
@@ -90,8 +99,7 @@ export default function Details() {
         ) : (
           <></>
         )}
-
-        {/* <Reviews /> */}
+        <Reviews reviews={reviews} />
       </Box>
     </>
   );

@@ -36,13 +36,31 @@ export enum ESortMode {
   UserBest = 0,
   UserWorst = 1,
   AdminBest = 2,
-  AdminWorst = 3
+  AdminWorst = 3,
+}
+
+export enum ESortModeReview {
+  Newest = 0,
+  Oldest = 1,
 }
 
 export interface IFilterForm {
   time: {
-    opening_at: string,
-    closing_at: string,
+    opening_at: string;
+    closing_at: string;
   };
   crowded_status: ECrowdedStatus;
+}
+
+export interface IReview {
+  id: number;
+  review: string;
+  star: number;
+  create_at: string;
+  coffee_shop_ID: number;
+  user_ID: number;
+  avatar: string;
+  email: string;
+  role: number;
+  username: string;
 }

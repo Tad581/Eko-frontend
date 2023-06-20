@@ -1,4 +1,4 @@
-import { ECrowdedStatus, ESortMode } from "@/interfaces";
+import { ECrowdedStatus, ESortMode, ESortModeReview } from "@/interfaces";
 import moment from "moment";
 
 export const objectToArray = (inputObject: any) => {
@@ -66,6 +66,17 @@ export const sortOptions = [
   },
 ];
 
+export const sortOptionsReview = [
+  {
+    value: ESortModeReview.Newest,
+    label: "最新",
+  },
+  {
+    value: ESortModeReview.Oldest,
+    label: "最古",
+  },
+];
+
 export const apiSortOptions = {
   [ESortMode.UserBest]: {
     orderBy: "avg_star",
@@ -86,8 +97,8 @@ export const apiSortOptions = {
 };
 
 export const handleSortOption = (option: ESortMode) => {
-  return apiSortOptions[option]
-}
+  return apiSortOptions[option];
+};
 
 export const trafficOptions = [
   {
