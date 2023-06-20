@@ -3,32 +3,21 @@ import { Box, Typography, Chip } from "@mui/material";
 
 // ** Hooks import
 
-const fakeData = [
-  {
-    id: 1,
-    name: "駐車場",
-  },
-  {
-    id: 2,
-    name: "エアコン",
-  },
-  {
-    id: 3,
-    name: "配送",
-  },
-];
+interface IProps {
+  propsArray: { id: number; name: string; quantity: number; status: string }[];
+}
 
-export default function Devices() {
+export default function Devices(props: IProps) {
   return (
     <Box mt={3}>
       <Typography variant="h5" component="div" sx={{ fontWeight: "bold" }}>
         ユーティリティー
       </Typography>
       <Box mt={2}>
-        {fakeData.map((item) => (
+        {props.propsArray.map((device: any) => (
           <Chip
-            key={item.id}
-            label={item.name}
+            key={device.id}
+            label={device.name}
             color="primary"
             sx={{ marginRight: 1 }}
           />

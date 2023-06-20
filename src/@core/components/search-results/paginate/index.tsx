@@ -74,6 +74,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
     params = removeUnUseFieldInParams(params);
     params.orderBy = handleSortOption(sortMode).orderBy;
     params.orderType = handleSortOption(sortMode).orderType;
+
     (async () => {
       const getAllCafe = await CafeAPI.getAll(params);
       setCafeListData(getAllCafe.data);

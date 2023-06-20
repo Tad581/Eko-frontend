@@ -11,7 +11,7 @@ export interface ICafeInfo {
     status: string;
   }[];
   id: number;
-  images?: string[];
+  images: string[];
   name: string;
   owner: any;
   owner_ID: number;

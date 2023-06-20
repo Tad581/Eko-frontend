@@ -10,24 +10,10 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 
+// ** Interfaces import
+import { ICafeInfo } from "@/interfaces";
 
-interface IProps {
-  id: number;
-  name: string;
-  status: number;
-  review: {
-    star: number;
-    count: number;
-  };
-  address: string;
-  opening_at: string;
-  closing_at: string;
-  phone_number: string;
-  description: string;
-}
-
-
-export default function BasicInfo(props: IProps) {
+export default function BasicInfo(props: ICafeInfo) {
   return (
     <Box>
       <Box>
@@ -35,11 +21,44 @@ export default function BasicInfo(props: IProps) {
           {props.name}
         </Typography>
       </Box>
-      <Box display="flex" alignItems="center" my={2}>
-        <Rating name="simple-controlled" value={3} precision={0.1} readOnly />
-        <Typography component="span" sx={{ marginLeft: 1 }}>
-          3.0
+      <Box display="flex" alignItems="flext-start" flexDirection={"column"} my={2}>
+        <Typography sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}>
+          エアコンへの評価
         </Typography>
+        <Box display={"flex"} mt={1}>
+          <Box>
+            <Typography component="span" sx={{ fontSize: 14, marginRight: 1 }}>
+              アドミンから
+            </Typography>
+            <Box display="flex" alignItems="center" ml={-0.3}>
+              <Rating
+                name="simple-controlled"
+                value={props.status}
+                precision={0.1}
+                readOnly
+              />
+              <Typography component="span" sx={{ marginLeft: 1 }}>
+                {props.status}
+              </Typography>
+            </Box>
+          </Box>
+          <Box ml={6}>
+            <Typography component="span" sx={{ fontSize: 14, marginRight: 1 }}>
+              ユーザーから
+            </Typography>
+            <Box display="flex" alignItems="center" ml={-0.3}>
+              <Rating
+                name="simple-controlled"
+                value={props.review.star}
+                precision={0.1}
+                readOnly
+              />
+              <Typography component="span" sx={{ marginLeft: 1 }}>
+                {props.review.star}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       <Box display="flex" alignItems="center" mt={2}>
         <PlaceOutlinedIcon />
@@ -75,14 +94,19 @@ export default function BasicInfo(props: IProps) {
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt={2}>
-        <GroupsOutlinedIcon />
+        <GroupsOutlinedIcon sx={{ mr: 2 }} />
+        {"今店での人数: "}
         <Typography
           variant="subtitle1"
           component="div"
           sx={{ fontSize: 16, fontWeight: "bold" }}
           ml={1}
         >
-          混雑中
+          {props.current_crowded === 0
+            ? "少ない"
+            : props.current_crowded === 1
+            ? "普通"
+            : "多い"}
         </Typography>
       </Box>
       <Typography

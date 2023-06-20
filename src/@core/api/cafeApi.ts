@@ -25,14 +25,36 @@ export const CafeAPI = {
         orderBy: params.orderBy,
         orderType: params.orderType,
         opening_at: params.opening_at,
-        now: params.now
+        now: params.now,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);
       },
     });
     console.log(
-      "AuthAPI:: getAll characters:: response?.data: ",
+      "AuthAPI:: getAll cafe:: response?.data: ",
+      response?.data
+    );
+
+    return response?.data || [];
+  },
+  getOne: async function (params: {
+    id: number,
+    now: string
+  }) {
+    const response = await api.request({
+      url: `/coffee_shop/` + params.id,
+      method: "GET",
+      params: {
+        id: params.id,
+        now: params.now,
+      },
+      paramsSerializer: (params) => {
+        return qs.stringify(params);
+      },
+    });
+    console.log(
+      "AuthAPI:: getOne cafe:: response?.data: ",
       response?.data
     );
 
