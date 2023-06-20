@@ -17,16 +17,37 @@ export const ReviewAPI = {
         user_ID: params.user_ID,
         coffee_shop_ID: params.coffee_shop_ID,
         orderBy: params.orderBy,
-        orderType: params.orderType
+        orderType: params.orderType,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);
       },
     });
-    console.log(
-      "AuthAPI:: getAll review :: response?.data: ",
-      response?.data
-    );
+    console.log("AuthAPI:: getAll review :: response?.data: ", response?.data);
+
+    return response?.data || [];
+  },
+  postOne: async function (params: {
+    star?: number;
+    user_ID?: number;
+    coffee_shop_ID?: number;
+    review?: string;
+    images?: string[];
+  }) {
+    const response = await api.request({
+      url: `/users/${params.user_ID}/reviews`,
+      method: "POST",
+      data: {
+        star: params.star,
+        coffee_shop_ID: params.coffee_shop_ID,
+        images: params.images,
+        review: params.review,
+      }
+      // paramsSerializer: (params) => {
+      //   return qs.stringify(params);
+      // },
+    });
+    console.log("AuthAPI:: postOne review :: response?.data: ", response?.data);
 
     return response?.data || [];
   },

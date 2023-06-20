@@ -1,6 +1,15 @@
-// ** MUI Components import
-import { Box, Typography, Avatar, Rating, Button, Select, FormControl, MenuItem } from "@mui/material";
-
+// ** Components import
+import {
+  Box,
+  Typography,
+  Avatar,
+  Rating,
+  Button,
+  Select,
+  FormControl,
+  MenuItem,
+} from "@mui/material";
+import MakeReview from "../layouts/form/review";
 // ** MUI Icons import
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
@@ -13,11 +22,38 @@ import { IReview } from "@/interfaces";
 // ** Other import
 import { sortOptionsReview } from "@/@core/utils/cafes";
 
+// ** APIs import
+import { ReviewAPI } from "@/@core/api/reviewApi";
 interface IProps {
-  reviews: IReview[];
+  id: number | undefined;
+  name: string;
+  images: string[];
+  address: string;
 }
 
 export default function Reviews(props: IProps) {
+  const [reviews, setReviews] = useState<IReview[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (props.id !== undefined) {
+      const paramsReview = {
+        coffee_shop_ID: props.id,
+      };
+      (async () => {
+        const getAllReview = await ReviewAPI.getAll(paramsReview);
+        setReviews(getAllReview.data);
+      })();
+    }
+  }, [props.id]);
+
   return (
     <Box mt={3}>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -54,13 +90,14 @@ export default function Reviews(props: IProps) {
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
             startIcon={<AddOutlinedIcon />}
+            onClick={handleClickOpen}
           >
             レビューを書く
           </Button>
         </Box>
       </Box>
       <Box mt={2}>
-        {props.reviews.map((review: IReview) => (
+        {reviews.map((review: IReview) => (
           <Box key={review.id} display={"flex"}>
             <Avatar
               alt={review.username}
@@ -100,6 +137,14 @@ export default function Reviews(props: IProps) {
           </Box>
         ))}
       </Box>
+      <MakeReview
+        handleClose={handleClose}
+        coffee_shop_ID={props.id}
+        open={open}
+        name={props.name}
+        address={props.address}
+        images={props.images}
+      ></MakeReview>
     </Box>
   );
 }
