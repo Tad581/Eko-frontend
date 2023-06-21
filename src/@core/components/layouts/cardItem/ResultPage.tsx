@@ -109,7 +109,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
                   readOnly
                 />
                 <Typography component="span" sx={{ marginLeft: 1 }}>
-                  {props.review.star}
+                  {props.review.star.toFixed(1)}
                 </Typography>
               </Box>
             </Box>
