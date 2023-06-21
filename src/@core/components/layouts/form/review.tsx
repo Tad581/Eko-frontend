@@ -14,11 +14,13 @@ import {
   CardContent,
   CardMedia,
   Rating,
+  Grid,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 // ** Hooks import
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { styled } from "@mui/material/styles";
 
 // ** MUI Icons import
@@ -99,6 +101,8 @@ export default function MakeReview(props: IProps) {
 
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (props.coffee_shop_ID !== undefined) {
       const tempFormValue = {
@@ -122,10 +126,9 @@ export default function MakeReview(props: IProps) {
   };
 
   const handleSubmit = async () => {
-    console.log(formValue);
     const params = formValue;
     const postOneReview = await ReviewAPI.postOne(params);
-    console.log(postOneReview);
+    router.reload();
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,7 +236,7 @@ export default function MakeReview(props: IProps) {
                     label="Star"
                     type="number"
                     inputprops={{ min: 0, max: 5 }}
-                    precision={0.1}
+                    precision={1}
                     required
                     onChange={handleOnchangeRatingStar}
                     value={formValue.star}
@@ -264,62 +267,66 @@ export default function MakeReview(props: IProps) {
               </Box>
             </Box>
             <Box>
-              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+              <Typography
+                sx={{ fontSize: 16, fontWeight: 700, my: 1, width: "95%" }}
+              >
                 写真
               </Typography>
-              <Box sx={{ display: "flex" }}>
+              <Grid container spacing={2} width={"calc(100%)"}>
                 {previewImages.map((previewImage) => (
-                  <Box key={previewImage}>
+                  <Grid item key={previewImage} sm={4} md={4} lg={4} xl={4}>
                     <img
                       src={previewImage}
                       alt="Preview"
                       style={{
-                        maxWidth: "100%",
+                        width: "100%",
                         objectFit: "cover",
                         border: "1px solid black",
                         borderRadius: "10px",
-                        width: "10vw",
                         aspectRatio: "1 / 1",
                       }}
                     />
-                  </Box>
+                  </Grid>
                 ))}
-                <Box
-                  style={{
-                    border: "1px solid black",
-                    padding: "10px",
-                    width: "30%",
+                <Grid
+                  item
+                  sm={4}
+                  md={4}
+                  lg={4}
+                  xl={4}
+                >
+                  <Box sx={{ border: "1px solid black",
+                    padding: "0px",
                     aspectRatio: "1 / 1",
                     cursor: "pointer",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <label
-                    htmlFor="image-upload"
-                    style={{
-                      cursor: "pointer",
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <AddOutlinedIcon sx={{ fontSize: 60 }} />
-                  </label>
-                  <input
-                    id="image-upload"
-                    type="file"
-                    name="images"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageChange}
-                    style={{ display: "none" }}
-                    width="100%"
-                    height="100%"
-                  />
-                </Box>
-              </Box>
+                    borderRadius: "10px",}}>
+                    <label
+                      htmlFor="image-upload"
+                      style={{
+                        cursor: "pointer",
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <AddOutlinedIcon sx={{ fontSize: 60 }} />
+                    </label>
+                    <input
+                      id="image-upload"
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageChange}
+                      style={{ display: "none" }}
+                      width="100%"
+                      height="100%"
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
           </DialogContent>
           <DialogActions sx={{ display: "flex", justifyContent: "center" }}>

@@ -116,7 +116,7 @@ export default function Reviews(props: IProps) {
       </Box>
       <Box mt={2}>
         {reviews.map((review: IReview) => (
-          <Box key={review.id} display={"flex"}>
+          <Box key={review.id} display={"flex"} mb={1}>
             <Avatar
               alt={review.username}
               src={review.avatar}
