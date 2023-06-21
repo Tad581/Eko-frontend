@@ -15,14 +15,14 @@ export default function CafeImage(props: IProps) {
       </Typography>
       <Grid container spacing={2} mt={2}>
         {props.images.map((imageUrl: string) => (
-          <Grid item sm={12} md={6} lg={4} xl={3} key={imageUrl}>
+          <Grid item sm={3} md={3} lg={3} xl={3}key={imageUrl}>
             <CardMedia
               key={imageUrl}
               sx={{
                 aspectRatio: "1 / 1",
                 width: "100%",
                 borderRadius: "10px",
-                border: "1px",
+                border: "1px solid black",
               }}
               image={imageUrl ? imageUrl : "https://i.ibb.co/6WXYg60/cafe.jpg"}
               title="green iguana"
