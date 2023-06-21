@@ -8,6 +8,7 @@ export const ReviewAPI = {
     coffee_shop_ID?: number;
     orderBy?: string;
     orderType?: string;
+    images?: string[]
   }) {
     const response = await api.request({
       url: `/reviews`,
@@ -18,6 +19,7 @@ export const ReviewAPI = {
         coffee_shop_ID: params.coffee_shop_ID,
         orderBy: params.orderBy,
         orderType: params.orderType,
+        images: params.images,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);

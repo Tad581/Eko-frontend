@@ -9,6 +9,8 @@ import {
   FormControl,
   MenuItem,
   SelectChangeEvent,
+  Grid,
+  CardMedia,
 } from "@mui/material";
 import MakeReview from "../layouts/form/review";
 // ** MUI Icons import
@@ -151,6 +153,27 @@ export default function Reviews(props: IProps) {
               <Typography sx={{ fontSize: 16, fontWeight: 400, marginTop: 1 }}>
                 {review.review}
               </Typography>
+              <Grid container spacing={2} mt={2}>
+                {review.images.map((imageUrl: string) => (
+                  <Grid item sm={3} md={3} lg={3} xl={3} key={imageUrl}>
+                    <CardMedia
+                      key={imageUrl}
+                      sx={{
+                        aspectRatio: "1 / 1",
+                        width: "100%",
+                        borderRadius: "10px",
+                        border: "1px solid black",
+                      }}
+                      image={
+                        imageUrl
+                          ? imageUrl
+                          : "https://i.ibb.co/6WXYg60/cafe.jpg"
+                      }
+                      title="green iguana"
+                    ></CardMedia>
+                  </Grid>
+                ))}
+              </Grid>
             </Box>
           </Box>
         ))}

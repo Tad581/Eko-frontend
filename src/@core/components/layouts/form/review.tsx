@@ -31,6 +31,9 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { ReviewAPI } from "@/@core/api/reviewApi";
 import { OtherAPI } from "@/@core/api/otherApi";
 
+// ** Other import
+import axios from "axios";
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -101,6 +104,8 @@ export default function MakeReview(props: IProps) {
 
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
+  const [uploadFiles, setUploadFiles] = useState<any>([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -126,27 +131,56 @@ export default function MakeReview(props: IProps) {
   };
 
   const handleSubmit = async () => {
-    const params = formValue;
-    const postOneReview = await ReviewAPI.postOne(params);
-    router.reload();
-  };
+    const reviewImages: string[] = [];
+    uploadFiles.forEach(async (file: any) => {
+      const formData = new FormData();
+      formData.append("file", file);
 
-  const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    // Handle the review field change here
-    console.log(value);
+      try {
+        const res = await axios.post(
+          "https://itss-1-be.fly.dev/api/v2/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "🚀 ~ file: review.tsx:150 ~ uploadFiles.forEach ~ res:",
+          res
+        );
+        reviewImages.push(res.data.url);
+        console.log(
+          "🚀 ~ file: review.tsx:151 ~ uploadFiles.forEach ~ reviewImages:",
+          reviewImages
+        );
+      } catch (error) {
+        // Handle the error
+      }
+    });
+    setTimeout(async () => {
+      const params = { ...formValue, images: reviewImages };
+      console.log("🚀 ~ file: review.tsx:156 ~ handleSubmit ~ params:", params);
+      props.handleClose();
+      await ReviewAPI.postOne(params);
+      router.reload();
+    }, 2500);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
+    const filesArray = [...uploadFiles];
     if (files) {
-      const previewArray = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
+      const previewArray = Array.from(files).map((file) => {
+        filesArray.push(file);
+        return URL.createObjectURL(file);
+      });
       setPreviewImages(previewArray);
+      setUploadFiles(filesArray);
+      // Handle the image field change here
+      console.log(files);
     }
-    // Handle the image field change here
-    console.log(files);
   };
 
   return (
@@ -163,7 +197,7 @@ export default function MakeReview(props: IProps) {
           レビューを書く
         </Typography>
       </BootstrapDialogTitle>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
         <Form>
           <DialogContent dividers>
             <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
@@ -288,18 +322,16 @@ export default function MakeReview(props: IProps) {
                     />
                   </Grid>
                 ))}
-                <Grid
-                  item
-                  sm={4}
-                  md={4}
-                  lg={4}
-                  xl={4}
-                >
-                  <Box sx={{ border: "1px solid black",
-                    padding: "0px",
-                    aspectRatio: "1 / 1",
-                    cursor: "pointer",
-                    borderRadius: "10px",}}>
+                <Grid item sm={4} md={4} lg={4} xl={4}>
+                  <Box
+                    sx={{
+                      border: "1px solid black",
+                      padding: "0px",
+                      aspectRatio: "1 / 1",
+                      cursor: "pointer",
+                      borderRadius: "10px",
+                    }}
+                  >
                     <label
                       htmlFor="image-upload"
                       style={{
@@ -332,7 +364,7 @@ export default function MakeReview(props: IProps) {
           <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               autoFocus
-              onClick={props.handleClose}
+              onClick={handleSubmit}
               type="submit"
               variant="contained"
               color="primary"

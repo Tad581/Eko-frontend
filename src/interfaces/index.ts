@@ -63,4 +63,5 @@ export interface IReview {
   email: string;
   role: number;
   username: string;
+  images: string[];
 }
