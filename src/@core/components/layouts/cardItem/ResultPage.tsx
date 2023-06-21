@@ -12,12 +12,13 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 
 // ** Interfaces import
 import { ICafeInfo } from "@/interfaces";
 
 // ** Hooks import
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const resultPageBoxStyle = {
   border: "1px solid #000",
@@ -26,23 +27,26 @@ const resultPageBoxStyle = {
 };
 
 export const CardItemResultPage = (props: ICafeInfo) => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <Box width="95%" sx={resultPageBoxStyle} onClick={() => {
-      router.push({
-        pathname: '/search-results/[id]',
-        query: { id: props.id },
-      })
-    }}>
+    <Box
+      width="95%"
+      sx={resultPageBoxStyle}
+      onClick={() => {
+        router.push({
+          pathname: "/search-results/[id]",
+          query: { id: props.id },
+        });
+      }}
+    >
       <Card
         sx={{
           display: "flex",
           flexDirection: "row",
           height: "calc(100%)",
           position: "relative",
-          maxHeight: "270px"
+          maxHeight: "270px",
         }}
       >
         <Box width="40%">
@@ -111,7 +115,23 @@ export const CardItemResultPage = (props: ICafeInfo) => {
             </Box>
           </Box>
 
-          <Box display="flex" alignItems="flex-start" mt={2}>
+          <Box display="flex" alignItems="center" mt={2}>
+            <GroupsOutlinedIcon sx={{ mr: 2 }} />
+            {"今店での人数: "}
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{ fontSize: 16, fontWeight: "bold" }}
+              ml={1}
+            >
+              {props.current_crowded === 0
+                ? "少ない"
+                : props.current_crowded === 1
+                ? "普通"
+                : "多い"}
+            </Typography>
+          </Box>
+          <Box display="flex" alignItems="flex-start">
             <PlaceOutlinedIcon sx={{ mt: 0.5 }} />
             <Typography
               variant="subtitle1"
