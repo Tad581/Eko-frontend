@@ -1,5 +1,5 @@
 // ** MUI Components import
-import { Box, Typography, Card, CardMedia } from "@mui/material";
+import { Box, Typography, Card, CardMedia, Grid } from "@mui/material";
 
 // ** Hooks import
 
@@ -13,16 +13,23 @@ export default function CafeImage(props: IProps) {
       <Typography variant="h5" component="div" sx={{ fontWeight: "bold" }}>
         写真
       </Typography>
-      <Box display={"flex"} mt={2}>
+      <Grid container spacing={2} mt={2}>
         {props.images.map((imageUrl: string) => (
-          <CardMedia
-            key={imageUrl}
-            sx={{ height: 300, width: 300, margin: "10px 10px 10px 0", borderRadius: "10px", border: "1px" }}
-            image={imageUrl ? imageUrl : "https://i.ibb.co/6WXYg60/cafe.jpg"}
-            title="green iguana"
-          ></CardMedia>
+          <Grid item sm={12} md={6} lg={4} xl={3} key={imageUrl}>
+            <CardMedia
+              key={imageUrl}
+              sx={{
+                aspectRatio: "1 / 1",
+                width: "100%",
+                borderRadius: "10px",
+                border: "1px",
+              }}
+              image={imageUrl ? imageUrl : "https://i.ibb.co/6WXYg60/cafe.jpg"}
+              title="green iguana"
+            ></CardMedia>
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Box>
   );
 }
