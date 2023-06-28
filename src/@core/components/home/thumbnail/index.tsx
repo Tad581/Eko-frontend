@@ -42,7 +42,7 @@ export const Thumbnail = () => {
       }}
     >
       <Typography align="center" mb={5} sx={{ fontWeight: 600, fontSize: 40 }}>
-        いらっさいませ〜
+        いっらしゃいませ〜
       </Typography>
       <Stack
         direction="row"
