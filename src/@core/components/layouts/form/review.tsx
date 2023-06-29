@@ -132,10 +132,9 @@ export default function MakeReview(props: IProps) {
 
   const handleSubmit = async () => {
     const reviewImages: string[] = [];
-    uploadFiles.forEach(async (file: any) => {
+    for (const file of uploadFiles) {
       const formData = new FormData();
       formData.append("file", file);
-
       try {
         const res = await axios.post(
           "https://itss-1-be.fly.dev/api/v2/upload",
@@ -158,14 +157,12 @@ export default function MakeReview(props: IProps) {
       } catch (error) {
         // Handle the error
       }
-    });
-    setTimeout(async () => {
-      const params = { ...formValue, images: reviewImages };
-      console.log("🚀 ~ file: review.tsx:156 ~ handleSubmit ~ params:", params);
-      props.handleClose();
-      await ReviewAPI.postOne(params);
-      router.reload();
-    }, 2500);
+    }
+    const params = { ...formValue, images: reviewImages };
+    console.log("🚀 ~ file: review.tsx:156 ~ handleSubmit ~ params:", params);
+    props.handleClose();
+    await ReviewAPI.postOne(params);
+    router.reload();
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
