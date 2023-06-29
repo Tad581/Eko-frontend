@@ -284,7 +284,7 @@ export default function MakeReview(props: IProps) {
 
               <Box sx={{ my: 0.5 }}>
                 <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
-                  エアコンの評価点
+                  コメント
                 </Typography>
                 <Field
                   as={TextField}

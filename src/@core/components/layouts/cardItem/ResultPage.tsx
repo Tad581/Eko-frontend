@@ -1,4 +1,4 @@
-// ** MUI Components import
+// ** Components import
 import {
   Box,
   Card,
@@ -7,6 +7,7 @@ import {
   Typography,
   Rating,
 } from "@mui/material";
+import Link from "next/link";
 
 // ** MUI Icons import
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -27,18 +28,18 @@ const resultPageBoxStyle = {
 };
 
 export const CardItemResultPage = (props: ICafeInfo) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <Box
       width="95%"
       sx={resultPageBoxStyle}
-      onClick={() => {
-        router.push({
-          pathname: "/search-results/[id]",
-          query: { id: props.id },
-        });
-      }}
+      // onClick={() => {
+      //   router.push({
+      //     pathname: "/search-results/[id]",
+      //     query: { id: props.id },
+      //   });
+      // }}
     >
       <Card
         sx={{
@@ -63,14 +64,12 @@ export const CardItemResultPage = (props: ICafeInfo) => {
           />
         </Box>
         <CardContent sx={{ paddingLeft: 0, width: "60%" }}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={{ fontWeight: 700, fontSize: 24 }}
+          <Link
+            href={`/search-results/${props.id}`}
+            style={{ fontWeight: 700, fontSize: 24, marginBottom: 2 }}
           >
             {props.name}
-          </Typography>
+          </Link>
           <Typography sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}>
             エアコンへの評価
           </Typography>
