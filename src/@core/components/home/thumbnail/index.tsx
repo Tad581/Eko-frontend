@@ -51,7 +51,7 @@ export const Thumbnail = () => {
         alignItems="center"
       >
         <TextField
-          label="名前"
+          label="名前・住所"
           variant="outlined"
           size="small"
           value={searchKeyword}

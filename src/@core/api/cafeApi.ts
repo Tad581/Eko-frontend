@@ -1,6 +1,7 @@
 import api from "./configs/axiosConfigs";
 import * as qs from "qs";
 
+
 export const CafeAPI = {
   getAll: async function (params: {
     name?: string | null;

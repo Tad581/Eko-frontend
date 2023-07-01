@@ -45,7 +45,6 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   const [sortMode, setSortMode] = useState<ESortMode>(ESortMode.UserBest);
 
-
   // For pagination
   const [pagination, setPagination] = useState<any>({
     count: 0,
@@ -150,7 +149,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
           marginLeft={-1}
         >
           <Typography mx={1} sx={{ fontWeight: 700 }}>
-            {pagination.from + 1} {" ~ "}
+            {cafeListData.length > 0 ? pagination.from + 1 : 0} {" ~ "}
             {pagination.to === cafeListData.length + 1
               ? pagination.to - 1
               : cafeListData.length < pageSize
@@ -197,7 +196,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
         width="100%"
         paddingBottom="50px"
       >
-        {showData.map((data: ICafeInfo) => (
+        {showData.length > 0 ? (
+          showData.map((data: ICafeInfo) => (
             <CardItemResultPage
               key={data.id}
               address={data.address}
@@ -216,7 +216,10 @@ export const ResultPagination = ({ filterForm }: Props) => {
               verified={data.verified}
               images={data.images}
             />
-        ))}
+          ))
+        ) : (
+          <Typography mt={10}>マッチングデータがありません</Typography>
+        )}
       </Box>
       {cafeListData.length < pageSize ? (
         <></>

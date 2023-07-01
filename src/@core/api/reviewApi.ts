@@ -1,5 +1,6 @@
 import api from "./configs/axiosConfigs";
 import * as qs from "qs";
+import { toast } from "react-toastify";
 
 export const ReviewAPI = {
   getAll: async function (params: {
@@ -8,7 +9,7 @@ export const ReviewAPI = {
     coffee_shop_ID?: number;
     orderBy?: string;
     orderType?: string;
-    images?: string[]
+    images?: string[];
   }) {
     const response = await api.request({
       url: `/reviews`,
@@ -44,13 +45,30 @@ export const ReviewAPI = {
         coffee_shop_ID: params.coffee_shop_ID,
         images: params.images,
         review: params.review,
-      }
-      // paramsSerializer: (params) => {
-      //   return qs.stringify(params);
-      // },
+      },
     });
-    console.log("AuthAPI:: postOne review :: response?.data: ", response?.data);
-
+    console.log("AuthAPI:: postOne review :: response?.data: ", response);
+    response?.status === 201
+      ? toast.success("レビュー成功した", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      : toast.error("なにか壊れたそう", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
     return response?.data || [];
   },
 };

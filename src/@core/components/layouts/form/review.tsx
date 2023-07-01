@@ -29,7 +29,6 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // ** APIs import
 import { ReviewAPI } from "@/@core/api/reviewApi";
-import { OtherAPI } from "@/@core/api/otherApi";
 
 // ** Other import
 import axios from "axios";
@@ -145,24 +144,15 @@ export default function MakeReview(props: IProps) {
             },
           }
         );
-        console.log(
-          "🚀 ~ file: review.tsx:150 ~ uploadFiles.forEach ~ res:",
-          res
-        );
         reviewImages.push(res.data.url);
-        console.log(
-          "🚀 ~ file: review.tsx:151 ~ uploadFiles.forEach ~ reviewImages:",
-          reviewImages
-        );
       } catch (error) {
         // Handle the error
       }
     }
     const params = { ...formValue, images: reviewImages };
-    console.log("🚀 ~ file: review.tsx:156 ~ handleSubmit ~ params:", params);
     props.handleClose();
     await ReviewAPI.postOne(params);
-    router.reload();
+    // router.reload();
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
