@@ -128,10 +128,10 @@ export const trafficOptions = [
     value: ECrowdedStatus.Secluded,
     label: "少ない",
   },
-  {
-    value: ECrowdedStatus.All,
-    label: "全て",
-  },
+  // {
+  //   value: ECrowdedStatus.All,
+  //   label: "全て",
+  // },
 ];
 
 export const timeValues = [

@@ -43,9 +43,11 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
     closing_at: "なし",
   });
 
-  const [crowded_status, setCrowdedStatus] = useState<ECrowdedStatus>(
-    ECrowdedStatus.All
-  );
+  const [crowded_status, setCrowdedStatus] = useState<ECrowdedStatus[]>([
+    ECrowdedStatus.Crowded,
+    ECrowdedStatus.Normal,
+    ECrowdedStatus.Secluded,
+  ]);
 
   const handleChangeTimeInput = (event: SelectChangeEvent) => {
     let tempArr;
@@ -59,7 +61,14 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
   const handleChangeCrowdedStatus = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setCrowdedStatus(event.target.value as unknown as ECrowdedStatus);
+    // setCrowdedStatus(event.target.value as unknown as ECrowdedStatus);
+    const index = crowded_status.indexOf(parseInt(event.target.value, 10));
+    if (index === -1) {
+      setCrowdedStatus([...crowded_status, parseInt(event.target.value, 10)]);
+    } else {
+      setCrowdedStatus(crowded_status.filter(status => status !== parseInt(event.target.value, 10)))
+    }
+    console.log(crowded_status)
   };
 
   const handleSubmitFilterForm = () => {
@@ -208,7 +217,7 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
             >
               今店での人数
             </FormLabel>
-            <RadioGroup
+            {/* <RadioGroup
               aria-labelledby="crowded-status"
               name="crowded-status"
               defaultValue={trafficOptions[3].value}
@@ -222,7 +231,23 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
                   label={option.label}
                 />
               ))}
-            </RadioGroup>
+            </RadioGroup> */}
+            <FormGroup>
+              {trafficOptions.map((option) => (
+                <FormControlLabel
+                  key={option.value}
+                  control={
+                    <Checkbox
+                      name={option.label}
+                      value={option.value}
+                      checked={crowded_status.includes(option.value)}
+                      onChange={handleChangeCrowdedStatus}
+                    />
+                  }
+                  label={option.label}
+                />
+              ))}
+            </FormGroup>
           </FormControl>
         </Box>
         <hr />

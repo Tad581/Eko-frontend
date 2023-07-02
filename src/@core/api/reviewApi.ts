@@ -26,7 +26,7 @@ export const ReviewAPI = {
         return qs.stringify(params);
       },
     });
-    console.log("AuthAPI:: getAll review :: response?.data: ", response?.data);
+    console.log("ReviewAPI:: getAll review :: response?.data: ", response?.data);
 
     return response?.data || [];
   },
@@ -47,7 +47,7 @@ export const ReviewAPI = {
         review: params.review,
       },
     });
-    console.log("AuthAPI:: postOne review :: response?.data: ", response);
+    console.log("ReviewAPI:: postOne review :: response?.data: ", response);
     response?.status === 201
       ? toast.success("レビュー成功した", {
           position: "top-right",
