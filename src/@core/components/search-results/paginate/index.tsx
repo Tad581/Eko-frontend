@@ -215,6 +215,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
               status={data.status}
               verified={data.verified}
               images={data.images}
+              bookmarked={data.bookmarked}
             />
           ))
         ) : (

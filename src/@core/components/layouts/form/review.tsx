@@ -32,6 +32,7 @@ import { ReviewAPI } from "@/@core/api/reviewApi";
 
 // ** Other import
 import axios from "axios";
+import { CURRENT_USER_ID } from "@/@core/utils/cafes";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -95,7 +96,7 @@ export default function MakeReview(props: IProps) {
     coffee_shop_ID: props.coffee_shop_ID,
     star: 0,
     review: "",
-    user_ID: 4,
+    user_ID: CURRENT_USER_ID,
     images: [],
   };
 

@@ -1,6 +1,6 @@
+import { CURRENT_USER_ID } from './../utils/cafes';
 import api from "./configs/axiosConfigs";
 import * as qs from "qs";
-
 
 export const CafeAPI = {
   getAll: async function (params: {
@@ -14,6 +14,7 @@ export const CafeAPI = {
     crowded_status?: number[];
     page?: number;
     pageSize?: number;
+    user_ID?: number;
   }) {
     const response = await api.request({
       url: `/coffee_shop`,
@@ -27,6 +28,7 @@ export const CafeAPI = {
         orderType: params.orderType,
         opening_at: params.opening_at,
         now: params.now,
+        user_ID: CURRENT_USER_ID,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);

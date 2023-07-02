@@ -14,12 +14,18 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 // ** Interfaces import
-import { ICafeInfo } from "@/interfaces";
+import { ICafeInfo, IBookmarkInput } from "@/interfaces";
+import { CURRENT_USER_ID } from "@/@core/utils/cafes";
+
+// ** API import
+import { BookmarkAPI } from "@/@core/api/bookmarkApi";
 
 // ** Hooks import
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import { useState } from "react";
 
 const resultPageBoxStyle = {
   border: "1px solid #000",
@@ -28,7 +34,18 @@ const resultPageBoxStyle = {
 };
 
 export const CardItemResultPage = (props: ICafeInfo) => {
-  // const router = useRouter();
+  // const router = use Router();
+  const [bookmarked, setBookmarked] = useState<number>(props.bookmarked);
+
+  const handleBookmark = async (bookmarkInput: IBookmarkInput) => {
+    if (props.bookmarked === 0) {
+      setBookmarked(1);
+      await BookmarkAPI.postOne(bookmarkInput);
+    } else {
+      setBookmarked(0);
+      await BookmarkAPI.deleteOne(bookmarkInput);
+    }
+  };
 
   return (
     <Box
@@ -174,8 +191,18 @@ export const CardItemResultPage = (props: ICafeInfo) => {
             position: "absolute",
             right: "20px",
           }}
+          onClick={() =>
+            handleBookmark({
+              user_ID: CURRENT_USER_ID,
+              coffee_shop_ID: props.id,
+            })
+          }
         >
-          <BookmarkBorderOutlinedIcon />
+          {bookmarked === 0 ? (
+            <BookmarkBorderOutlinedIcon />
+          ) : (
+            <BookmarkIcon />
+          )}
         </Box>
       </Card>
     </Box>

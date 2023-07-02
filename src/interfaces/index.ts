@@ -23,8 +23,9 @@ export interface ICafeInfo {
   };
   status: number; // Đánh giá của Admin về điều hòa của quán
   verified: number;
+  bookmarked: number;
+  bookmark_count?: number;
 }
-
 
 export interface IFilterForm {
   time: {
@@ -49,6 +50,11 @@ export interface IReview {
   nationality: string;
 }
 
+export interface IBookmarkInput {
+  user_ID: number;
+  coffee_shop_ID: number;
+}
+
 export enum ECrowdedStatus {
   Crowded = 2,
   Normal = 1,
@@ -70,6 +76,5 @@ export enum ESortModeReview {
 export enum EUserNationality {
   Japan = "日本",
   VietNam = "VietNam",
-  All = "全て"
+  All = "全て",
 }
-

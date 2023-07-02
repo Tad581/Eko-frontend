@@ -247,3 +247,5 @@ export const timeValues = [
     label: "23:00",
   },
 ];
+
+export const CURRENT_USER_ID = 4

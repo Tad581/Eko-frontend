@@ -56,7 +56,7 @@ export const ReviewAPI = {
     response?.status === 201
       ? toast.success("レビュー成功した", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -74,6 +74,6 @@ export const ReviewAPI = {
           progress: undefined,
           theme: "light",
         });
-    return response?.data || [];
+    return response?.data;
   },
 };
