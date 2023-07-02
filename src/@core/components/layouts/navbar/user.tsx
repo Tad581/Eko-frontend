@@ -83,7 +83,7 @@ export const UserNavbar = () => {
             variant="contained"
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
-            // onClick={() => router.push("/add-cafe")}
+            onClick={() => router.push("/add-cafe")}
           >
             レビュー
           </Button>

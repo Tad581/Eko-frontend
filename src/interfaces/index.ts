@@ -31,7 +31,7 @@ export interface IFilterForm {
     opening_at: string;
     closing_at: string;
   };
-  crowded_status: ECrowdedStatus;
+  crowded_status: ECrowdedStatus[];
 }
 
 export interface IReview {
@@ -50,7 +50,6 @@ export interface IReview {
 }
 
 export enum ECrowdedStatus {
-  All = 3,
   Crowded = 2,
   Normal = 1,
   Secluded = 0,

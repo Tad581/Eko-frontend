@@ -10,7 +10,7 @@ export const OtherAPI = {
         file: params.file
       },
     });
-    console.log("AuthAPI:: postOne image :: response?.data: ", response?.data);
+    console.log("OtherAPI:: uploadOne image :: response?.data: ", response?.data);
 
     return response?.data || [];
   },
