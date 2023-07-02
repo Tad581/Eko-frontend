@@ -20,21 +20,21 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 
 // ** Hooks import
 import { useRouter } from "next/router";
-import {useState} from "react"
+import { useState } from "react";
 
 export const UserNavbar = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   const handleSubmit = () => {
-    router.reload()
+    router.reload();
     localStorage.setItem("keyword", searchKeyword);
   };
 
   const handleSubmitEnterKey = (event: any) => {
     if (event.key === "Enter") {
-      router.reload()
+      router.reload();
       localStorage.setItem("keyword", searchKeyword);
     }
   };
@@ -83,6 +83,7 @@ export const UserNavbar = () => {
             variant="contained"
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
+            onClick={() => router.push("/add-cafe")}
           >
             レビュー
           </Button>

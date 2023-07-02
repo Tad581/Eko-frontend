@@ -152,7 +152,7 @@ export default function MakeReview(props: IProps) {
     const params = { ...formValue, images: reviewImages };
     props.handleClose();
     await ReviewAPI.postOne(params);
-    // router.reload();
+    router.reload();
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
