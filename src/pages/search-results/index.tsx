@@ -17,7 +17,7 @@ export default function Home() {
         opening_at: "なし",
         closing_at: "なし"
       },
-      crowded_status: ECrowdedStatus.All
+      crowded_status: [ECrowdedStatus.Crowded, ECrowdedStatus.Normal, ECrowdedStatus.Secluded]
   });
 
   const handleFilterFormData = (filterFormData: IFilterForm) => {

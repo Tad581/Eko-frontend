@@ -25,8 +25,31 @@ export interface ICafeInfo {
   verified: number;
 }
 
+
+export interface IFilterForm {
+  time: {
+    opening_at: string;
+    closing_at: string;
+  };
+  crowded_status: ECrowdedStatus[];
+}
+
+export interface IReview {
+  id: number;
+  review: string;
+  star: number;
+  create_at: string;
+  coffee_shop_ID: number;
+  user_ID: number;
+  avatar: string;
+  email: string;
+  role: number;
+  username: string;
+  images: string[];
+  nationality: string;
+}
+
 export enum ECrowdedStatus {
-  All = 3,
   Crowded = 2,
   Normal = 1,
   Secluded = 0,
@@ -44,24 +67,9 @@ export enum ESortModeReview {
   Oldest = 1,
 }
 
-export interface IFilterForm {
-  time: {
-    opening_at: string;
-    closing_at: string;
-  };
-  crowded_status: ECrowdedStatus;
+export enum EUserNationality {
+  Japan = "日本",
+  VietNam = "VietNam",
+  All = "全て"
 }
 
-export interface IReview {
-  id: number;
-  review: string;
-  star: number;
-  create_at: string;
-  coffee_shop_ID: number;
-  user_ID: number;
-  avatar: string;
-  email: string;
-  role: number;
-  username: string;
-  images: string[];
-}

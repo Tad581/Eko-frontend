@@ -1,6 +1,7 @@
 import api from "./configs/axiosConfigs";
 import * as qs from "qs";
 
+
 export const CafeAPI = {
   getAll: async function (params: {
     name?: string | null;
@@ -10,7 +11,7 @@ export const CafeAPI = {
     orderBy?: string;
     orderType?: string;
     now?: string;
-    crowded_status?: number;
+    crowded_status?: number[];
     page?: number;
     pageSize?: number;
   }) {
@@ -32,7 +33,7 @@ export const CafeAPI = {
       },
     });
     console.log(
-      "AuthAPI:: getAll cafe:: response?.data: ",
+      "CoffeeAPI:: getAll cafe:: response?.data: ",
       response?.data
     );
 
@@ -54,7 +55,7 @@ export const CafeAPI = {
       },
     });
     console.log(
-      "AuthAPI:: getOne cafe:: response?.data: ",
+      "CoffeeAPI:: getOne cafe:: response?.data: ",
       response?.data
     );
 

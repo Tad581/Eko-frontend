@@ -1,4 +1,9 @@
-import { ECrowdedStatus, ESortMode, ESortModeReview } from "@/interfaces";
+import {
+  ECrowdedStatus,
+  ESortMode,
+  ESortModeReview,
+  EUserNationality,
+} from "@/interfaces";
 import moment from "moment";
 
 export const objectToArray = (inputObject: any) => {
@@ -107,13 +112,19 @@ export const apiSortOptionsReview = {
   },
 };
 
+export const nationalityFilterOption = [
+  EUserNationality.Japan,
+  EUserNationality.VietNam,
+  EUserNationality.All
+];
+
 export const handleSortOption = (option: ESortMode) => {
   return apiSortOptions[option];
 };
 
 export const handleSortOptionReview = (option: ESortModeReview) => {
   return apiSortOptionsReview[option];
-}
+};
 
 export const trafficOptions = [
   {
@@ -128,10 +139,10 @@ export const trafficOptions = [
     value: ECrowdedStatus.Secluded,
     label: "少ない",
   },
-  {
-    value: ECrowdedStatus.All,
-    label: "全て",
-  },
+  // {
+  //   value: ECrowdedStatus.All,
+  //   label: "全て",
+  // },
 ];
 
 export const timeValues = [

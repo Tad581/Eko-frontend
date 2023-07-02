@@ -42,7 +42,7 @@ export const Thumbnail = () => {
       }}
     >
       <Typography align="center" mb={5} sx={{ fontWeight: 600, fontSize: 40 }}>
-        いっらしゃいませ〜
+        いらっしゃいませ〜
       </Typography>
       <Stack
         direction="row"
@@ -51,7 +51,7 @@ export const Thumbnail = () => {
         alignItems="center"
       >
         <TextField
-          label="名前"
+          label="名前・住所"
           variant="outlined"
           size="small"
           value={searchKeyword}

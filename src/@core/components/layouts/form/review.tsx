@@ -29,7 +29,6 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // ** APIs import
 import { ReviewAPI } from "@/@core/api/reviewApi";
-import { OtherAPI } from "@/@core/api/otherApi";
 
 // ** Other import
 import axios from "axios";
@@ -132,10 +131,9 @@ export default function MakeReview(props: IProps) {
 
   const handleSubmit = async () => {
     const reviewImages: string[] = [];
-    uploadFiles.forEach(async (file: any) => {
+    for (const file of uploadFiles) {
       const formData = new FormData();
       formData.append("file", file);
-
       try {
         const res = await axios.post(
           "https://itss-1-be.fly.dev/api/v2/upload",
@@ -146,26 +144,15 @@ export default function MakeReview(props: IProps) {
             },
           }
         );
-        console.log(
-          "🚀 ~ file: review.tsx:150 ~ uploadFiles.forEach ~ res:",
-          res
-        );
         reviewImages.push(res.data.url);
-        console.log(
-          "🚀 ~ file: review.tsx:151 ~ uploadFiles.forEach ~ reviewImages:",
-          reviewImages
-        );
       } catch (error) {
         // Handle the error
       }
-    });
-    setTimeout(async () => {
-      const params = { ...formValue, images: reviewImages };
-      console.log("🚀 ~ file: review.tsx:156 ~ handleSubmit ~ params:", params);
-      props.handleClose();
-      await ReviewAPI.postOne(params);
-      router.reload();
-    }, 2500);
+    }
+    const params = { ...formValue, images: reviewImages };
+    props.handleClose();
+    await ReviewAPI.postOne(params);
+    router.reload();
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -284,7 +271,7 @@ export default function MakeReview(props: IProps) {
 
               <Box sx={{ my: 0.5 }}>
                 <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
-                  エアコンの評価点
+                  コメント
                 </Typography>
                 <Field
                   as={TextField}

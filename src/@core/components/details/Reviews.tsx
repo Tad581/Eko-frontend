@@ -20,13 +20,14 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useState, useEffect } from "react";
 
 // ** Interfaces import
-import { IReview, ESortModeReview } from "@/interfaces";
+import { IReview, ESortModeReview, EUserNationality } from "@/interfaces";
 
 // ** Other import
 import {
   sortOptionsReview,
   apiSortOptionsReview,
   handleSortOptionReview,
+  nationalityFilterOption,
 } from "@/@core/utils/cafes";
 
 // ** APIs import
@@ -46,9 +47,12 @@ export default function Reviews(props: IProps) {
     ESortModeReview.Newest
   );
 
+  const [filterMode, setFilterMode] = useState<EUserNationality>();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -57,22 +61,31 @@ export default function Reviews(props: IProps) {
     setSortMode(event.target.value as unknown as ESortModeReview);
   };
 
+  const handleChangeFilterMode = (event: SelectChangeEvent) => {
+    setFilterMode(event.target.value as unknown as EUserNationality);
+  };
+
   useEffect(() => {
     if (props.id !== undefined) {
       let paramsReview = {
         coffee_shop_ID: props.id,
         orderType: apiSortOptionsReview[ESortModeReview.Newest].orderType,
         orderBy: apiSortOptionsReview[ESortModeReview.Newest].orderBy,
+        user_nationality_whitelist: filterMode,
       };
 
       paramsReview.orderBy = handleSortOptionReview(sortMode).orderBy;
       paramsReview.orderType = handleSortOptionReview(sortMode).orderType;
+
+      if (filterMode === EUserNationality.All)
+        delete paramsReview.user_nationality_whitelist;
+
       (async () => {
         const getAllReview = await ReviewAPI.getAll(paramsReview);
         setReviews(getAllReview.data);
       })();
     }
-  }, [props.id, sortMode]);
+  }, [props.id, sortMode, filterMode]);
 
   return (
     <Box mt={3}>
@@ -81,6 +94,30 @@ export default function Reviews(props: IProps) {
           レビュー
         </Typography>
         <Box display={"flex"}>
+          <Box
+            justifyContent={"flex-start"}
+            alignItems={"center"}
+            display={"flex"}
+            mr={3}
+          >
+            <Typography mr={3}>評価した人の国籍</Typography>
+            <FormControl>
+              <Select
+                labelId="sort-mode"
+                id="sort-mode"
+                value={filterMode as unknown as string}
+                onChange={handleChangeFilterMode}
+                sx={{ width: "auto", height: "40px" }}
+                defaultValue={nationalityFilterOption[0] as unknown as string}
+              >
+                {nationalityFilterOption.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
           <Box
             justifyContent={"flex-start"}
             alignItems={"center"}
@@ -134,7 +171,7 @@ export default function Reviews(props: IProps) {
               }}
             >
               <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
-                {review.username}
+                {review.username} - {review.nationality}
               </Typography>
               <Box display={"flex"}>
                 <Typography sx={{ fontSize: 14, marginRight: 1 }}>
