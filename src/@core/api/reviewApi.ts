@@ -10,6 +10,7 @@ export const ReviewAPI = {
     orderBy?: string;
     orderType?: string;
     images?: string[];
+    user_nationality_whitelist?: string;
   }) {
     const response = await api.request({
       url: `/reviews`,
@@ -21,12 +22,16 @@ export const ReviewAPI = {
         orderBy: params.orderBy,
         orderType: params.orderType,
         images: params.images,
+        user_nationality_whitelist: params.user_nationality_whitelist,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);
       },
     });
-    console.log("ReviewAPI:: getAll review :: response?.data: ", response?.data);
+    console.log(
+      "ReviewAPI:: getAll review :: response?.data: ",
+      response?.data
+    );
 
     return response?.data || [];
   },

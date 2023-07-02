@@ -25,24 +25,6 @@ export interface ICafeInfo {
   verified: number;
 }
 
-export enum ECrowdedStatus {
-  All = 3,
-  Crowded = 2,
-  Normal = 1,
-  Secluded = 0,
-}
-
-export enum ESortMode {
-  UserBest = 0,
-  UserWorst = 1,
-  AdminBest = 2,
-  AdminWorst = 3,
-}
-
-export enum ESortModeReview {
-  Newest = 0,
-  Oldest = 1,
-}
 
 export interface IFilterForm {
   time: {
@@ -64,4 +46,31 @@ export interface IReview {
   role: number;
   username: string;
   images: string[];
+  nationality: string;
 }
+
+export enum ECrowdedStatus {
+  All = 3,
+  Crowded = 2,
+  Normal = 1,
+  Secluded = 0,
+}
+
+export enum ESortMode {
+  UserBest = 0,
+  UserWorst = 1,
+  AdminBest = 2,
+  AdminWorst = 3,
+}
+
+export enum ESortModeReview {
+  Newest = 0,
+  Oldest = 1,
+}
+
+export enum EUserNationality {
+  Japan = "日本",
+  VietNam = "VietNam",
+  All = "全て"
+}
+
