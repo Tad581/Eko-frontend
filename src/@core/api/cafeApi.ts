@@ -15,6 +15,7 @@ export const CafeAPI = {
     page?: number;
     pageSize?: number;
     user_ID?: number;
+    bookmark_type?: string;
   }) {
     const response = await api.request({
       url: `/coffee_shop`,
@@ -29,6 +30,7 @@ export const CafeAPI = {
         opening_at: params.opening_at,
         now: params.now,
         user_ID: CURRENT_USER_ID,
+        bookmark_type: params.bookmark_type,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);

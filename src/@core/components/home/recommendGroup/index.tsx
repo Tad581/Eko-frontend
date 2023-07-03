@@ -51,6 +51,7 @@ export const RecommendGroup = () => {
               status={data.status}
               verified={data.verified}
               images={data.images}
+              bookmarked={data.bookmarked}
             ></CardItemHomePage>
           </Grid>
         ))}

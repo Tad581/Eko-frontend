@@ -92,6 +92,7 @@ export const UserNavbar = () => {
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
             startIcon={<BookmarkIcon />}
+            onClick={() => router.push("/bookmark")}
           >
             ブックマーク
           </Button>

@@ -18,6 +18,7 @@ import { ICafeInfo, IFilterForm, ESortMode } from "@/interfaces";
 
 // ** Hooks import
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 // ** API import
 import { CafeAPI } from "@/@core/api/cafeApi";
@@ -45,6 +46,8 @@ export const ResultPagination = ({ filterForm }: Props) => {
 
   const [sortMode, setSortMode] = useState<ESortMode>(ESortMode.UserBest);
 
+  const router = useRouter();
+
   // For pagination
   const [pagination, setPagination] = useState<any>({
     count: 0,
@@ -68,6 +71,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
       closing_at: filterForm.time.closing_at,
       crowded_status: filterForm.crowded_status,
       now: getCurrentHour(),
+      bookmark_type: router.pathname === "/bookmark" ? "bookmarked" : "all",
     };
 
     params = removeUnUseFieldInParams(params);
@@ -85,6 +89,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
       to: pageSize,
       page: 1,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterForm, sortMode]);
 
   useEffect(() => {
