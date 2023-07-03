@@ -44,6 +44,7 @@ export default function Details() {
     status: 0,
     verified: 0,
     images: [""],
+    bookmarked: 0
   });
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function Details() {
 
     if (cafeId !== undefined) {
       (async () => {
+        // TODO
         const getOneCafe = await CafeAPI.getOne(paramsCafe);
         setCafeDetail(getOneCafe);
       })();
@@ -83,6 +85,7 @@ export default function Details() {
           status={cafeDetail.status}
           verified={cafeDetail.verified}
           images={cafeDetail.images}
+          bookmarked={cafeDetail.bookmarked}
         />
         <Devices propsArray={cafeDetail.device} />
         {cafeDetail.images?.length !== 0 ? (
