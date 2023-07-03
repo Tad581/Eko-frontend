@@ -25,6 +25,7 @@ export interface ICafeInfo {
   verified: number;
   bookmarked: number;
   bookmark_count?: number;
+  crowded_hours?: any;
 }
 
 export interface IFilterForm {

@@ -8,6 +8,7 @@ import {
   Rating,
 } from "@mui/material";
 import Link from "next/link";
+import UpdateCafe from "../form/UpdateCafe";
 
 // ** MUI Icons import
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -15,6 +16,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import EditIcon from "@mui/icons-material/Edit";
 
 // ** Interfaces import
 import { ICafeInfo, IBookmarkInput } from "@/interfaces";
@@ -37,6 +39,8 @@ export const CardItemResultPage = (props: ICafeInfo) => {
   // const router = use Router();
   const [bookmarked, setBookmarked] = useState<number>(props.bookmarked);
 
+  const [open, setOpen] = useState(false);
+
   const handleBookmark = async (bookmarkInput: IBookmarkInput) => {
     if (props.bookmarked === 0) {
       setBookmarked(1);
@@ -47,17 +51,16 @@ export const CardItemResultPage = (props: ICafeInfo) => {
     }
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Box
-      width="95%"
-      sx={resultPageBoxStyle}
-      // onClick={() => {
-      //   router.push({
-      //     pathname: "/search-results/[id]",
-      //     query: { id: props.id },
-      //   });
-      // }}
-    >
+    <Box width="95%" sx={resultPageBoxStyle}>
       <Card
         sx={{
           display: "flex",
@@ -182,29 +185,72 @@ export const CardItemResultPage = (props: ICafeInfo) => {
           alignItems="center"
           justifyContent="center"
           sx={{
-            border: "1px solid #000",
-            padding: "16px",
-            borderRadius: "8px",
-            width: "50px",
-            height: "50px",
             marginTop: "16px",
             position: "absolute",
             right: "20px",
           }}
-          onClick={() =>
-            handleBookmark({
-              user_ID: CURRENT_USER_ID,
-              coffee_shop_ID: props.id,
-            })
-          }
         >
-          {bookmarked === 0 ? (
-            <BookmarkBorderOutlinedIcon />
+          {props.owner_ID !== CURRENT_USER_ID ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                border: "1px solid #000",
+                padding: "16px",
+                borderRadius: "8px",
+                width: "50px",
+                height: "50px",
+                marginRight: 2,
+              }}
+              onClick={handleClickOpen}
+            >
+              <EditIcon />
+            </Box>
           ) : (
-            <BookmarkIcon />
+            <></>
           )}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              border: "1px solid #000",
+              padding: "16px",
+              borderRadius: "8px",
+              width: "50px",
+              height: "50px",
+            }}
+            onClick={() =>
+              handleBookmark({
+                user_ID: CURRENT_USER_ID,
+                coffee_shop_ID: props.id,
+              })
+            }
+          >
+            {bookmarked === 0 ? (
+              <BookmarkBorderOutlinedIcon />
+            ) : (
+              <BookmarkIcon />
+            )}
+          </Box>
         </Box>
       </Card>
+      <UpdateCafe
+        handleClose={handleClose}
+        coffee_shop_ID={props.id}
+        open={open}
+        name={props.name}
+        opening_at={props.opening_at}
+        closing_at={props.closing_at}
+        devices={props.device}
+        crowded_hours={props.crowded_hours}
+        image={props.images}
+        description={props.description}
+        owner_ID={props.owner_ID}
+        phone_number={props.phone_number}
+        address={props.address}
+      ></UpdateCafe>
     </Box>
   );
 };
