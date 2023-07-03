@@ -8,23 +8,25 @@ import { useState } from "react";
 // ** Icons import
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
-export default function ImageForm() {
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+interface IProps {
+  uploadFiles: any;
+  handlePropsImage: any;
+}
 
-  const [uploadFiles, setUploadFiles] = useState<any>([]);
+export default function ImageForm(props: IProps) {
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    const filesArray = [...uploadFiles];
+    const filesArray = [...props.uploadFiles];
     if (files) {
       const previewArray = Array.from(files).map((file) => {
         filesArray.push(file);
         return URL.createObjectURL(file);
       });
       setPreviewImages(previewArray);
-      setUploadFiles(filesArray);
+      props.handlePropsImage(filesArray);
       // Handle the image field change here
-      console.log(files);
     }
   };
 

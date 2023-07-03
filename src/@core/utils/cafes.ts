@@ -115,7 +115,7 @@ export const apiSortOptionsReview = {
 export const nationalityFilterOption = [
   EUserNationality.Japan,
   EUserNationality.VietNam,
-  EUserNationality.All
+  EUserNationality.All,
 ];
 
 export const handleSortOption = (option: ESortMode) => {
@@ -248,4 +248,17 @@ export const timeValues = [
   },
 ];
 
-export const CURRENT_USER_ID = 4
+export const CURRENT_USER_ID = 4;
+
+export const CROWDED_TIME = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 0, 0, 0, 0],
+];
+
+export const DEVICES = [
+  {
+    name: "エアコン",
+    quantity: 3,
+    status: "goods",
+  },
+];

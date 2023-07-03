@@ -83,7 +83,7 @@ export const CafeAPI = {
        crowded_hours: params.crowded_hours,
        image: params.image,
        description: params.description,
-       owner_ID: CURRENT_USER_ID,
+       owner_ID: params.owner_ID,
        address: params.address,
       },
     });

@@ -28,7 +28,11 @@ export const UserNavbar = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   const handleSubmit = () => {
-    router.reload();
+    if (
+      router.pathname === "/bookmark"
+    )
+      router.reload();
+    else router.push("/search-results");
     localStorage.setItem("keyword", searchKeyword);
   };
 
