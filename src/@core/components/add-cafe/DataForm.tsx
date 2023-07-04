@@ -26,7 +26,7 @@ import ImageForm from "./ImageForm";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // ** Hook import
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // ** Other import
@@ -57,8 +57,18 @@ interface FormValues {
   categories?: string[];
 }
 
+const convertTimeArray = (timeArray: string[]) => {
+  const convertTime = timeArray.map((hour: string) => {
+    if (hour[0] === "0") return parseInt(hour[1], 10);
+    else return parseInt(hour.slice(0, 2), 10);
+  });
+  return convertTime;
+};
+
 export default function DataForm() {
   const [uploadFiles, setUploadFiles] = useState<any>([]);
+
+  const [crowded_status, setCrowded_status] = useState<any>(CROWDED_TIME);
 
   const router = useRouter();
 
@@ -67,7 +77,7 @@ export default function DataForm() {
     opening_at: timeValuesForAdd[0].value,
     closing_at: timeValuesForAdd[0].value,
     devices: [],
-    crowded_hours: CROWDED_TIME,
+    crowded_hours: crowded_status,
     image: [],
     description: "",
     owner_ID: CURRENT_USER_ID,
@@ -117,6 +127,36 @@ export default function DataForm() {
     console.log(formValue);
   };
 
+  const handleCrowdedTimeNormalDay = (
+    crowdedTime: string[],
+    normalTime: string[],
+    secludedTime: string[]
+  ) => {
+    const crowdedIndex = convertTimeArray(crowdedTime);
+    const normalIndex = convertTimeArray(normalTime);
+    const tempArr = crowded_status[0].map((status: number, index: number) => {
+      if (crowdedIndex.includes(index)) return 2;
+      else if (normalIndex.includes(index)) return 1;
+      else return 0;
+    });
+    setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+  };
+
+  const handleCrowdedTimeWeekendDay = (
+    crowdedTime: string[],
+    normalTime: string[],
+    secludedTime: string[]
+  ) => {
+    const crowdedIndex = convertTimeArray(crowdedTime);
+    const normalIndex = convertTimeArray(normalTime);
+    const tempArr = crowded_status[1].map((status: number, index: number) => {
+      if (crowdedIndex.includes(index)) return 2;
+      else if (normalIndex.includes(index)) return 1;
+      else return 0;
+    });
+    setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+  };
+
   const handleSubmit = async () => {
     const reviewImages: string[] = [];
     for (const file of uploadFiles) {
@@ -133,14 +173,21 @@ export default function DataForm() {
           }
         );
         reviewImages.push(res.data.url);
+        console.log("🚀 ~ file: DataForm.tsx:176 ~ handleSubmit ~ reviewImages:", reviewImages)
       } catch (error) {
         // Handle the error
       }
     }
-    const params = { ...formValue, images: reviewImages };
+    const params = { ...formValue, images: [...reviewImages] };
     await CafeAPI.createOne(params);
     router.push("/");
   };
+
+  useEffect(() => {
+    setFormValue({ ...formValue, crowded_hours: crowded_status });
+    console.log(formValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [crowded_status]);
 
   return (
     <Box sx={{ paddingX: "90px", paddingY: "50px", display: "flex" }}>
@@ -347,7 +394,26 @@ export default function DataForm() {
                 </FormGroup>
               </FormControl>
             </Box>
-            <CrowdedTime />
+            <Box
+              sx={{ my: 0.5 }}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+                平日の混雑状態
+              </Typography>
+              <CrowdedTime handleCrowdedTime={handleCrowdedTimeNormalDay} />
+            </Box>
+            <Box
+              sx={{ my: 0.5 }}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+                週末の混雑状態
+              </Typography>
+              <CrowdedTime handleCrowdedTime={handleCrowdedTimeWeekendDay} />
+            </Box>
           </DialogContent>
           <DialogActions
             sx={{

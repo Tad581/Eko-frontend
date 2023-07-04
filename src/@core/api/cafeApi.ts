@@ -64,7 +64,7 @@ export const CafeAPI = {
     status?: number;
     devices?: { name: string; quantity: number; status: string }[];
     crowded_hours?: any;
-    image?: string[];
+    images?: string[];
     description: string;
     owner_ID: number;
     phone_number: string;
@@ -76,15 +76,19 @@ export const CafeAPI = {
       url: `/coffee_shop`,
       method: "POST",
       data: {
-       name: params.name,
-       opening_at: params.opening_at,
-       closing_at: params.closing_at,
-       devices: params.devices,
-       crowded_hours: params.crowded_hours,
-       image: params.image,
-       description: params.description,
-       owner_ID: params.owner_ID,
-       address: params.address,
+        name: params.name,
+        opening_at: params.opening_at,
+        closing_at: params.closing_at,
+        devices: params.devices,
+        crowded_hours: params.crowded_hours,
+        images: params.images,
+        description: params.description,
+        phone_number: params.phone_number,
+        owner_ID: params.owner_ID,
+        address: params.address,
+        status: 0,
+        verified: 0,
+        categories: []
       },
     });
     console.log("CafeAPI:: createOne cafe :: response?.data: ", response);
@@ -112,7 +116,7 @@ export const CafeAPI = {
     return response?.data;
   },
   updateOne: async function (params: {
-    id: number,
+    id: number;
     name: string;
     opening_at: string;
     closing_at: string;

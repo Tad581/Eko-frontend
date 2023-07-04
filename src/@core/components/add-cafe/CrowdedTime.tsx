@@ -6,6 +6,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import { Typography, TextField } from "@mui/material";
+import { Field, ErrorMessage } from "formik";
 
 // ** Hooks import
 import { useState, useEffect } from "react";
@@ -13,6 +15,10 @@ import { Theme, useTheme } from "@mui/material/styles";
 
 // ** Other import
 import { timeValuesForMultiSelect } from "@/@core/utils/cafes";
+
+interface IProps {
+  handleCrowdedTime: any;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,7 +40,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-export default function CrowdedTime() {
+export default function CrowdedTime(props: IProps) {
   const theme = useTheme();
   const [secluded, setSecluded] = useState<string[]>(timeValuesForMultiSelect);
   const [normal, setNormal] = useState<string[]>([]);
@@ -67,9 +73,20 @@ export default function CrowdedTime() {
     setCrowded(crowded.filter((time) => !value.includes(time)));
   };
 
+  useEffect(() => {
+    props.handleCrowdedTime(crowded, normal, secluded);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [crowded, normal, secluded]);
+
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      width="70%"
+    >
+      <FormControl sx={{ m: 1, width: "100%" }}>
         <InputLabel id="少ない">少ない</InputLabel>
         <Select
           labelId="少ない"
@@ -78,6 +95,7 @@ export default function CrowdedTime() {
           value={secluded}
           onChange={handleChangeSecluded}
           input={<OutlinedInput id="少ない" label="少ない" />}
+          sx={{ width: "100%" }}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -99,7 +117,7 @@ export default function CrowdedTime() {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: "100%" }}>
         <InputLabel id="普通">普通</InputLabel>
         <Select
           labelId="普通"
@@ -108,6 +126,7 @@ export default function CrowdedTime() {
           value={normal}
           onChange={handleChangeNormal}
           input={<OutlinedInput id="普通" label="普通" />}
+          sx={{ width: "100%" }}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -129,7 +148,7 @@ export default function CrowdedTime() {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: "100%" }}>
         <InputLabel id="多い">多い</InputLabel>
         <Select
           labelId="多い"
@@ -158,6 +177,6 @@ export default function CrowdedTime() {
           ))}
         </Select>
       </FormControl>
-    </div>
+    </Box>
   );
 }
