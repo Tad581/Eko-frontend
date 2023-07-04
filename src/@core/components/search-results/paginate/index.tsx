@@ -221,6 +221,7 @@ export const ResultPagination = ({ filterForm }: Props) => {
               verified={data.verified}
               images={data.images}
               bookmarked={data.bookmarked}
+              crowded_hours={data.crowded_hours}
             />
           ))
         ) : (

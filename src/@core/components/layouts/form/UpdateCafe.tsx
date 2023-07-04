@@ -15,6 +15,12 @@ import {
   CardMedia,
   Rating,
   Grid,
+  Paper,
+  FormControl,
+  FormLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
@@ -28,11 +34,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 // ** APIs import
-import { ReviewAPI } from "@/@core/api/reviewApi";
+import { CafeAPI } from "@/@core/api/cafeApi";
 
 // ** Other import
 import axios from "axios";
-import { CROWDED_TIME, CURRENT_USER_ID } from "@/@core/utils/cafes";
+import {
+  CROWDED_TIME,
+  CURRENT_USER_ID,
+  timeValuesForAdd,
+} from "@/@core/utils/cafes";
+import CrowdedTime from "../../add-cafe/CrowdedTime";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -41,6 +52,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
+  },
+  "& .MuiPaper-root": {
+    maxWidth: "none",
   },
 }));
 
@@ -57,7 +71,7 @@ interface FormValues {
   status?: number;
   devices?: { name: string; quantity: number; status: string }[];
   crowded_hours?: any;
-  image?: string[];
+  images?: string[];
   description: string;
   owner_ID: number;
   phone_number: string;
@@ -72,11 +86,19 @@ interface IProps extends FormValues {
   coffee_shop_ID: number;
 }
 
+const convertTimeArray = (timeArray: string[]) => {
+  const convertTime = timeArray.map((hour: string) => {
+    if (hour[0] === "0") return parseInt(hour[1], 10);
+    else return parseInt(hour.slice(0, 2), 10);
+  });
+  return convertTime;
+};
+
 function BootstrapDialogTitle(props: DialogTitleProps) {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other} maxWidth={"none"}>
       {children}
       {onClose ? (
         <IconButton
@@ -97,22 +119,27 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export default function UpdateCafe(props: IProps) {
-  const initialValues: FormValues = {
-    name: "",
-    opening_at: "",
-    closing_at: "",
-    devices: [],
-    crowded_hours: CROWDED_TIME,
-    image: [],
-    description: "",
-    owner_ID: CURRENT_USER_ID,
-    phone_number: "",
-    address: "",
-  };
+  const [formValue, setFormValue] = useState<FormValues>({
+    name: props.name,
+    opening_at: props.opening_at,
+    closing_at: props.closing_at,
+    status: props.status,
+    devices: props.devices,
+    crowded_hours: props.crowded_hours,
+    images: props.images,
+    description: props.description,
+    owner_ID: props.owner_ID,
+    phone_number: props.phone_number,
+    address: props.address,
+    verified: props.verified,
+    categories: props.categories,
+  });
 
-  const [formValue, setFormValue] = useState<FormValues>(initialValues);
+  const [previewImages, setPreviewImages] = useState<string[]>(props.images || []);
 
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [crowded_status, setCrowded_status] = useState<any>(
+    props.crowded_hours || CROWDED_TIME
+  );
 
   const [uploadFiles, setUploadFiles] = useState<any>([]);
 
@@ -155,9 +182,12 @@ export default function UpdateCafe(props: IProps) {
         // Handle the error
       }
     }
-    const params = { ...formValue, images: reviewImages };
+    const params = {
+      ...formValue,
+      images: [...formValue.images || [], ...reviewImages],
+    };
     props.handleClose();
-    await ReviewAPI.postOne(params);
+    await CafeAPI.updateOne({ ...params, id: props.coffee_shop_ID });
     router.reload();
   };
 
@@ -176,6 +206,46 @@ export default function UpdateCafe(props: IProps) {
     }
   };
 
+  const handleChangeTimeInput = (event: SelectChangeEvent) => {
+    let tempArr;
+    if (event.target.name === "opening-at")
+      tempArr = { ...formValue, opening_at: event.target.value };
+    else tempArr = { ...formValue, closing_at: event.target.value };
+    setFormValue(tempArr);
+  };
+
+  const handleCrowdedTimeNormalDay = (
+    crowdedTime: string[],
+    normalTime: string[],
+    secludedTime: string[]
+  ) => {
+    const crowdedIndex = convertTimeArray(crowdedTime);
+    const normalIndex = convertTimeArray(normalTime);
+    const tempArr = crowded_status[0].map((status: number, index: number) => {
+      if (crowdedIndex.includes(index)) return 2;
+      else if (normalIndex.includes(index)) return 1;
+      else return 0;
+    });
+    setCrowded_status([[...tempArr], [...crowded_status[1]]]);
+  };
+
+  const handleCrowdedTimeWeekendDay = (
+    crowdedTime: string[],
+    normalTime: string[],
+    secludedTime: string[]
+  ) => {
+    const crowdedIndex = convertTimeArray(crowdedTime);
+    const normalIndex = convertTimeArray(normalTime);
+    const tempArr = crowded_status[1].map((status: number, index: number) => {
+      if (crowdedIndex.includes(index)) return 2;
+      else if (normalIndex.includes(index)) return 1;
+      else return 0;
+    });
+    setTimeout(() => {
+      setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+    }, 100);
+  };
+
   return (
     <BootstrapDialog
       onClose={props.handleClose}
@@ -190,9 +260,9 @@ export default function UpdateCafe(props: IProps) {
           喫茶店の編集
         </Typography>
       </BootstrapDialogTitle>
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
+      <Formik initialValues={formValue} onSubmit={() => {}}>
         <Form>
-          <DialogContent dividers sx={{width: "60vw"}}>
+          <DialogContent dividers sx={{ width: "60vw" }}>
             <Box
               sx={{ my: 0.5 }}
               display={"flex"}
@@ -208,7 +278,7 @@ export default function UpdateCafe(props: IProps) {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.name}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="name" component="div" />
             </Box>
@@ -227,7 +297,7 @@ export default function UpdateCafe(props: IProps) {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.address}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="address" component="div" />
             </Box>
@@ -246,10 +316,106 @@ export default function UpdateCafe(props: IProps) {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.phone_number}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="phone_number" component="div" />
             </Box>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              sx={{ marginY: "5px" }}
+            >
+              <FormLabel id="working-time">
+                <Typography
+                  align="center"
+                  my={1}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: 16,
+                    marginBottom: "0px",
+                    color: "black",
+                  }}
+                >
+                  営業時間
+                </Typography>
+              </FormLabel>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                width="70%"
+                my={1}
+                sx={{ fontSize: "16px" }}
+              >
+                <FormControl sx={{ mr: 1, width: "50%" }}>
+                  {/* <InputLabel id="opening-at">開</InputLabel> */}
+                  <Select
+                    id="opening-at"
+                    // label="開"
+                    defaultValue={timeValuesForAdd[0].value}
+                    value={formValue.opening_at}
+                    onChange={handleChangeTimeInput}
+                    name="opening-at"
+                  >
+                    {timeValuesForAdd.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {" - "}
+                <FormControl sx={{ ml: 1, width: "50%" }}>
+                  {/* <InputLabel id="closing-at">閉</InputLabel> */}
+                  <Select
+                    id="closing-at"
+                    // label="閉"
+                    defaultValue={timeValuesForAdd[0].value}
+                    value={formValue.closing_at}
+                    onChange={handleChangeTimeInput}
+                    name="closing-at"
+                  >
+                    {timeValuesForAdd.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+            {/* <Box
+              sx={{ my: 0.5 }}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+                平日の混雑状態
+              </Typography>
+              <CrowdedTime
+                handleCrowdedTime={handleCrowdedTimeNormalDay}
+                isUpdate={true}
+                initialTime={
+                  formValue.crowded_hours ? formValue.crowded_hours[0] : []
+                }
+              />
+            </Box>
+            <Box
+              sx={{ my: 0.5 }}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
+                週末の混雑状態
+              </Typography>
+              <CrowdedTime
+                handleCrowdedTime={handleCrowdedTimeWeekendDay}
+                isUpdate={true}
+                initialTime={
+                  formValue.crowded_hours ? formValue?.crowded_hours[1] : []
+                }
+              />
+            </Box> */}
             <Box>
               <Typography
                 sx={{ fontSize: 16, fontWeight: 700, my: 1, width: "95%" }}

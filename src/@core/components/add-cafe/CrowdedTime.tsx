@@ -18,6 +18,8 @@ import { timeValuesForMultiSelect } from "@/@core/utils/cafes";
 
 interface IProps {
   handleCrowdedTime: any;
+  initialTime?: any;
+  isUpdate?: boolean;
 }
 
 const ITEM_HEIGHT = 48;
@@ -40,11 +42,33 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
+const convertIndexToTime = (index: number) => {
+  if (index < 10) return "0" + index + ":00";
+  else return index + ":00";
+};
+
 export default function CrowdedTime(props: IProps) {
   const theme = useTheme();
   const [secluded, setSecluded] = useState<string[]>(timeValuesForMultiSelect);
   const [normal, setNormal] = useState<string[]>([]);
   const [crowded, setCrowded] = useState<string[]>([]);
+
+  const handleInitialData = (crowded_hours: number[]) => {
+    const secludedIndex: string[] = [];
+    const normalIndex: string[] = [];
+    const crowdedIndex: string[] = [];
+
+    crowded_hours.forEach((status: number, index) => {
+      if (status === 0) {
+        secludedIndex.push(convertIndexToTime(index));
+      } else if (status === 1) {
+        normalIndex.push(convertIndexToTime(index));
+      } else crowdedIndex.push(convertIndexToTime(index));
+    });
+    setSecluded([...secludedIndex]);
+    setNormal([...normalIndex]);
+    setCrowded([...crowdedIndex]);
+  };
 
   const handleChangeCrowded = (event: SelectChangeEvent<typeof crowded>) => {
     const {
@@ -77,6 +101,13 @@ export default function CrowdedTime(props: IProps) {
     props.handleCrowdedTime(crowded, normal, secluded);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crowded, normal, secluded]);
+
+  useEffect(() => {
+    if (props.isUpdate && props.initialTime?.length > 0) {
+      handleInitialData(props.initialTime);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.initialTime]);
 
   return (
     <Box

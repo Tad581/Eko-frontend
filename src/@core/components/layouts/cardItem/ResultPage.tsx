@@ -190,7 +190,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
             right: "20px",
           }}
         >
-          {props.owner_ID !== CURRENT_USER_ID ? (
+          {props.owner_ID === CURRENT_USER_ID ? (
             <Box
               display="flex"
               alignItems="center"
@@ -245,7 +245,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
         closing_at={props.closing_at}
         devices={props.device}
         crowded_hours={props.crowded_hours}
-        image={props.images}
+        images={props.images}
         description={props.description}
         owner_ID={props.owner_ID}
         phone_number={props.phone_number}

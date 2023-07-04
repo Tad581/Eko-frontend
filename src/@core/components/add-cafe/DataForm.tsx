@@ -99,33 +99,31 @@ export default function DataForm() {
 
   const handleChangeTimeInput = (event: SelectChangeEvent) => {
     let tempArr;
-    console.log(event);
     if (event.target.name === "opening-at")
       tempArr = { ...formValue, opening_at: event.target.value };
     else tempArr = { ...formValue, closing_at: event.target.value };
     setFormValue(tempArr);
-    console.log(formValue);
   };
 
-  const handleChangeDeviceList = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = JSON.parse(event.target.value);
-    console.log(value);
-    const index = formValue.devices.findIndex((item: any) => {
-      return value.name === item.name;
-    });
-    if (index === -1) {
-      const tempArr = [...formValue.devices, value];
-      setFormValue({ ...formValue, devices: tempArr });
-    } else {
-      const tempArr = formValue.devices.filter(
-        (device: any) => device.name !== value.name
-      );
-      setFormValue({ ...formValue, devices: tempArr });
-    }
-    console.log(formValue);
-  };
+  // const handleChangeDeviceList = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const value = JSON.parse(event.target.value);
+  //   console.log(value);
+  //   const index = formValue.devices.findIndex((item: any) => {
+  //     return value.name === item.name;
+  //   });
+  //   if (index === -1) {
+  //     const tempArr = [...formValue.devices, value];
+  //     setFormValue({ ...formValue, devices: tempArr });
+  //   } else {
+  //     const tempArr = formValue.devices.filter(
+  //       (device: any) => device.name !== value.name
+  //     );
+  //     setFormValue({ ...formValue, devices: tempArr });
+  //   }
+  //   console.log(formValue);
+  // };
 
   const handleCrowdedTimeNormalDay = (
     crowdedTime: string[],
@@ -139,7 +137,7 @@ export default function DataForm() {
       else if (normalIndex.includes(index)) return 1;
       else return 0;
     });
-    setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+    setCrowded_status([[...tempArr], [...crowded_status[1]]]);
   };
 
   const handleCrowdedTimeWeekendDay = (
@@ -154,7 +152,9 @@ export default function DataForm() {
       else if (normalIndex.includes(index)) return 1;
       else return 0;
     });
-    setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+    setTimeout(() => {
+      setCrowded_status([[...crowded_status[0]], [...tempArr]]);
+    }, 100);
   };
 
   const handleSubmit = async () => {
@@ -184,8 +184,7 @@ export default function DataForm() {
   };
 
   useEffect(() => {
-    setFormValue({ ...formValue, crowded_hours: crowded_status });
-    console.log(formValue);
+    setFormValue({ ...formValue, crowded_hours: [...crowded_status] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crowded_status]);
 
@@ -282,7 +281,7 @@ export default function DataForm() {
             <Box
               display="flex"
               justifyContent="space-between"
-              sx={{ marginY: "20px" }}
+              sx={{ marginY: "5px" }}
             >
               <FormLabel id="working-time">
                 <Typography
@@ -343,7 +342,7 @@ export default function DataForm() {
                 </FormControl>
               </Box>
             </Box>
-            <Box sx={{ my: 1 }}>
+            {/* <Box sx={{ my: 1 }}>
               <FormControl
                 sx={{
                   display: "flex",
@@ -393,7 +392,7 @@ export default function DataForm() {
                   ))}
                 </FormGroup>
               </FormControl>
-            </Box>
+            </Box> */}
             <Box
               sx={{ my: 0.5 }}
               display={"flex"}

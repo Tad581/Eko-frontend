@@ -69,6 +69,7 @@ export default function Details() {
           address={cafeDetail.address}
           closing_at={cafeDetail.closing_at}
           current_crowded={cafeDetail.current_crowded}
+          crowded_hours={cafeDetail.crowded_hours}
           description={cafeDetail.description}
           device={cafeDetail.device}
           id={cafeDetail.id}

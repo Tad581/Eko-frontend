@@ -80,7 +80,11 @@ export const CafeAPI = {
         name: params.name,
         opening_at: params.opening_at,
         closing_at: params.closing_at,
-        devices: params.devices,
+        devices: {
+          name: "エアコン",
+          quantity: 1,
+          status: "good",
+        },
         crowded_hours: params.crowded_hours,
         images: params.images,
         description: params.description,
@@ -89,7 +93,7 @@ export const CafeAPI = {
         address: params.address,
         status: 0,
         verified: 0,
-        categories: []
+        categories: [],
       },
     });
     console.log("CafeAPI:: createOne cafe :: response?.data: ", response);
@@ -124,7 +128,7 @@ export const CafeAPI = {
     status?: number;
     devices?: { name: string; quantity: number; status: string }[];
     crowded_hours?: any;
-    image?: string[];
+    images?: string[];
     description: string;
     owner_ID: number;
     phone_number: string;
@@ -139,16 +143,24 @@ export const CafeAPI = {
         name: params.name,
         opening_at: params.opening_at,
         closing_at: params.closing_at,
-        devices: params.devices,
+        devices: {
+          name: "エアコン",
+          quantity: 1,
+          status: "good",
+        },
         crowded_hours: params.crowded_hours,
-        image: params.image,
+        images: params.images,
         description: params.description,
-        owner_ID: CURRENT_USER_ID,
+        phone_number: params.phone_number,
+        owner_ID: params.owner_ID,
         address: params.address,
+        status: 0,
+        verified: 0,
+        categories: [],
       },
     });
     console.log("CafeAPI:: updateOne cafe :: response?.data: ", response);
-    response?.status === 201
+    response?.status === 200
       ? toast.success("編集成功した", {
           position: "top-right",
           autoClose: 3000,
