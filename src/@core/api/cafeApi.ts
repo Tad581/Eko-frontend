@@ -48,6 +48,7 @@ export const CafeAPI = {
       params: {
         id: params.id,
         now: params.now,
+        user_ID: CURRENT_USER_ID,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params);

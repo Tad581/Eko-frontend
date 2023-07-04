@@ -2,7 +2,7 @@
 import { Box, Button, Rating, Typography } from "@mui/material";
 
 // ** Hooks import
-import {useState} from "react"
+import { useState, useEffect } from "react";
 
 // ** MUI Icons import
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -22,10 +22,10 @@ import { BookmarkAPI } from "@/@core/api/bookmarkApi";
 import { CURRENT_USER_ID } from "@/@core/utils/cafes";
 
 export default function BasicInfo(props: ICafeInfo) {
-  const [bookmarked, setBookmarked] = useState<number>(props.bookmarked)
+  const [bookmarked, setBookmarked] = useState<number>(props.bookmarked);
 
   const handleBookmark = async (bookmarkInput: IBookmarkInput) => {
-    if (props.bookmarked === 0) {
+    if (bookmarked === 0) {
       setBookmarked(1);
       await BookmarkAPI.postOne(bookmarkInput);
     } else {
@@ -34,6 +34,10 @@ export default function BasicInfo(props: ICafeInfo) {
     }
   };
 
+  useEffect(() => {
+    setBookmarked(props.bookmarked);
+  }, [props]);
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -41,21 +45,28 @@ export default function BasicInfo(props: ICafeInfo) {
           {props.name}
         </Typography>
         <Button
-            variant="outlined"
-            size="medium"
-            sx={{ minWidth: "100px", fontWeight: 700 }}
-            startIcon={bookmarked === 0 ? <BookmarkBorderOutlinedIcon/> : <BookmarkIcon />}
-            onClick={() =>
-              handleBookmark({
-                user_ID: CURRENT_USER_ID,
-                coffee_shop_ID: props.id,
-              })
-            }
-          >
-            {bookmarked === 0 ? 'ブークマーク' : 'ブークマークを解除'}
-          </Button>
+          variant="outlined"
+          size="medium"
+          sx={{ minWidth: "100px", fontWeight: 700 }}
+          startIcon={
+            bookmarked === 0 ? <BookmarkBorderOutlinedIcon /> : <BookmarkIcon />
+          }
+          onClick={() =>
+            handleBookmark({
+              user_ID: CURRENT_USER_ID,
+              coffee_shop_ID: props.id,
+            })
+          }
+        >
+          {bookmarked === 0 ? "ブークマーク" : "ブークマークを解除"}
+        </Button>
       </Box>
-      <Box display="flex" alignItems="flext-start" flexDirection={"column"} my={2}>
+      <Box
+        display="flex"
+        alignItems="flext-start"
+        flexDirection={"column"}
+        my={2}
+      >
         <Typography sx={{ fontSize: 14, marginRight: 1, fontWeight: "bold" }}>
           エアコンへの評価
         </Typography>

@@ -55,7 +55,6 @@ export default function Details() {
 
     if (cafeId !== undefined) {
       (async () => {
-        // TODO
         const getOneCafe = await CafeAPI.getOne(paramsCafe);
         setCafeDetail(getOneCafe);
       })();

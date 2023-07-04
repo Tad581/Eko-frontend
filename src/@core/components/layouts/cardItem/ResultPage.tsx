@@ -42,7 +42,7 @@ export const CardItemResultPage = (props: ICafeInfo) => {
   const [open, setOpen] = useState(false);
 
   const handleBookmark = async (bookmarkInput: IBookmarkInput) => {
-    if (props.bookmarked === 0) {
+    if (bookmarked === 0) {
       setBookmarked(1);
       await BookmarkAPI.postOne(bookmarkInput);
     } else {
