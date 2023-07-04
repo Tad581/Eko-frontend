@@ -32,7 +32,7 @@ import { ReviewAPI } from "@/@core/api/reviewApi";
 
 // ** Other import
 import axios from "axios";
-import { CROWDED_TIME, CURRENT_USER_ID, DEVICES } from "@/@core/utils/cafes";
+import { CROWDED_TIME, CURRENT_USER_ID } from "@/@core/utils/cafes";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -101,7 +101,7 @@ export default function UpdateCafe(props: IProps) {
     name: "",
     opening_at: "",
     closing_at: "",
-    devices: DEVICES,
+    devices: [],
     crowded_hours: CROWDED_TIME,
     image: [],
     description: "",
