@@ -9,6 +9,13 @@ import {
   Typography,
   Button,
   TextField,
+  FormControl,
+  FormLabel,
+  MenuItem,
+  Select,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
@@ -22,7 +29,15 @@ import { useRouter } from "next/router";
 
 // ** Other import
 import axios from "axios";
-import { CROWDED_TIME, CURRENT_USER_ID, DEVICES } from "@/@core/utils/cafes";
+import {
+  CROWDED_TIME,
+  CURRENT_USER_ID,
+  DEVICES,
+  timeValues,
+  trafficOptions,
+} from "@/@core/utils/cafes";
+
+// ** API import
 import { CafeAPI } from "@/@core/api/cafeApi";
 
 interface FormValues {
@@ -185,6 +200,133 @@ export default function DataForm() {
                 sx={{ width: "80%", my: 1 }}
               />
               <ErrorMessage name="description" component="div" />
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              sx={{ marginY: "20px" }}
+            >
+              <FormLabel id="working-time">
+                <Typography
+                  align="center"
+                  my={1}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: 16,
+                    marginBottom: "0px",
+                    color: "black",
+                  }}
+                >
+                  営業時間
+                </Typography>
+              </FormLabel>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                width="80%"
+                my={1}
+                sx={{ fontSize: "16px" }}
+              >
+                <FormControl sx={{ mr: 1, width: "50%" }}>
+                  {/* <InputLabel id="opening-at">開</InputLabel> */}
+                  <Select
+                    id="opening-at"
+                    // label="開"
+                    defaultValue={timeValues[0].value}
+                    // value={time.opening_at}
+                    // onChange={handleChangeTimeInput}
+                    name="opening-at"
+                  >
+                    {timeValues.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {" - "}
+                <FormControl sx={{ ml: 1, width: "50%" }}>
+                  {/* <InputLabel id="closing-at">閉</InputLabel> */}
+                  <Select
+                    id="closing-at"
+                    // label="閉"
+                    defaultValue={timeValues[0].value}
+                    // value={time.closing_at}
+                    // onChange={handleChangeTimeInput}
+                    name="closing-at"
+                  >
+                    {timeValues.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+            <Box sx={{ my: 1 }}>
+              <FormControl
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <FormLabel id="crowded-status">
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      marginBottom: "0px",
+                      alignItems: "center",
+                    }}
+                  >
+                    ユーティリティー
+                  </Typography>
+                </FormLabel>
+                {/* <RadioGroup
+              aria-labelledby="crowded-status"
+              name="crowded-status"
+              defaultValue={trafficOptions[3].value}
+              onChange={handleChangeCrowdedStatus}
+            >
+              {trafficOptions.map((option) => (
+                <FormControlLabel
+                  value={option.value}
+                  key={option.value}
+                  control={<Radio />}
+                  label={option.label}
+                />
+              ))}
+            </RadioGroup> */}
+                <FormGroup
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "80%"
+                  }}
+                >
+                  {trafficOptions.map((option) => (
+                    <FormControlLabel
+                      key={option.value}
+                      control={
+                        <Checkbox
+                          name={option.label}
+                          value={option.value}
+                          // checked={crowded_status.includes(option.value)}
+                          // onChange={handleChangeCrowdedStatus}
+                        />
+                      }
+                      label={option.label}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
             </Box>
           </DialogContent>
           <DialogActions
