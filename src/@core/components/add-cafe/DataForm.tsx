@@ -16,6 +16,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  SelectChangeEvent,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
@@ -32,9 +33,8 @@ import axios from "axios";
 import {
   CROWDED_TIME,
   CURRENT_USER_ID,
-  DEVICES,
-  timeValues,
-  trafficOptions,
+  devicesList,
+  timeValuesForAdd,
 } from "@/@core/utils/cafes";
 
 // ** API import
@@ -45,7 +45,7 @@ interface FormValues {
   opening_at: string;
   closing_at: string;
   status?: number;
-  devices?: { name: string; quantity: number; status: string }[];
+  devices: any;
   crowded_hours?: any;
   image?: string[];
   description: string;
@@ -63,9 +63,9 @@ export default function DataForm() {
 
   const initialValues: FormValues = {
     name: "",
-    opening_at: "",
-    closing_at: "",
-    devices: DEVICES,
+    opening_at: timeValuesForAdd[0].value,
+    closing_at: timeValuesForAdd[0].value,
+    devices: [],
     crowded_hours: CROWDED_TIME,
     image: [],
     description: "",
@@ -84,6 +84,36 @@ export default function DataForm() {
     const { name, value } = event.target;
     const tempValue = { ...formValue, [name]: value };
     setFormValue(tempValue);
+  };
+
+  const handleChangeTimeInput = (event: SelectChangeEvent) => {
+    let tempArr;
+    console.log(event);
+    if (event.target.name === "opening-at")
+      tempArr = { ...formValue, opening_at: event.target.value };
+    else tempArr = { ...formValue, closing_at: event.target.value };
+    setFormValue(tempArr);
+    console.log(formValue);
+  };
+
+  const handleChangeDeviceList = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = JSON.parse(event.target.value);
+    console.log(value);
+    const index = formValue.devices.findIndex((item: any) => {
+      return value.name === item.name;
+    });
+    if (index === -1) {
+      const tempArr = [...formValue.devices, value];
+      setFormValue({ ...formValue, devices: tempArr });
+    } else {
+      const tempArr = formValue.devices.filter(
+        (device: any) => device.name !== value.name
+      );
+      setFormValue({ ...formValue, devices: tempArr });
+    }
+    console.log(formValue);
   };
 
   const handleSubmit = async () => {
@@ -139,7 +169,7 @@ export default function DataForm() {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.name}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="name" component="div" />
             </Box>
@@ -158,7 +188,7 @@ export default function DataForm() {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.address}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="address" component="div" />
             </Box>
@@ -177,7 +207,7 @@ export default function DataForm() {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.phone_number}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="phone_number" component="div" />
             </Box>
@@ -197,7 +227,7 @@ export default function DataForm() {
                 required
                 onChange={handleOnchangeValue}
                 value={formValue.description}
-                sx={{ width: "80%", my: 1 }}
+                sx={{ width: "70%", my: 1 }}
               />
               <ErrorMessage name="description" component="div" />
             </Box>
@@ -224,7 +254,7 @@ export default function DataForm() {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                width="80%"
+                width="70%"
                 my={1}
                 sx={{ fontSize: "16px" }}
               >
@@ -233,12 +263,12 @@ export default function DataForm() {
                   <Select
                     id="opening-at"
                     // label="開"
-                    defaultValue={timeValues[0].value}
-                    // value={time.opening_at}
-                    // onChange={handleChangeTimeInput}
+                    defaultValue={timeValuesForAdd[0].value}
+                    value={formValue.opening_at}
+                    onChange={handleChangeTimeInput}
                     name="opening-at"
                   >
-                    {timeValues.map((option) => (
+                    {timeValuesForAdd.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -251,12 +281,12 @@ export default function DataForm() {
                   <Select
                     id="closing-at"
                     // label="閉"
-                    defaultValue={timeValues[0].value}
-                    // value={time.closing_at}
-                    // onChange={handleChangeTimeInput}
+                    defaultValue={timeValuesForAdd[0].value}
+                    value={formValue.closing_at}
+                    onChange={handleChangeTimeInput}
                     name="closing-at"
                   >
-                    {timeValues.map((option) => (
+                    {timeValuesForAdd.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -270,7 +300,7 @@ export default function DataForm() {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                   justifyContent: "space-between",
                 }}
               >
@@ -281,45 +311,33 @@ export default function DataForm() {
                       fontWeight: 700,
                       fontSize: 16,
                       marginBottom: "0px",
-                      alignItems: "center",
+                      marginTop: 1,
                     }}
                   >
                     ユーティリティー
                   </Typography>
                 </FormLabel>
-                {/* <RadioGroup
-              aria-labelledby="crowded-status"
-              name="crowded-status"
-              defaultValue={trafficOptions[3].value}
-              onChange={handleChangeCrowdedStatus}
-            >
-              {trafficOptions.map((option) => (
-                <FormControlLabel
-                  value={option.value}
-                  key={option.value}
-                  control={<Radio />}
-                  label={option.label}
-                />
-              ))}
-            </RadioGroup> */}
+
                 <FormGroup
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "80%"
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    width: "70%",
                   }}
                 >
-                  {trafficOptions.map((option) => (
+                  {devicesList.map((option) => (
                     <FormControlLabel
-                      key={option.value}
+                      key={option.label}
                       control={
                         <Checkbox
                           name={option.label}
-                          value={option.value}
-                          // checked={crowded_status.includes(option.value)}
-                          // onChange={handleChangeCrowdedStatus}
+                          value={JSON.stringify(option.value)}
+                          checked={formValue.devices.some(
+                            (item: any) => item.name === option.value.name
+                          )}
+                          onChange={handleChangeDeviceList}
                         />
                       }
                       label={option.label}

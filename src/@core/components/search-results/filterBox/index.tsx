@@ -61,14 +61,17 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
   const handleChangeCrowdedStatus = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    // setCrowdedStatus(event.target.value as unknown as ECrowdedStatus);
     const index = crowded_status.indexOf(parseInt(event.target.value, 10));
     if (index === -1) {
       setCrowdedStatus([...crowded_status, parseInt(event.target.value, 10)]);
     } else {
-      setCrowdedStatus(crowded_status.filter(status => status !== parseInt(event.target.value, 10)))
+      setCrowdedStatus(
+        crowded_status.filter(
+          (status) => status !== parseInt(event.target.value, 10)
+        )
+      );
     }
-    console.log(crowded_status)
+    console.log(crowded_status);
   };
 
   const handleSubmitFilterForm = () => {
@@ -164,41 +167,6 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
           </Box>
         </Box>
         <hr />
-        {/* <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-start"
-          sx={{ marginTop: "20px" }}
-        >
-          <Typography
-            align="center"
-            mb={5}
-            sx={{
-              fontWeight: 600,
-              fontSize: 16,
-              marginBottom: "0px",
-              color: "black",
-            }}
-          >
-            ユーティリティー
-          </Typography>
-          <FormGroup>
-            {devicesList.map((device) => (
-              <FormControlLabel
-                key={device.value}
-                control={
-                  <Checkbox
-                    name={device.label}
-                    value={filterForm[device.value as keyof IFilterForm]}
-                    onChange={handleCheckboxChange}
-                  />
-                }
-                label={device.label}
-              />
-            ))}
-          </FormGroup>
-        </Box>
-        <hr /> */}
         <Box
           display="flex"
           flexDirection="column"
@@ -217,21 +185,6 @@ export const FilterBox = ({ filterForm, handleFilterFormData }: Props) => {
             >
               今店での人数
             </FormLabel>
-            {/* <RadioGroup
-              aria-labelledby="crowded-status"
-              name="crowded-status"
-              defaultValue={trafficOptions[3].value}
-              onChange={handleChangeCrowdedStatus}
-            >
-              {trafficOptions.map((option) => (
-                <FormControlLabel
-                  value={option.value}
-                  key={option.value}
-                  control={<Radio />}
-                  label={option.label}
-                />
-              ))}
-            </RadioGroup> */}
             <FormGroup>
               {trafficOptions.map((option) => (
                 <FormControlLabel
