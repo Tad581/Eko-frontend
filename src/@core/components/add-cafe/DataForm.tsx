@@ -19,10 +19,11 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import CrowdedTime from "./CrowdedTime";
+import ImageForm from "./ImageForm";
 
 // ** Icons import
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import ImageForm from "./ImageForm";
 
 // ** Hook import
 import { useState } from "react";
@@ -346,6 +347,7 @@ export default function DataForm() {
                 </FormGroup>
               </FormControl>
             </Box>
+            <CrowdedTime />
           </DialogContent>
           <DialogActions
             sx={{
