@@ -33,6 +33,7 @@ import { ReviewAPI } from "@/@core/api/reviewApi";
 // ** Other import
 import axios from "axios";
 import { CURRENT_USER_ID } from "@/@core/utils/cafes";
+import * as Yup from 'yup';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -99,6 +100,13 @@ export default function MakeReview(props: IProps) {
     user_ID: CURRENT_USER_ID,
     images: [],
   };
+
+  const validationSchema = Yup.object().shape({
+    inputValue: Yup.number()
+      .min(1, 'Value must be at least 1')
+      .max(5, 'Value must be at most 5')
+      .required('Value is required'),
+  });
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
 
@@ -185,7 +193,7 @@ export default function MakeReview(props: IProps) {
           レビューを書く
         </Typography>
       </BootstrapDialogTitle>
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
+      <Formik initialValues={initialValues} onSubmit={() => {}} validationSchema={validationSchema}>
         <Form>
           <DialogContent dividers>
             <Typography sx={{ fontSize: 16, fontWeight: 700, my: 1 }}>
@@ -258,6 +266,7 @@ export default function MakeReview(props: IProps) {
                     label="Star"
                     type="number"
                     inputprops={{ min: 0, max: 5 }}
+                    id="rating-star"
                     precision={1}
                     required
                     onChange={handleOnchangeRatingStar}
