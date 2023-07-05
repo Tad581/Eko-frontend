@@ -9,6 +9,7 @@ import {
   TextField,
   Box,
   InputAdornment,
+  Popper,
 } from "@mui/material";
 
 // ** MUI Icons import
@@ -27,11 +28,17 @@ export const UserNavbar = () => {
 
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+
   const handleSubmit = () => {
-    if (
-      router.pathname === "/bookmark"
-    )
-      router.reload();
+    if (router.pathname === "/bookmark") router.reload();
     else router.push("/search-results");
     localStorage.setItem("keyword", searchKeyword);
   };
@@ -87,9 +94,8 @@ export const UserNavbar = () => {
             variant="contained"
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
-            onClick={() => router.push("/add-cafe")}
           >
-            喫茶店を追加
+            レビュー
           </Button>
           <Button
             variant="contained"
@@ -108,13 +114,45 @@ export const UserNavbar = () => {
           >
             日本語
           </Button>
-          <Box justifyContent={"center"} alignItems={"center"} display={"flex"}>
-            <AccountCircleOutlinedIcon sx={{ fontSize: "35px" }} />
-            <Typography
-              sx={{ fontWeight: 600, fontSize: "16px", marginLeft: "5px" }}
+          <Box>
+            <Box
+              justifyContent={"center"}
+              alignItems={"center"}
+              display={"flex"}
+              onClick={handleClick}
             >
-              nakama.no.team
-            </Typography>
+              <AccountCircleOutlinedIcon sx={{ fontSize: "35px" }} />
+              <Typography
+                sx={{ fontWeight: 600, fontSize: "16px", marginLeft: "5px" }}
+              >
+                nakama.no.team
+              </Typography>
+            </Box>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+              <Box
+                sx={{
+                  marginLeft: "25px",
+                  marginTop: "20px",
+                  p: 1,
+                  bgcolor: "background.paper",
+                  width: "180px",
+                  height: "50px",
+                  boxShadow:
+                    "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+                }}
+              >
+                <Typography
+                  onClick={() => router.push("/add-cafe")}
+                  sx={{
+                    cursor: "pointer",
+                    fontSize: "20px",
+                    fontWeight: 500,
+                  }}
+                >
+                  喫茶店の追加
+                </Typography>
+              </Box>
+            </Popper>
           </Box>
         </Stack>
       </Toolbar>

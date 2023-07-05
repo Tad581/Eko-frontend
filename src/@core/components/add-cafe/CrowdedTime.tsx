@@ -104,9 +104,11 @@ export default function CrowdedTime(props: IProps) {
 
   useEffect(() => {
     if (props.isUpdate && props.initialTime?.length > 0) {
+      // if (props.initialTime.length < 24)
+      //   props.initialTime = [...props.initialTime, 0];
       handleInitialData(props.initialTime);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.initialTime]);
 
   return (

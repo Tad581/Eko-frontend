@@ -384,7 +384,7 @@ export default function UpdateCafe(props: IProps) {
                 </FormControl>
               </Box>
             </Box>
-            {/* <Box
+            <Box
               sx={{ my: 0.5 }}
               display={"flex"}
               justifyContent={"space-between"}
@@ -415,7 +415,7 @@ export default function UpdateCafe(props: IProps) {
                   formValue.crowded_hours ? formValue?.crowded_hours[1] : []
                 }
               />
-            </Box> */}
+            </Box>
             <Box>
               <Typography
                 sx={{ fontSize: 16, fontWeight: 700, my: 1, width: "95%" }}
