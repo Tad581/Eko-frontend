@@ -108,6 +108,17 @@ export const CafeAPI = {
           progress: undefined,
           theme: "light",
         })
+      : response?.status === 400
+      ? toast.error(response?.data.message[0], {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
       : toast.error("なにか壊れたそう", {
           position: "top-right",
           autoClose: 3000,

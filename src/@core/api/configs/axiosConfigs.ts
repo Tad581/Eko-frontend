@@ -1,34 +1,51 @@
-import axios from 'axios'
-
+import axios from "axios";
+import { toast } from "react-toastify";
 // initializing the axios instance with custom configs
 export const api = axios.create({
   withCredentials: true,
-  baseURL: '/api'
-})
+  baseURL: "/api",
+});
 
 // defining a custom error handler for all APIs
-const errorHandler = async (error: { response: { status: any; data: { message: any }; statusText: string } }) => {
-  const statusCodes = [400, 401, 409, 406, 500]
-  const statusCode = error.response?.status
+const errorHandler = async (error: {
+  response: { status: any; data: { message: any }; statusText: string };
+}) => {
+  const statusCodes = [400, 401, 409, 406, 500];
+  const statusCode = error.response?.status;
   try {
     // logging only errors that are not 401
     if (statusCode && statusCode !== 401) {
       console.error(
-        `axiosConfig.ts:: errorHandler:: message: ${JSON.stringify(error.response?.data?.message)} code: ${statusCode}`
-      )
+        `axiosConfig.ts:: errorHandler:: message: ${JSON.stringify(
+          error.response?.data?.message
+        )} code: ${statusCode}`
+      );
     }
 
     if (statusCodes.includes(statusCode)) {
-      console.log('Message error: ', JSON.stringify(error.response?.data?.message))
+      console.log(
+        "Message error: ",
+        JSON.stringify(error.response?.data?.message)
+      );
+      toast.error(JSON.stringify(error.response?.data?.message[0]), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
 
-    return Promise.reject(error.response?.data?.message || error)
+    return Promise.reject(error.response?.data?.message || error);
   } catch (error) {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-}
+};
 
 // registering the custom error handler to the "api" axios instance
-api.interceptors.response.use(undefined, error => errorHandler(error))
+api.interceptors.response.use(undefined, (error) => errorHandler(error));
 
-export default api
+export default api;

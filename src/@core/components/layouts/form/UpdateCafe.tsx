@@ -135,7 +135,9 @@ export default function UpdateCafe(props: IProps) {
     categories: props.categories,
   });
 
-  const [previewImages, setPreviewImages] = useState<string[]>(props.images || []);
+  const [previewImages, setPreviewImages] = useState<string[]>(
+    props.images || []
+  );
 
   const [crowded_status, setCrowded_status] = useState<any>(
     props.crowded_hours || CROWDED_TIME
@@ -184,7 +186,7 @@ export default function UpdateCafe(props: IProps) {
     }
     const params = {
       ...formValue,
-      images: [...formValue.images || [], ...reviewImages],
+      images: [...(formValue.images || []), ...reviewImages],
     };
     props.handleClose();
     await CafeAPI.updateOne({ ...params, id: props.coffee_shop_ID });
@@ -245,6 +247,11 @@ export default function UpdateCafe(props: IProps) {
       setCrowded_status([[...crowded_status[0]], [...tempArr]]);
     }, 100);
   };
+
+  useEffect(() => {
+    setFormValue({ ...formValue, crowded_hours: [...crowded_status] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [crowded_status]);
 
   return (
     <BootstrapDialog
