@@ -107,7 +107,7 @@ export default function CrowdedTime(props: IProps) {
       handleInitialData(props.initialTime);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.initialTime]);
+  }, []);
 
   return (
     <Box

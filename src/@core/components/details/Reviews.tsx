@@ -171,7 +171,7 @@ export default function Reviews(props: IProps) {
               }}
             >
               <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
-                {review.username} - {review.nationality}
+                {review.username} {review.nationality === "日本" ? '🇯🇵' : '🇻🇳'}
               </Typography>
               <Box display={"flex"}>
                 <Typography sx={{ fontSize: 14, marginRight: 1 }}>

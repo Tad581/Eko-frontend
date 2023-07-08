@@ -90,13 +90,13 @@ export const UserNavbar = () => {
         </Box>
 
         <Stack direction="row" spacing={2}>
-          <Button
+          {/* <Button
             variant="contained"
             size="medium"
             sx={{ minWidth: "100px", fontWeight: 700 }}
           >
             レビュー
-          </Button>
+          </Button> */}
           <Button
             variant="contained"
             size="medium"
