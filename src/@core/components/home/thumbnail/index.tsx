@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // ** Hooks import
 import { useRouter } from "next/router";
 import { useState } from "react";
+import "./thumbnail.css"
 
 export const Thumbnail = () => {
   const { push } = useRouter();
@@ -32,16 +33,17 @@ export const Thumbnail = () => {
   return (
     <Container
       sx={{
-        backgroundColor: "#bcc7f7",
+        background: 'linear-gradient(to bottom, #c7d2fe, #818cf8)',
         minWidth: "100vw",
-        height: "40vh",
+        height: "55vh",
         display: " flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
+    className="object"
     >
-      <Typography align="center" mb={5} sx={{ fontWeight: 600, fontSize: 40 }}>
+      <Typography align="center" mb={5} sx={{ fontWeight: 600, fontSize: 48, color: "#312e81" }}>
         いらっしゃいませ〜
       </Typography>
       <Stack
