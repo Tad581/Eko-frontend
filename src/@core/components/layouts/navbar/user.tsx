@@ -21,7 +21,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 
 // ** Hooks import
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const UserNavbar = () => {
   const router = useRouter();
@@ -37,21 +37,37 @@ export const UserNavbar = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
 
+  useEffect(() => {
+    const keywordTemp = localStorage.getItem("keyword") || "";
+    setSearchKeyword(keywordTemp);
+  }, [])
+
   const handleSubmit = () => {
-    if (router.pathname === "/bookmark") router.reload();
-    else router.push("/search-results");
+    if (router.pathname === "/search-results"){
+      router.reload();
+    }
+    else{
+      router.push("/search-results");
+    }
     localStorage.setItem("keyword", searchKeyword);
   };
 
   const handleSubmitEnterKey = (event: any) => {
     if (event.key === "Enter") {
-      router.reload();
+      if (router.pathname === "/search-results"){
+        router.reload();
+      }
+      else{
+        router.push("/search-results");
+      }
       localStorage.setItem("keyword", searchKeyword);
     }
   };
 
   const handleTextChange = (e: any) => {
     setSearchKeyword(e.target.value);
+    console.log(e.target.value);
+    
   };
 
   return (
@@ -68,20 +84,21 @@ export const UserNavbar = () => {
             <StorefrontRoundedIcon fontSize="large" />
           </IconButton>
           <TextField
-            label="発見"
+            label={searchKeyword ? "" : "発見"}
             variant="outlined"
             size="small"
             onChange={handleTextChange}
             onKeyDown={handleSubmitEnterKey}
+            value={searchKeyword}
             InputProps={{
               style: {
                 // height: "20px",
                 width: "30vw",
               },
               endAdornment: (
-                <InputAdornment position="end" onClick={handleSubmit}>
+                <InputAdornment position="end">
                   <IconButton edge="end">
-                    <SearchIcon />
+                    <SearchIcon onClick={handleSubmit}/>
                   </IconButton>
                 </InputAdornment>
               ),
