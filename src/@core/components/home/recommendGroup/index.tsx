@@ -28,7 +28,7 @@ export const RecommendGroup = () => {
         variant="h5"
         component="div"
         mt={3}
-        sx={{ fontWeight: 700, fontSize: "24px", paddingBottom: "10px" }}
+        sx={{ marginTop: "50px", fontWeight: 700, fontSize: "30px", paddingBottom: "10px" }}
       >
         おすすめのカフェ
       </Typography>

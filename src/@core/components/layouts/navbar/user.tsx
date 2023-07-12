@@ -39,7 +39,9 @@ export const UserNavbar = () => {
 
   useEffect(() => {
     const keywordTemp = localStorage.getItem("keyword") || "";
-    setSearchKeyword(keywordTemp);
+    if (router.pathname === "/search-results"){
+      setSearchKeyword(keywordTemp);
+    }
   }, [])
 
   const handleSubmit = () => {
