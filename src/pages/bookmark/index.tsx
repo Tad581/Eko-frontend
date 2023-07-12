@@ -1,9 +1,10 @@
 // ** MUI Component import
 import { Container } from "@mui/material";
 // ** Component import
-import { FilterBox } from "@/@core/components/search-results/filterBox";
-import { ResultPagination } from "@/@core/components/search-results/paginate";
+// import { FilterBox } from "@/@core/components/search-results/filterBox";
+// import { ResultPagination } from "@/@core/components/search-results/paginate";
 import { UserNavbar } from "@/@core/components/layouts/navbar/user";
+import { ResultPaginationBookmark } from "@/@core/components/search-results/pagin_bookmark";
 
 // ** Interfaces import
 import { IFilterForm, ECrowdedStatus } from "@/interfaces";
@@ -37,11 +38,11 @@ export default function Home() {
           display: "flex",
         }}
       >
-        <FilterBox
+        {/* <FilterBox
           filterForm={filterForm}
           handleFilterFormData={handleFilterFormData}
-        />
-        <ResultPagination filterForm={filterForm} />
+        /> */}
+        <ResultPaginationBookmark filterForm={filterForm} />
       </Container>
     </>
   );

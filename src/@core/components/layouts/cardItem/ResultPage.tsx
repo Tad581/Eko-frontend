@@ -26,7 +26,7 @@ import { CURRENT_USER_ID } from "@/@core/utils/cafes";
 import { BookmarkAPI } from "@/@core/api/bookmarkApi";
 
 // ** Hooks import
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const resultPageBoxStyle = {
@@ -36,7 +36,7 @@ const resultPageBoxStyle = {
 };
 
 export const CardItemResultPage = (props: ICafeInfo) => {
-  // const router = use Router();
+  const router = useRouter();
   const [bookmarked, setBookmarked] = useState<number>(props.bookmarked);
 
   const [open, setOpen] = useState(false);
@@ -48,6 +48,9 @@ export const CardItemResultPage = (props: ICafeInfo) => {
     } else {
       setBookmarked(0);
       await BookmarkAPI.deleteOne(bookmarkInput);
+    }
+    if (router.pathname === "/bookmark"){
+      router.reload();
     }
   };
 
